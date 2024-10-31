@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_JSON数据结构</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				JSON数据结构 其本质上就是一个字符串, 但是该字符串有对应的书写规则
+					1. 最外层单引号 
+					2. 可以由数组或者对象嵌套组成
+					3. 如果数据结构为对象, 那么对象的key要用双引号引起, value的数据类型根据需求, 可以任意
+			 */
+			var jsonStr1 = '{"stuInfo":[{"name":"张三", "age":20, "graduation":true},{"name":"李四", "age":18, "graduation":false},{"name":"王五", "age":22, "graduation":true}]}';
+			
+			var jsonStr2 = '[{"name":"张三", "age":20, "graduation":true},{"name":"李四", "age":18, "graduation":false},{"name":"王五", "age":22, "graduation":true}]';
+			
+			/* 
+				JS如何操作JSON字符串
+				1. 将json串转成JS的原生数据类型, 如: 数组, 对象
+				语法: JSON.parse(json串)   返回值: 数组或者对象
+				
+				2. 将JS的原生数据类型, 如数组或者对象 转成json串
+				语法: JSON.stringify(数组/对象) 返回值:json串
+			 */
+			var json1Obj = JSON.parse(jsonStr1);
+			var json2Arr = JSON.parse(jsonStr2);
+			console.log(json1Obj);
+			console.log(json2Arr);
+			
+			var arr = [1,2,3,4,5];
+			var json1 = JSON.stringify(arr);
+			console.log(json1);
+			var obj = {name:"张三", age:20, sex:"男"};
+			var json2 = JSON.stringify(obj);
+			console.log(json2);
+			
+		</script>
+	</body>
+</html>

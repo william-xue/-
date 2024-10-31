@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_二维数组</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				数组的维度反应的 是数组的嵌套情况
+				数组嵌套: 一个数组成为另一个数组的值
+				
+				二维数组: 数组的值又是一个数组
+				
+				获取二维数组中的值: 先通过外层数组的下标获取到子数组, 再通过子数组的下标获取最终的值
+				语法: 数组[一维下标][二维下标]
+				
+			 */
+			var arr1 = [[100, 22], [111, 256], [777, 135]];
+			console.log(arr1[1][1]);
+			
+			/* 
+				创建一个二维数组, 里面由10个子数组, 每个子数组里有两个随机数, 随机数范围[20, 100]
+			 */
+			var array = [];
+			for (var i = 0; i < 10; i++) {
+				// 创建子数组
+				var arr = [];
+				for (var j = 0; j < 2; j++) {
+					var ranNum = Math.floor(Math.random()*81+20);
+					arr.push(ranNum);
+				}
+				array.push(arr);
+			}
+			console.log(array);
+		</script>
+	</body>
+</html>

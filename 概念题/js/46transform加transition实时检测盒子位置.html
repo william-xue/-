@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #box {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 80px;
+      top: 0;
+      background-color: red;
+    }
+    #btn {
+      margin-top: 100px;
+    }
+  </style>
+  <body>
+    <div id="box"></div>
+    <button id="btn">点击</button>
+    <script>
+      btn.onclick = function () {
+        box.style.transform = "translateX(500px)";
+        box.style.transition = "all 4s";
+        ckeckBoxPosition();
+      };
+      function ckeckBoxPosition() {
+        let position = box.getBoundingClientRect();
+        console.log(position.left);
+        if (position.left < 500) {
+          requestAnimationFrame(ckeckBoxPosition);
+        }
+      }
+
+      window.onresize = function () {
+        ckeckBoxPosition();
+      };
+    </script>
+  </body>
+</html>

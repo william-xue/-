@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JQuery基础02</title>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<div id="div2"></div>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<input type="checkbox" checked="abc">
+		<input type="text">
+		<hr>
+		<img/>
+		<img/>
+		<hr>
+		<a href="http://www.baidu.com" abc="123">百度首页</a>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			/* 
+				1. 获取DOM节点
+					1.1 JS: document.getElementxxxx(), document.querySelectorxxxx()
+					1.2 JQ: $("选择器")
+					
+				2. 操作元素节点的内容
+					2.1 JS: innerHTML, innerText, textContent, value
+					2.2 JQ: html(), text(), val()
+				
+				3. 操作元素节点的样式
+					3.1 JS: style属性, 读写性; getComputedStyle() 只读;
+					3.2 JQ: css() 读写性;
+				
+				4. 操作元素节点的属性
+					4.1 JS: 点语法/getAttribute,setAttribute
+					4.2 JQ: attr() / prop()
+					
+				5. 创建, 插入, 删除元素节点
+					5.1 JS: createElement(), appendChild()/insertBefore(), removeChild()
+					5.2 JQ:
+						a. 创建节点  $("html字符串")
+						b. 将节点插入到文档里
+						c. 删除节点
+			 */
+			
+			/* 
+				html()方法 读写
+				类似于JS里的innerHTML
+				在设置内容时, 如果jq对象里有多个元素, 都设置上内容, 如果内容里有html标签的字符串, 该字符串会被解析成真正的标签
+				在获取内容时, 如果jq对象里有多个元素, 只能获取到第一个元素的内容
+			 */
+			$("#div1").html("这是div1").css("font-size", 50);
+			$("#div2").html("<h3>这是div2</h3>").css({
+				fontSize:50,
+				color:"red"
+			});
+			console.log($("#div1").html());
+			console.log($("#div2").html());
+			
+			$("ul li").html("这是li");
+			console.log($("div").html());
+			
+			/* 
+				text() 读写
+				类似于JS里的innerText
+				在设置内容时, 如果jq对象里有多个元素, 都设置上内容, 如果内容里有html标签的字符串, 该字符串不会被解析成真正的标签, 原样输出
+				在获取内容时, 如果jq对象里有多个元素, 能获取到所有元素的内容
+			 */
+			$("#div1").text("这是div1").css("font-size", 50);
+			$("#div2").text("<h3>这是div2</h3>").css({
+				fontSize:50,
+				color:"red"
+			});
+			console.log($("#div1").text());
+			console.log($("#div2").text());
+			
+			$("ul li").text("这是li");
+			console.log($("div").text());
+			
+			/* 
+				val() 读写
+				在设置value时, 如果jq对象里有多个元素, 都设置上
+				在获取value时, 如果jq对象里有多个元素, 只获取第一个元素的value值
+			 */
+			$("input:eq(0)").val("你好!");
+			$("input:eq(1)").val("世界!");
+			console.log($("input").val());
+			
+			
+			/* 
+				attr() 读写
+				1. 设置属性  jq对象.attr("属性名", "属性值")
+				2. 获取属性  jq对象.attr("属性名")
+				
+				注意: 设置的时候如果jq读写里有多个元素, 都设置上; 获取的时候jq对象里如果有多个元素, 只获取第一个
+			 */
+			$("img:first").attr("src", "https://news-bos.cdn.bcebos.com/mvideo/log-news.png").css("width", 100);
+			
+			$("img:last").attr({
+				src:"http://contentcms-bj.cdn.bcebos.com/cmspic/a845647d8abaffdc3d2735d3ba3668d5.jpeg?x-bce-process=image/crop,x_0,y_0,w_665,h_362",
+				alt:"百度logo",
+				width:100
+			});
+			
+			// $("img").attr("src", "http://contentcms-bj.cdn.bcebos.com/cmspic/a845647d8abaffdc3d2735d3ba3668d5.jpeg?x-bce-process=image/crop,x_0,y_0,w_665,h_362").css("width", 200);
+			console.log($("img").attr("src"));
+			
+			
+			/* 
+				prop() 读写性
+				1. 设置属性  jq对象.prop("属性名", "属性值")
+				2. 获取属性  jq对象.prop("属性名")
+			 */
+			
+			
+			console.log($("a:first").attr("href"));
+			console.log($("a:first").attr("abc"));
+			
+			console.log($("a:first").prop("href"));
+			console.log($("a:first").prop("abc"));
+			
+			console.log($("input:first").attr("checked"));
+			console.log($("input:first").prop("checked"));
+			
+			/* 
+				attr和prop的区别
+				1. 如果要操作系统自带属性, 建议使用prop; 如果要操作自定义属性, 建议使用attr
+				2. 当操作属性名和属性值相同的属性时, 建议使用prop
+			 */
+			
+			
+			/* 
+				创建节点
+				$("html字符串")
+			 */
+			//1. 创建div
+			// var divJQ = $("<div></div>");
+			// 2. 设置需要的样式或者属性
+			// divJQ.css({width:200, height:200, background:"red"});
+			// divJQ.prop("class", "div1");
+			// divJQ.html("这是div1");
+			// 3. 将新创建的div插入到当前文档
+			
+			//1. 父jq对象.append(新创建的jq对象/DOM元素/html字符串/元素数组) 将新元素添加到父jq对象里面的末尾
+			var divJQ = $("<div/>").css({width:200, height:200, background:"red"}).html("这是div1").prop("class", "div1");
+			$("body").append(divJQ);
+			
+			var button = document.createElement("button");
+			button.innerHTML = "DOM按钮";
+			$("body").append(button);
+			
+			$("body").append("<button>html字符串按钮</button>");
+			
+			var eleArr = [document.createElement("input"),document.createElement("input")];
+			$("body").append(eleArr);
+			
+			var eleArr1 = ["<input type='radio'/>", "<input type='radio'/>"];
+			$("body").append(eleArr1);
+			
+			var eleArr2 = [$("<a href='###'>超链接1</a>"), $("<a href='###'>超链接2</a>")];
+			$("body").append(eleArr2);
+			
+			
+			//2. 新创建的jq对象.appendTo(jq对象/选择器/DOM元素); 将新元素添加到父jq对象里面的末尾
+			$("<div/>").css({width:200, height:200, background:"blue"}).html("这是div1").prop("class", "div1").appendTo($("body"));
+			$("<div/>").css({width:100, height:100, background:"yellow"}).html("这是div2").prop("class", "div2").appendTo(".div1");
+			$("<div/>").css({width:300, height:300, background:"orange"}).html("这是div3").prop("class", "div3").appendTo(document.body);
+			
+			//3. jq父节点对象.prepend(新创建的jq对象/DOM元素/html字符串/元素数组) 将新创建的节点添加到父节点里面的最前面
+			var div1JQ = $("<div/>").css({width:100, height:100, background:"blue", borderRadius:"50%"});
+			$("body").prepend(div1JQ);
+			
+			//4. 新创建节点.prependTo(jq对象/选择器/DOM元素) 将新创建的节点添加到父节点里面的最前面
+			$("<h1/>").html("这是h1标签").prependTo("body");
+			
+			//5. 兄弟jq节点.after(新创建的jq对象/DOM元素/html字符串/元素数组) 往兄弟节点的后面插入新的节点
+			$("div").after($("<img/>").prop("src","http://gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/news/img/carousel/bg_19da_xinjingjie_029074f.png"));
+			
+			//6. 兄弟jq节点.before(新创建的jq对象/DOM元素/html字符串/元素数组) 往兄弟节点的前面插入新的节点
+			$("img").before("<hr/>");
+			
+			
+			/* 
+				删除节点
+				想要删除的jq节点.remove();
+				想要删除的jq节点.detach();
+				
+				以上两个方法都可以删除节点, 都有返回值,返回值是已经删掉的所有元素的jq对象
+				
+				remove()和detach()的区别:
+				remove在移除元素的时候, 会解绑其绑定上的所有事件
+				detach在移除元素的时候, 不会解绑其绑定上的所有事件
+			 */
+			// setTimeout(function(){
+			// 	// var res1 = $("img").remove();
+			// 	// console.log(res1);
+			// 	var res2 = $("img").detach();
+			// 	console.log(res2);
+			// }, 3000);
+			
+			// $("<button/>").html("remove按钮").click(function(){alert("remove按钮触发了")}).appendTo("body");
+			// $("<button/>").html("detach按钮").click(function(){alert("detach按钮触发了")}).appendTo("body");
+			
+			// var res1 = $("button:eq(2)").remove();
+			// $("body").append(res1);
+			
+			// var res2 = $("button:eq(2)").detach();
+			// $("body").append(res2);
+			
+			/* 
+				遍历jq对象
+			 */
+			var imgObj = $("img");
+			// console.log(imgObj);
+			// for(var i = 0; i < imgObj.length; i++) {
+			// 	console.log(imgObj.eq(i));
+			// }
+			// console.log(imgObj);
+			var obj = {
+				name:"张三",
+				age:20,
+				sex:"男"
+			}
+			// console.log(obj);
+			/* 
+				JS遍历对象, for...in 
+				for(key in 对象) {
+					
+				}
+				JS遍历数组, for...in 
+				for(index in 数组) {
+					
+				}
+			 */
+			// for(var k in obj) {
+			// 	console.log(obj[k]);
+			// }
+			
+			// var arr = [111,222,333,444,555];
+			// for(var i in arr) {
+			// 	console.log(arr[i]);
+			// }
+			
+			
+			// obj.forEach(function(){
+			// 	console.log(123);
+			// });
+			// imgObj.forEach(function(){
+			// 	console.log(123);
+			// })
+			// var arr1 = [100, 200, 300, 400, 500];
+			// console.log(arr1);
+			// obj.push(123);
+			// arr1.forEach(function(){
+			// 	console.log(123);
+			// })
+			
+			// var imgArr = document.querySelectorAll("img");
+			// var imgArr1 = document.getElementsByTagName("img");
+			// console.log(imgArr);
+			// console.log(imgArr1);
+			/* NodeList与HTMLCollection的区别 */
+			
+			// imgArr.forEach(function(){
+			// 	console.log(123);
+			// })
+			// imgArr.sort();
+			
+			
+			// 遍历jq对象 可以用for...in 但是会将jq对象的所有的key全部遍历出来, 我们没有必要获取所有的key ,我们只想拿到jq里所有的标签
+			var imgJq = $("img");
+			for(var n in imgJq){
+				console.log(n);
+			}
+			
+			// 所以 遍历jq对象, 请使用jq自带的方法, each方法, 方法需要传入回调函数, 第一个参数为key, 第二个参数为value(dom元素)
+			imgJq.each(function(i, v){
+				console.log(i, v);
+			});
+		</script>
+	</body>
+</html>

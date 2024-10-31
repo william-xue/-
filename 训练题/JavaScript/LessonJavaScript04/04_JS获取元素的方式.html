@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04_JS获取元素的方式</title>
+		<style type="text/css">
+			#div1 {
+				/* background-color: rgb(255,0,0); */
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">这是div1</div>
+		<div class="bgc">这是div2</div>
+		<div class="bgc">这是div3</div>
+		<ul>
+			<li>无序列表1</li>
+			<li class="bgc">无序列表2</li>
+			<li>无序列表3</li>
+			<li>无序列表4</li>
+			<li>无序列表5</li>
+		</ul>
+		<hr/>
+		<button onclick="btn1Click()">按钮1</button>
+		<script type="text/javascript">
+			/* 
+				JS获取元素的方式
+				1. 通过id值获取元素 getElementById("id值"), 该方法得到的直接就是html元素
+				2. 通过class值获取元素 getElementsByClassName("class值"), 该方法得到的是所有对应class值的数组
+				3. 通过标签名获取元素 getElementsByTagName("标签名"), 该方法得到的是对应标签名的数组
+				
+				4. 通过选择器获取一个元素 querySelector("选择器"), 但是不管选择器找到的是几个元素, 该方法永远返回找到的第一个元素
+				5. 通过选择器获取所有元素 querySelectorAll("选择器"),找到的是对应选择器表示的所有元素的数组
+			 */
+			// var div1Ele = document.getElementById("div1");
+			// console.log(div1Ele);
+			
+			// var classEles = document.getElementsByClassName("bgc");
+			// console.log(classEles);
+			
+			// var tagEles = document.getElementsByTagName("div");
+			// console.log(tagEles);
+			
+			// var s1 = document.querySelector("ul>li");
+			// console.log(s1);
+			
+			// var s2 = document.querySelectorAll("ul>li");
+			// console.log(s2);
+			
+			
+			/* 
+				JS如何操作元素的样式和元素的属性
+				1. JS操作元素的样式: 我们通过style属性来进行操作
+				2. JS操作元素的属性: 
+			 */
+			function btn1Click() {
+				var div1 = document.querySelector("#div1");
+				var div2 = document.querySelector(".bgc");
+				// 通过style属性 设置div1的样式(宽, 高, 背景色)
+				// div1.style = "width: 200px; height: 200px; background-color: red;"
+				var ranSize = Math.floor(Math.random()*51+50);
+				
+				div1.style.width = 300 + "px";  //"300px"
+				div1.style.height = 300 + "px"; //"300px"
+				div2.style.width = div1.style.width;
+				div2.style.height = div1.style.height;
+				
+				var r = Math.floor(Math.random()*256);
+				var g = Math.floor(Math.random()*256);
+				var b = Math.floor(Math.random()*256);
+				
+				div1.style.backgroundColor = "rgb("+r+","+g+","+b+")";
+				div2.style.backgroundColor = div1.style.backgroundColor;
+				
+				var reg = Math.floor(Math.random()*361);
+				div1.style.transform = "rotateZ(" + reg + "deg)";
+			}
+		</script>
+	</body>
+</html>

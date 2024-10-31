@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_DOM基础01</title>
+		<style type="text/css">
+			.div1 {
+				width: 200px;
+				height: 200px;
+				border: 2px solid;
+			}
+			.div2 {
+				width: 200px;
+				height: 200px;
+				border: 2px solid;
+			}
+		</style>
+	</head>
+	<body>
+		<p id="p1"></p>
+		<fieldset>
+			<legend><h2>设置属性</h2></legend>
+			<input type="text">
+			<input type="text">
+			<button type="button">设置</button>
+			<div class="div1"></div>
+		</fieldset>
+		<input type="text" placeholder="请输入用户名" id="i1">
+		<div class="div2"></div>
+		<button id="btn1">创建元素</button>
+		<button id="btn2">删除元素</button>
+		<script type="text/javascript">
+			/* 
+				DOM: Document Object Model文档对象模型, 处理文档内容有关的所有操作 
+				
+				DOM树: 指的是一个树状结构, 当html文档加载时, 浏览器会根据html文档里的代码, 将所有内容结合内容之间的嵌套关系, 生成一个树状结构, 我们称之为DOM树. DOM树是由一个一个的"节点"组成
+				
+				DOM的节点类型
+				1. 元素节点 body标签
+				2. 文本节点 文字内容
+				3. 注释节点 注释
+				4. 声明节点 <!DOCTYPE html>
+				5. 文档节点 document
+				
+				节点之间的关系
+				1. 父节点
+				2. 子节点
+				3. 兄弟节点
+			 */
+			/* 
+				一. 特殊节点的获取方式
+			 */
+			// 1. 文档节点
+			// console.log(document);
+			
+			//2. html节点
+			// console.log(document.documentElement, document.querySelector("html"));
+			
+			//3. body节点
+			// console.log(document.body, document.querySelector("body"));
+			//4. head节点
+			// console.log(document.head, document.querySelector("head"));
+			
+			//5. 声明节点
+			// console.log(document.doctype);
+			
+			
+			/* 	
+				二. 通过节点之间的关系获取元素
+			 */
+			//1. 获取到某个节点的所有子节点(子节点可以有多个)
+			// console.log(document.head.childNodes);
+			//2. 获取到某个节点的所有子元素节点(子节点可以有多个)
+			// console.log(document.head.children);
+			
+			//3. 获取某个节点的父节点(有且只有一个)
+			// console.log(document.body.parentNode);
+			// console.log(document.body.parentNode.parentNode);
+			// console.log(document.body.parentNode.parentNode.parentNode);
+			
+			/*
+				4.1 获取某个节点的第一个子节点
+				4.2 获取某个节点的第一个元素子节点
+			*/
+		   // console.log(document.head.firstChild);
+		   // console.log(document.head.firstElementChild);
+		   
+		   /* 
+				5.1 获取某个节点的最后一个子节点
+				5.2 获取某个节点的最后一个元素子节点
+		   */
+		  // console.log(document.head.lastChild);
+		  // console.log(document.head.lastElementChild);
+		  
+		  /* 
+				6.1 获取某个节点的上一个兄弟节点
+				6.2 获取某个节点的上一个元素兄弟节点
+		  */
+		 // console.log(document.body.previousSibling);
+		 // console.log(document.body.previousElementSibling);
+		 
+		 /* 
+				7.1 获取某个节点的下一个兄弟节点
+				7.2 获取某个节点的下一个元素兄弟节点
+		 */ 
+		 // console.log(document.head.nextSibling);
+		 // console.log(document.head.nextElementSibling);
+		  
+		  
+		  /* 
+			三. 操作元素节点的内容
+			1. innerHTML
+			2. innerText
+			3. textContent
+			
+			以上三个属性, 权限均为读写, 即: 既可以设置内容, 也可以获取内容	
+			
+			如何判断我们是在设置一个属性还是在获取一个属性???
+			办法: 看等号
+			1. 属性语法在等号的左边, 设置
+			2. 属性语法在等号的右边, 获取
+			3. 属性语法里没有等号, 获取
+		  */
+		 // innerHTML
+		 // var pEle = document.getElementById("p1");
+		 // pEle.innerHTML = "innerHTML: Hello, world!";
+		 // console.log(pEle.innerHTML);
+		 // var content = pEle.innerHTML;
+		 // pEle.innerHTML = pEle.innerHTML + pEle.innerHTML;
+		 
+		 // innerText
+		 // pEle.innerText = "innerText:hello, world!";
+		 // console.log(pEle.innerText);
+		 
+		 //textContent
+		 // pEle.textContent = "textContent:hello, world!";
+		 // console.log(pEle.textContent);
+		 
+		 /* 
+			三种操作节点内容方式的区别:
+			innerHTML
+			在设置内容时, 如果内容里有html字符串, 会被解析成标签, 如果有多余的空格, 只会保留一个空格
+			在获取内容时, 原样获取
+		 
+			innerText
+			在设置内容时, 如果内容里有html字符串, 不会被解析成标签而是以文本形式输出, 如果有多余的空格, 只会保留一个空格
+			在获取内容时, 如果有多余的空格, 只保留一个空格, 其余原样获取
+			
+			textContent
+			在设置内容时, 如果内容里有html字符串, 不会被解析成标签而是以文本形式输出, 如果有多余的空格, 只会保留一个空格
+			在获取内容时, 原样获取
+		*/
+		 
+		 
+		 // pEle.innerHTML = "  abc   <a href='http://www.baidu.com'>百度首页</a>   def   ";
+		 // console.log(pEle.innerHTML);
+		 
+		 // pEle.innerText = "  abc   <a href='http://www.baidu.com'>百度首页</a>   def   ";
+		 // console.log(pEle.innerText);
+		 
+		 // pEle.textContent = "  abc   <a href='http://www.baidu.com'>百度首页</a>   def   ";
+		 // console.log(pEle.textContent);
+		 
+		 
+		 /* 
+			四. 操作元素的属性
+				1. 	 点语法   语法: 元素.属性名
+				2.1  设置元素属性   元素.setAttribute("属性名", "属性值");
+				2.2  获取元素属性   元素.getAttribute("属性名");
+		 */
+		// var i1Ele = document.getElementById("i1");
+		// console.log(i1Ele.placeholder);
+		// i1Ele.placeholder = "请输入密码!";
+		
+		// i1Ele.setAttribute("type", "radio");
+		// console.log(i1Ele.getAttribute("type"));
+		
+		
+		// var btn1 = document.querySelector("button");
+		// var inputs = document.querySelectorAll("input");
+		// var div1Ele = document.querySelector(".div1");
+		// btn1.onclick = function(){
+		// 	var propName = inputs[0].value;
+		// 	var propValue = inputs[1].value;
+		// 	div1Ele.setAttribute(propName, propValue);
+		// }
+		
+		
+		/* 
+			五. 操作元素的样式
+				1. 通过style属性操作元素的样式, 即可设置, 又可获取
+			注意: 通过style属性进行操作, 永远只能操作行间样式!!!
+				2. 获取元素的非行间样式  getComputedStyle(元素)方法
+			该方法的返回值是一个样式对象, 该对象里存储了元素的所有样式, 样式的表现形式有如下特点:
+					2.1 如果是颜色值, 以rgb表示
+					2.2 如果是复合属性, 值为全值
+			但是, 我们最终是想要获取对象里的某个样式值, 获取对象某个值, 有两种语法:
+				a. 点语法  对象.属性名
+				b. 中括号语法: 对象["属性名"]
+		 */
+		// var div2Ele = document.querySelector(".div2");
+		// div2Ele.style.backgroundColor = "blue";
+		
+		// console.log(div2Ele.style.backgroundColor);
+		
+		// var styleObj = getComputedStyle(div2Ele)
+		// console.log(styleObj.width, styleObj["height"], styleObj.backgroundColor);
+		
+		/* 
+			六. 动态创建, 添加, 删除元素节点
+		 */
+		/* 
+			创建元素
+			语法:
+			document.createElement("标签名");
+			返回值: 创建好的html标签
+			
+			添加元素
+			语法:
+			父元素.appendChild(新创建元素);
+			
+			删除元素
+			语法:
+			父元素.removeChild(要删除的元素);
+		 */
+		var btn1Ele = document.getElementById("btn1");
+		btn1Ele.onclick = function(){
+			// 创建
+			var imgEle = document.createElement("img");
+			// 设置所需的样式或者属性
+			imgEle.src = "img/1.png";
+			imgEle.style.width = "100px";
+			// 添加元素
+			document.body.appendChild(imgEle);
+		}
+		
+		var btn2Ele = document.getElementById("btn2");
+		
+		btn2Ele.onclick = function(){
+			var fEle = document.querySelector("fieldset");
+			console.log(fEle);
+			if(fEle) {
+				document.body.removeChild(fEle);
+			}
+		}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class A {
+        constructor(props) {
+          console.log("a", props);
+          this.props = props;
+        }
+      }
+      class B extends A {
+        constructor(props) {
+          // 这里相当于调用了A的constructor
+          super(props);
+          console.log(props);
+          console.log(this.props);
+        }
+      }
+      new B({ a: "zs" });
+    </script>
+  </body>
+</html>

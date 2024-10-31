@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<fieldset>
+			<legend><h2>中间数</h2></legend>
+			<input type="text" id="n1">
+			<input type="text" id="n2">
+			<input type="text" id="n3">
+			<button onclick="middleNumer()">中间数</button>
+		</fieldset>
+		<fieldset>
+			<legend><h2>四则运算</h2></legend>
+			<input type="number" id="num1">
+			<input type="text" id="flag">
+			<input type="number" id="num2">
+			<button onclick="computed()">计算</button>
+		</fieldset>
+		<script type="text/javascript">
+			function middleNumer() {
+				var v1 = n1.value - 0 ;
+				var v2 = n2.value - 0;
+				var v3 = n3.value - 0;
+				// if求中间数
+				// if(v1 > v2) {
+				// 	// v1大于v2
+				// 	if(v3 > v1) {
+				// 		// v3 > v1 > v2
+				// 		alert(v1);
+				// 	}else {
+				// 		// v1是最大值
+				// 		if(v2 > v3){
+				// 			alert(v2);
+				// 		}else {
+				// 			alert(v3);
+				// 		}
+				// 	}
+				// }else {
+				// 	// v2大于v1
+				// 	if(v3 > v2) {
+				// 		// v3 > v2 > v1
+				// 		alert(v2);
+				// 	}else {
+				// 		// v2是最大值
+				// 		if(v1 > v3) {
+				// 			alert(v1);
+				// 		}else {
+				// 			alert(v3);
+				// 		}
+				// 	}
+				// }
+				
+				
+				// 三目求中间数
+				var middleN = v1 > v2 ? (v3 > v1 ? v1 : (v2 > v3 ? v2 : v3)) : (v3 > v2 ? v2 : (v1 > v3 ? v1 : v3));
+				alert(middleN);
+			}
+			
+			// var a = 0;
+			// if(a > 0) {
+			// 	alert("正数");
+			// }else if(a == 0) {
+			// 	alert("0");
+			// }else {
+			// 	alert("负数");
+			// }
+			
+			// var weight = 100;
+			// var money = 0;
+			// if(weight > 50) {
+			// 	money = (weight - 50) * 0.25 + 50 * 0.15;
+			// }else {
+			// 	money = weight * 0.15;
+			// }
+			// alert(money);
+			
+			function computed() {
+				var v1 = num1.value - 0;
+				var v2 = num2.value - 0;
+				var flagI = flag.value;
+				var result = 0;
+				if(flagI == "+") {
+					result = v1 + v2;
+				}else if(flagI == "-") {
+					result = v1 - v2;
+				}else if(flagI == "*"){
+					result = v1 * v2;
+				}else if(flagI == "/"){
+					result = v1 / v2;
+				}else {
+					result = "回去上小学去吧!!";
+				}
+				if(typeof result === "number") {
+					alert(result.toFixed(2));
+				}else {
+					alert(result);
+				}
+			}
+			
+			if(a+b>c && a+c>b && b+c>a) {
+				
+			}
+		</script>
+	</body>
+</html>

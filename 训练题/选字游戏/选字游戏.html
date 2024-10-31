@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>选字游戏</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.box {
+				width: 400px;
+				height: 500px;
+				margin: 100px auto 0;
+				border: 2px solid red;
+				padding: 10px;
+			}
+			.time {
+				font-size: 25px;
+				float: left;
+			}
+			.score {
+				font-size: 25px;
+				float: right;
+			}
+			.question {
+				clear:both;
+				font-size: 300px;
+				text-align: center;
+			}
+			ul {
+				display: flex;
+				justify-content: space-around;
+				font-size: 40px;
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="time">时间:20</div>
+			<div class="score">得分:0</div>
+			<div class="question">字</div>
+			<ul>
+				<li>红</li>
+				<li>黄</li>
+				<li>蓝</li>
+				<li>绿</li>
+				<li>紫</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var timeDiv = document.querySelector(".time");
+			var scoreDiv = document.querySelector(".score");
+			var questionDiv = document.querySelector(".question");
+			var lis = document.querySelectorAll("ul li");
+			
+			// 文字数组
+			var fontArr = ["红", "黄", "蓝", "绿", "紫"];
+			// 颜色数组
+			var colorArr = ["red", "yellow", "blue", "green", "purple"];
+			
+			// 产生随机数的函数
+			function randomNumber(x, y) {
+				return Math.floor(Math.random() * (y - x + 1) + x);
+			}
+			
+			/* 
+				 1. 创建两个数组存放文字和颜色
+				 2. 封装一个函数用来展示问题，问题的文字和颜色都是随机的，并声明出每个颜色对应的答案
+				 3. 封装一个函数用来显示答案，要求做到次运行的时候字和颜色都是随机的且不相同
+				 4. 封装一个函数用来记录用户的得分情况
+				 5. 创建一个计时器，当时间走完弹框显示用户的得分情况
+				 6. 创建开始游戏的函数，并给每个选项加上点击事件，用来判断用户是否选对，注意选择后其他函数是否调用
+			 */
+			// 声明一个全局变量 记录本次游戏的汉字答案
+			var answer = "";
+			// 展示问题的函数
+			function randomQuestion(){
+				// 从文字和颜色数组里分别随机出一个值 赋值给questionDiv
+				var ranFont = fontArr[randomNumber(0, fontArr.length-1)];
+				var ranColor = colorArr[randomNumber(0, colorArr.length-1)];
+				questionDiv.style.color = ranColor;
+				questionDiv.innerHTML = ranFont;
+				switch (ranColor){
+					case "red":{
+						answer = "红";
+						break;
+					}
+					case "yellow":{
+						answer = "黄";
+						break;
+					}
+					case "blue":{
+						answer = "蓝";
+						break;
+					}
+					case "green":{
+						answer = "绿";
+						break;
+					}
+					case "purple":{
+						answer = "紫";
+						break;
+					}
+				}
+			}
+			randomQuestion();
+			
+			
+			// 耦合
+			// 显示答案的函数
+			function randomAnswer(){
+				randomArray(fontArr);
+				randomArray(colorArr);
+				for (var i = 0; i < lis.length; i++) {
+					lis[i].innerHTML = fontArr[i];
+					lis[i].style.color = colorArr[i];
+				}
+			}
+			randomAnswer();
+			// 打乱数组
+			function randomArray(arr){
+				for(var i = 0; i < 20; i++) {
+					var r1 = randomNumber(0, arr.length-1);
+					var r2 = randomNumber(0, arr.length-1);
+					if(r1 != r2){
+						// 交换两个值
+						var t = arr[r1];
+						arr[r1] = arr[r2];
+						arr[r2] = t;
+					}
+				}
+			}
+			// 声明一个变量记录分数
+			var score = 0;
+			// 每个li添加点击事件
+			for (var i = 0; i < lis.length; i++) {
+				lis[i].onclick = function(){
+					// 获取点击的li上的文字
+					console.log(this.innerHTML, questionDiv.style.color);
+					// if(time == 0) {
+					// 	return;
+					// }
+					if(this.innerHTML == answer) {
+						randomQuestion();
+						randomAnswer();
+						score++;
+						scoreDiv.innerHTML = "得分:" + score;
+					}
+				}
+			}
+			var time = 5;
+			var timer = setInterval(function(){
+				time--;
+				timeDiv.innerHTML = "时间:" + time;
+				if(time == 0){
+					// clearInterval(timer);
+					// 不可再操作游戏
+					// for(var i = 0; i < lis.length; i++){
+					// 	lis[i].onclick = null;
+					// }
+					// alert(213);
+					// time = 5;
+					// timeDiv.innerHTML = "时间:" + time;
+				}
+			}, 1000);
+		</script>
+	</body>
+</html>

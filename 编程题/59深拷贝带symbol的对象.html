@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let s = Symbol("");
+      let oc = { name: "zs", age: 15 };
+      let obj = {
+        [s]: "ss",
+        dsa: "ds",
+        date: new Date(),
+        reg: /223/,
+        func: function () {},
+        num: new Number(2),
+        str: new String("22"),
+        array: [oc, oc],
+      };
+      oc.obj = obj;
+      let getType = function (value) {
+        let str = Object.prototype.toString.call(value).split(" ")[1];
+        let type = str.substr(0, str.length - 1);
+        return type;
+      };
+      function deepClone(obj, hash = new Map()) {
+        let cloneObj;
+        let Constructor = obj.constructor;
+        if (hash.has(obj)) {
+          console.log(obj, "fuyong");
+          return hash.get(obj);
+        }
+        if (typeof obj !== "object") {
+          return obj;
+        }
+        console.log(getType(obj));
+        switch (getType(obj)) {
+          case "Date":
+            return new Date(obj);
+          case "String":
+          case "Number":
+          case "RegExp":
+            return new Constructor(obj);
+          case "Function":
+            return obj;
+          case "Array":
+            let arr = new Constructor();
+            obj.map((val, index) => {
+              arr[index] = deepClone(val, hash);
+            });
+            return arr;
+          default:
+            cloneObj = new Constructor();
+            hash.set(obj, cloneObj);
+        }
+        [...Object.getOwnPropertySymbols(obj), ...Object.keys(obj)].map(
+          (val) => {
+            let result = deepClone(obj[val], hash);
+            cloneObj[val] = result;
+          }
+        );
+        return cloneObj;
+      }
+      let result = deepClone(obj);
+      result.array[0].age = 10;
+      console.log(result);
+    </script>
+  </body>
+</html>

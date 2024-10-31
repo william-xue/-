@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Vue {
+        static extend() {
+          const Sub = function VueComponent(options) {
+            this._init(options);
+          };
+          Sub.cid = cid++;
+          Sub.prototype = Object.create(this.prototype);
+          Sub.prototype.constructor = Sub;
+          Sub.options = mergeOptions(this.options, extendOptions);
+          return Sub;
+        }
+        say() {
+          console.log("say");
+        }
+      }
+      // Vue.extend就是创造一个继承Vue类的一个子类 然后可以写一个组件在里面 生成虚拟dom 然后写完的组件未来想挂载到哪个dom上就挂载到哪里
+    </script>
+  </body>
+</html>

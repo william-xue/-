@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="test">
+  <script>
+    let test=document.getElementById('test')
+    let flag=true
+    function debounce(callback) {
+        let timer = null;
+        return function (e) {
+          clearTimeout(timer);
+          if(!e.target.composing){
+            return
+          }
+          timer = setTimeout(() => {
+            callback && callback.apply(this, arguments);
+          }, 500);
+        };
+      }
+    test.oninput=debounce(function(e){
+      console.log(e.target.composing);
+    })
+    test.addEventListener('compositionstart',function(e){
+      e.target.composing=false
+    })
+    test.addEventListener('compositionend',function(e){
+      e.target.composing=true
+      var ev = document.createEvent('HTMLEvents');
+      ev.initEvent('input', false, true);
+      test.dispatchEvent(ev)
+    })
+   
+  </script>
+</body>
+</html>

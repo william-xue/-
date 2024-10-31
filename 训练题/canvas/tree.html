@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overflow: hidden;
+      }
+    </style>
+    <canvas id="tree"></canvas>
+    <script>
+      const canvas = document.getElementById("tree");
+      if (canvas.getContext) {
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = window.innerHeight * devicePixelRatio;
+        ctx.translate(canvas.width / 2, canvas.height);
+        ctx.scale(1, -1);
+
+        function draw(postion, lineWidth, length, dir) {
+          if (length < 20) {
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.arc(postion[0], postion[1], 3, 0, Math.PI * 2, true);
+            ctx.stroke();
+            return;
+          }
+          const endPoiot = [
+            postion[0] + length * Math.cos((dir * Math.PI) / 180),
+            postion[1] + length * Math.sin((dir * Math.PI) / 180),
+          ];
+
+          ctx.beginPath();
+          ctx.moveTo(...postion);
+          ctx.lineTo(...endPoiot);
+          ctx.lineWidth = lineWidth;
+          ctx.lineCap = "round";
+          ctx.strokeStyle =
+            "rgb(0," +
+            Math.floor(255 - 42.5 * Math.random() * 2) +
+            "," +
+            Math.floor(255 - 42.5 * Math.random() * 2) +
+            ")";
+          ctx.stroke();
+          draw(endPoiot, 5, length - 10, dir - Math.random() * 40);
+          draw(endPoiot, 5, length - 10, dir + Math.random() * 40);
+        }
+        draw([0, 0], 5, 100, 90);
+      }
+    </script>
+  </body>
+</html>

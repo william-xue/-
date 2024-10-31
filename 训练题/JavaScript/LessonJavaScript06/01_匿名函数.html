@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_匿名函数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				匿名函数: 没有名字的函数
+				
+				函数名的作用: 
+					1. 用于调用函数
+					
+				匿名函数存在问题: 匿名函数怎么调用???
+					1. 在声明的同时, 立刻调用
+					2. 把匿名函数赋值给一个变量, 那么变量名就可以充当函数名使用
+			 */
+			// 避免"变量污染"
+			// (function(){
+			// 	var a = 10;
+			// 	var b = 20;
+			// 	console.log(a, b);
+			// })();
+			
+			// var a = "hello";
+			// console.log()
+			// (function(){
+			// 	console.log("fn1函数被调用了!");
+				
+			// })();
+		
+			
+			// 注意: 函数的名字 代指的是 整个函数体(整个函数声明)!!!!!
+			// var fn2 = function(){
+			// 	console.log("fn2函数被调用了!");
+			// }
+			// console.log(fn2);
+			// fn2();
+			
+			function fn3(){
+				console.log("fn3函数被调用了");
+			}
+			// console.log(fn3);
+			// fn3();
+			// 当一个函数充当实参, 传入到另一个函数里, 那么我们称这个函数叫"回调函数"
+			function fn4(f){
+				// console.log(f);
+				f();
+			}
+			// fn4(10);
+			fn4(function(){console.log("hello, world!")});
+		    fn4(fn3);
+			
+		</script>
+	</body>
+</html>

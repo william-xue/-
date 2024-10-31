@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>01_问题解释</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// setInterval(function(n, m){
+			// 	console.log("hello, world!", n, m);
+			// }, 1000, 10, 100);
+			
+			// function fn1(a, b) {
+			// 	console.log(a, b);
+			// }
+			// fn1(10, 20);
+			
+			var n1 = 100;
+			function fn1(arg1){
+				arg1 = 1000;
+				console.log(arg1);
+			}
+			fn1(n1);
+			console.log(n1);
+			
+			
+			
+			/* 
+				JS里 变量在赋值的过程, 永远是一个拷贝的过程!!
+				
+				JS里的数据类型根据复杂程度分为两种:
+				1. 基本数据类型 除了数组/对象之外的其他数据类型
+				2. 复杂数据类型 数组/对象
+				
+				基本数据类型的赋值过程是一个"值"传递的过程
+				复杂数据类型的赋值过程是一个"址"传递的过程
+				
+				"值"传递会形成各自的内存空间, 修改一个, 不会影响其他
+				"址"传递最终会指向同一个空间, 谁去修改, 修改的都是同一个空间
+				
+			 */
+			var arr1 = [1,2,3,4,5];
+			function fn2(a) {
+				a[0] = 100;
+				console.log(a);
+			}
+			fn2(arr1);
+			console.log(arr1);
+		</script>
+	</body>
+</html>

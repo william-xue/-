@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+     * 有点区别的，主要是class 里面的setstate是有一个合并的merge操作，hooks是利用闭包，直接进行值的替换，
+
+        所以在用hooks，尽量多用useReducer，一次性改变数据，毕竟多次setstate触发多次渲染，影响性能
+
+        与在类中使用setState的异同点：
+        相同点：也是异步的，例如在onClick事件中，调用两次setState，数据只改变一次。
+
+        不同点：类中的setState是合并，而函数组件中的setState是替换。
+
+        当state状态值结构比较复杂时，使用useReducer更有优势。
+
+        使用useState获取的setState方法更新数据时是异步的；而使用useReducer获取的dispatch方法更新数据是同步的。
+     * 
+    */
+    </script>
+  </body>
+</html>

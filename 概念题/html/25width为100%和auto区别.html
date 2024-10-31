@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      /* 盒子默认不设置宽度的话为auto auto就是和不设置width一样 margin会实际减小盒子的大小 padding不会*/
+      .box {
+        height: 20px;
+        background-color: red;
+        /* margin: 0 50px; */
+        padding: 0 50px;
+        /* width: 100%; */
+        width: auto;
+      }
+      .box1 {
+        background-color: blue;
+        height: 100%;
+        padding: 0 50px;
+      }
+      .box3 {
+        background-color: green;
+        height: 100%;
+      }
+    </style>
+    <div class="box">
+      <div class="box1">
+        <div class="box3"></div>
+      </div>
+    </div>
+  </body>
+</html>

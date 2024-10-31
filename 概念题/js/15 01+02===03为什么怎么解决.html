@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 0.1+0.2===0.3  false 因为输入的0.1和0.2转化二进制都是无限循环情况所以计算结果是0.30000000004
+      // 解决1 乘10解决
+      var a = 0.1,
+        b = 0.2,
+        c = 0.3;
+      var result = (0.1 * 10 + 0.2 * 10) / 10;
+      console.log(result === c);
+      // 解决2 用极小值判断
+      var r = a + b - c;
+      // 结果小于极小值说明是有误差
+      console.log(r < Number.EPSILON);
+    </script>
+  </body>
+</html>

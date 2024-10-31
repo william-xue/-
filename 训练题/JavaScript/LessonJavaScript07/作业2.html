@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>时钟</title>
+		<style type="text/css">
+			.clock {
+				width: 600px;
+				height: 600px;
+				margin: 100px auto 0;
+				background-color: gray;
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.innerClock {
+				width: 550px;
+				height: 550px;
+				background-color: white;
+				border-radius: 50%;
+				position: relative;
+			}
+			.innerClock>div {
+				width: 520px;
+				height: 40px;
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				font-size: 30px;
+			}
+			.innerClock span {
+				display: inline-block;
+			}
+			.clock>div+div {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 50%;
+				margin: 0 auto;
+				transform-origin: center bottom; 
+			}
+			.h {
+				width: 5px;
+				height: 130px;
+				background-color: black;
+			}
+			.m {
+				width: 3px;
+				height: 170px;
+				background-color: blue;
+			}
+			.s {
+				width: 1px;
+				height: 200px;
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="clock">
+			<div class="innerClock">
+				<div><span>9</span></div>
+				<div><span>10</span></div>
+				<div><span>11</span></div>
+				<div><span>12</span></div>
+				<div><span>1</span></div>
+				<div><span>2</span></div>
+				<div><span>3</span></div>
+				<div><span>4</span></div>
+				<div><span>5</span></div>
+				<div><span>6</span></div>
+				<div><span>7</span></div>
+				<div><span>8</span></div>
+			</div>
+			<div class="h"></div>
+			<div class="m"></div>
+			<div class="s"></div>
+		</div>
+		<script type="text/javascript">
+			var numberDivs = document.querySelectorAll(".innerClock>div");
+			var numberSpans = document.querySelectorAll(".innerClock span");
+			for(var i = 0; i < numberDivs.length; i++) {
+				numberDivs[i].style.transform = "rotateZ(" + i*30 + "deg)";
+				numberSpans[i].style.transform = "rotateZ(" + i*-30 + "deg)";
+			}
+			
+			var hDiv = document.querySelector(".h");
+			var mDiv = document.querySelector(".m");
+			var sDiv = document.querySelector(".s");
+			
+			setInterval(function(){
+				var nowObj = new Date();
+				var timeH = nowObj.getHours();
+				var timeM = nowObj.getMinutes();
+				var timeS = nowObj.getSeconds();
+				
+				// 设置时针的旋转角度 时针1小时转30度, 但是最终的角度由小时和分钟共同决定
+				hDiv.style.transform = "rotateZ(" + (timeH*30+timeM/60*30) + "deg)";
+				
+				// 设置分针的旋转角度 分针1分钟转6度, 但是最终的旋转角度由分钟和秒决定
+				mDiv.style.transform = "rotateZ(" + (timeM*6+timeS/60*6) + "deg)";
+				
+				// 设置秒针的旋转角度 秒针一秒钟转6度
+				sDiv.style.transform = "rotateZ(" + (timeS*6) + "deg)";
+			}, 1000);
+		</script>
+	</body>
+</html>

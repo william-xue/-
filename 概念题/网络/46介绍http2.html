@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+      1 http1的缺点
+         一次只允许在一个tcp连接上发起请求
+         单向请求只能有客户端发起
+         请求报文与响应报文首部信息冗余量大
+         数据未压缩 导致数据传输量大
+      2 http2 的改动
+         http1中使用的是文本传输在HTTP2.0中引入了新的编码机制，所有传输的数据都会被分割，并采用二进制格式编码(二进制分帧)
+         在HTTP2.0中，我们使用了HPACK（HTTP2头部压缩算法）压缩格式对传输的header进行编码，减少了header的大小。并在两端维护了索引表，用于记录出现过的header，后面在传输过程中就可以传输已经记录过的header的键名，对端收到数据后就可以通过键名找到对应的值
+         服务端推送是一种在客户端请求之前发送数据的机制。在HTTP2.0中，服务器可以对一个客户端的请求发送多个响应。如果一个请求是由你的主页发送的，服务器可能会响应主页内容、logo以及样式表，因为他知道客户端会用到这些东西。这样不但减轻了数据传送冗余步骤
+         ，也加快了页面响应的速度，提高了用户体验。
+    */
+    </script>
+  </body>
+</html>

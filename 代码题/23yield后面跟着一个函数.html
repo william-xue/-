@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function test() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(3);
+          }, 1000);
+        });
+      }
+      function test1() {
+        return 1;
+      }
+      function aaa() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(4);
+          }, 1000);
+        });
+      }
+      async function test2() {
+        let data = await aaa();
+        return data;
+      }
+      function* gen() {
+        let res = yield test();
+        console.log(res);
+        let res1 = yield test1();
+        console.log(res1);
+        let res2 = yield test2();
+        console.log(res2);
+      }
+      const g = gen();
+      g.next().value.then((res) => {
+        let value = g.next(res);
+        let value2 = g.next(value.value);
+        value2.value.then((res2) => {
+          g.next(res2);
+        });
+      });
+    </script>
+  </body>
+</html>

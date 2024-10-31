@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button id="myButton">点击按钮</button>
+  </body>
+  <script>
+    // 先进行捕获 在进行冒泡
+    // 冒泡处理
+    document.getElementById("myButton").addEventListener(
+      "click",
+      function (ev) {
+        alert(1);
+      },
+      false
+    );
+    // 捕获处理
+    document.body.addEventListener(
+      "click",
+      function (ev) {
+        alert(2);
+      },
+      true
+    );
+    // 冒泡处理
+    document.addEventListener(
+      "click",
+      function (ev) {
+        alert(3);
+      },
+      false
+    );
+  </script>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>随机数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				随机数:
+				1. 随机产生
+				2. 要有一个对应的区间范围
+				3. 绝大部分情况下我们要的是一个整数
+			 */
+			/* 
+				产生一个随机数: Math.random();
+				
+				产生一个(0, 1)的随机数: Math.random()
+				产生(0, n)的随机数: Math.random()*n
+				产生(0, n]的随机数: Math.random()*(n+1)
+				产生[0, n]的随机整数: Math.floor(Math.random()*(n+1))
+				产生[m, n]的随机整数: Math.floor(Math.random()*(n-m+1)+m);
+			 */
+			/* 
+				JS里对小数进行取整
+				向上取整  Math.ceil(小数)
+				向下取整  Math.floor(小数)
+				四舍五入  Math.round(小数)
+			 */
+			console.log(Math.random());
+			console.log(Math.random()*100);
+			console.log(Math.random()*101);
+			console.log(Math.floor(Math.random()*11));
+			// [30, 70]的随机整数
+			console.log(Math.floor(Math.random()*(70-30+1)+30));
+			
+			// console.log(Math.ceil(9.00001));
+			// console.log(Math.floor(9.99999));
+			// console.log(Math.round(4.4));
+			// console.log(Math.round(4.5));
+		</script>
+	</body>
+</html>

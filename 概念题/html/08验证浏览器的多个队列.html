@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="start">开始</button>
+    <button id="jh">添加到交互队列</button>
+    <script>
+      function delay(time) {
+        const curTime = +new Date();
+        while (true) {
+          const curTime2 = +new Date();
+          if (curTime2 - curTime > time) {
+            return;
+          }
+        }
+      }
+      function addDelayQueue() {
+        console.log("添加到延时队列");
+        setTimeout(() => {
+          console.log("延时队列执行");
+        }, 0);
+        delay(2000);
+      }
+      function jhQueue() {
+        console.log("添加到交互队列");
+        jh.onclick = function () {
+          console.log("交互队列执行");
+        };
+        delay(2000);
+      }
+      start.onclick = function () {
+        addDelayQueue();
+        jhQueue();
+      };
+    </script>
+  </body>
+</html>

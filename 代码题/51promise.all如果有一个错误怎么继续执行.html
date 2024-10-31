@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let fn = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          reject("fn出错");
+        }, 1000);
+      }).catch((err) => {
+        return Promise.resolve("chucuol");
+      });
+
+      let fn1 = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          resolve("fn出错");
+        }, 1000);
+      }).catch((err) => {
+        return Promise.resolve("chucuol");
+      });
+      let fn2 = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          resolve("fn出错");
+        }, 1000);
+      }).catch((err) => {
+        return Promise.resolve("chucuol");
+      });
+      Promise.all([fn1, fn2, fn]).then((arr) => {
+        console.log(arr);
+      });
+    </script>
+  </body>
+</html>

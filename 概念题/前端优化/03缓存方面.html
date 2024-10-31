@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+    上面简单介绍完持久化缓存，下面这个才是重点，那么我们应该如何在 webpack 中进行持久化缓存的呢，我们需要做到以下两点：
+      保证 hash 值的唯一性，即为每个打包后的资源生成一个独一无二的 hash 值，只要打包内容不一致，那么 hash 值就不一致。
+      保证 hash 值的稳定性，我们需要做到修改某个模块的时候，只有受影响的打包后文件 hash 值改变，与该模块无关的打包文件 hash 值不变。
+
+    hash 文件名是实现持久化缓存的第一步，目前 webpack 有两种计算 hash 的方式([hash] 和 [chunkhash])
+      hash 代表每次 webpack 在编译的过程中会生成唯一的 hash 值，在项目中任何一个文件改动后就会被重新创建，然后 webpack 计算新的 hash 值。
+      chunkhash 是根据模块计算出来的 hash 值，所以某个文件的改动只会影响它本身的 hash 值，不会影响其他文件。
+
+    分离业务代码和第三方的代码：之所以将业务代码和第三方代码分离出来，是因为业务代码更新频率高，而第三方代码更新迭代速度慢，所以我们将第三方代码(库，框架)进行抽离，这样可以充分利用浏览器的缓存来加载第三方库。
+      按需加载：比如在使用 React-Router 的时候，当用户需要访问到某个路由的时候再去加载对应的组件，那么用户没有必要在一开始的时候就将所有的路由组件下载到本地。
+      在多页面应用中，我们往往可以将公共模块进行抽离，比如 header, footer 等等，这样页面在进行跳转的时候这些公共模块因为存在于缓存里，就可以直接进行加载了，而不是再进行网络请求了。
+    例子：
+            // src/pageA.js
+      import componentA from './common/componentA';
+      // 使用到 jquery 第三方库，需要抽离，避免业务打包文件过大
+      import $ from 'jquery';
+      // 加载 css 文件，一部分为公共样式，一部分为独有样式，需要抽离
+      import './css/common.css'
+      import './css/pageA.css';
+      console.log(componentA);
+      console.log($.trim(' do something '));
+      
+      // src/pageB.js
+      // 页面 A 和 B 都用到了公共模块 componentA，需要抽离，避免重复加载
+      import componentA from './common/componentA';
+      import componentB from './common/componentB';
+      import './css/common.css'
+      import './css/pageB.css';
+      console.log(componentA);
+      console.log(componentB);
+      // 用到异步加载模块 asyncComponent，需要抽离，加载首屏速度
+      document.getElementById('xxxxx').addEventListener('click', () => {
+      import( /* webpackChunkName: "async" */
+      './common/asyncComponent.js').then((async) => {
+        async();
+      })
+      })
+      // 公共模块基本长这样
+      export default "component X";
+    webpack 
+      const path = require('path');
+      const webpack = require('webpack');
+      const ExtractTextPlugin = require('extract-text-webpack-plugin');
+      module.exports = {
+      entry: {
+      pageA: [path.resolve(__dirname, './src/pageA.js')],
+      pageB: path.resolve(__dirname, './src/pageB.js'),
+      },
+      output: {
+      path: path.resolve(__dirname, './dist'),
+      filename: 'js/[name].[chunkhash:8].js',
+      chunkFilename: 'js/[name].[chunkhash:8].js'
+      },
+      module: {
+      rules: [
+        {
+        // 用正则去匹配要用该 loader 转换的 CSS 文件
+        test: /.css$/,
+        use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: ["css-loader"]
+        }) 
+        }
+      ]
+      },
+      plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'common',
+        minChunks: 2,
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: ({ resource }) => (
+        resource && resource.indexOf('node_modules') >= 0 && resource.match(/.js$/)
+        )
+      }),
+        new ExtractTextPlugin({
+          filename: `css/[name].[chunkhash:8].css`,
+        }),
+      ]
+      }
+   -->
+  </body>
+</html>

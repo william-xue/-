@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_this关键字</title>
+		<style type="text/css">
+			ul {
+				width: 1000px;
+				height: 50px;
+				margin: 150px auto 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			li {
+				width: 200px;
+				height: 100%;
+				border: 1px solid;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>热点</li>
+			<li>娱乐</li>
+			<li>体育</li>
+			<li>时尚</li>
+			<li>军事</li>
+		</ul>
+		<script type="text/javascript">
+			var lis = document.querySelectorAll("li");
+
+			// lis[0].onclick = function() {
+			// 	lis[1].style.background = "transparent";
+			// 	lis[2].style.background = "transparent";
+			// 	lis[3].style.background = "transparent";
+			// 	lis[4].style.background = "transparent";
+			// 	lis[0].style.background = "red";
+			// }
+			// lis[1].onclick = function() {
+			// 	lis[0].style.background = "transparent";
+			// 	lis[2].style.background = "transparent";
+			// 	lis[3].style.background = "transparent";
+			// 	lis[4].style.background = "transparent";
+			// 	lis[1].style.background = "red";
+			// }
+			// lis[2].onclick = function() {
+			// 	lis[1].style.background = "transparent";
+			// 	lis[0].style.background = "transparent";
+			// 	lis[3].style.background = "transparent";
+			// 	lis[4].style.background = "transparent";
+			// 	lis[2].style.background = "red";
+			// }
+			// lis[3].onclick = function() {
+			// 	lis[1].style.background = "transparent";
+			// 	lis[2].style.background = "transparent";
+			// 	lis[0].style.background = "transparent";
+			// 	lis[4].style.background = "transparent";
+			// 	lis[3].style.background = "red";
+			// }
+			// lis[4].onclick = function() {
+			// 	lis[1].style.background = "transparent";
+			// 	lis[2].style.background = "transparent";
+			// 	lis[3].style.background = "transparent";
+			// 	lis[0].style.background = "transparent";
+			// 	lis[4].style.background = "red";
+			// }
+			
+			for(var i = 0; i < lis.length; i++) {
+				lis[i].onclick = function(){
+					// 无法确定当函数触发的时候, 是点击的哪个li导致点击事件触发的 
+					console.log(this);
+					// 先把所有的li背景色设置成透明
+					for(var j = 0; j < lis.length; j++){
+						lis[j].style.background = "transparent";
+					}
+					this.style.background = "red";
+				}
+			}
+			/* 
+				如何快速判断this代指的是谁?
+				1. 永远先看this在哪个函数里
+				2. 看是谁在触发该函数, this代指的就是谁!
+			 */
+			
+			
+		</script>
+	</body>
+</html>

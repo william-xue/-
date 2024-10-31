@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_数组操作函数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				我们将来可能会对数组进行各种各样的操作, 如:
+				1. 往数组里添加元素
+				2. 从数组里删除元素
+				3. 对数组进行截取
+				4. 对数组里的数据进行排序
+				5. 打乱数组里的值
+				...
+			 */
+			var arr1 = [1,2,3,4,5];
+			/* 
+				1. push(值) 向数组的尾部添加元素
+					可以一次加一个值, 也可以一次加多个值, 该方法执行完毕后, 会返回添加后的新数组元素个数
+			*/
+			// var newCount = arr1.push("abc");
+			// console.log(arr1, newCount);
+			// var newCount1 = arr1.push(100, 200, "def", true, null);
+			// console.log(arr1, newCount1);
+			
+			
+			/* 
+				2. pop() 从数组的尾部删除一个元素
+					一次只能删除一个值, 该方法执行完之后得到的被删除的值
+			 */
+			// var res = arr1.pop();
+			// console.log(arr1, res);
+			// var res1 = arr1.pop();
+			// console.log(arr1, res1);
+			
+			
+			/* 
+				3. unshift() 向数组的头部添加元素
+					一次可以添加一个值, 也可以一次添加多个值, 该方法执行过后也会返回添加过后的数组元素个数
+			 */
+			// var count1 = arr1.unshift("abc");
+			// console.log(arr1, count1);
+			// var count2 = arr1.unshift("xxx", "yyy", "zzz");
+			// console.log(arr1, count2);
+			
+			
+			/* 
+				4. shift() 从数组头部删除元素
+					一次只能删除一个, 该方法执行过后返回被删除的值
+			 */
+			// var v1 = arr1.shift();
+			// console.log(arr1, v1);
+			// var v2 = arr1.shift();
+			// console.log(arr1, v2);
+			
+			/* 
+				5. splice(1,2,3) 从数组的某个位置删除/添加值
+				参数1: 要删除的开始位置的下标
+				参数2: 要删除的元素个个数
+				参数3以以后的参数: 需要添加的值
+				
+				如果只想删除, 参数3及以后不写
+				如果只想插入数据, 参数2给0, 表示不删除, 其他参数照写
+			 */
+			// arr1.splice(2, 2, "666", "777", "abc");
+			// console.log(arr1);
+			// arr1.splice(2, 0, "你好","世界");
+			// console.log(arr1);
+			
+			/* 
+				6. slice(1，2) 获取子数组, 该方法执行完之后会得到一个新的子数组
+				参数1:开始截取的起始位置下标, 可以给负值, 表示从后往前数
+				参数2:截取的结束位置的下标, 可以给负值, 表示从后往前数
+				注意: 
+					1. 结束位置对应的值不会被截取到
+					2. 要保证起点永远在终点的左边
+					3. 如果不写结束位置, 结束位置默认在最后
+			 */
+			// [1,2,3,4,5]
+			// var subArr = arr1.slice(1);
+			// console.log(subArr);
+			
+			/* 
+				7. sort方法 数组排序方法
+				其默认的排序规则, 是按照字符串的排序规则进行排序, 而且排序的结果 为升序
+				如果想要自定义排序规则, 请给sort方法传入一个回调函数
+			 */
+			// var arr1 = [9, 7, "a", "B", 5, 100, 3];
+			// var newArr1 = arr1.sort();
+			// console.log(newArr1);
+			
+			/* 
+				1. sort默认会排成升序
+				2. 每次sort会从数组里拿两个值比较
+				分析出: 当第一个参数大于第二个参数时, 理论上应该去交换位置, 最终才可以排成升序
+				
+				
+			 */
+			
+			var arr1 = [9, 100, 3, 1, 6];
+			arr1.sort(function(a, b){
+				console.log(a, b);
+				/* 
+					sort方法当接收到 return的值后, 会判断其与0的关系, 来决定是否交换两个值
+					return的值 > 0, 交换两个值的位置
+					return的值 == 0, 不交换两个值的位置
+					return的值 < 0, 不交换两个值的位置
+				 */
+				return Math.random() - 0.5;
+			});
+			console.log(arr1);
+			
+			
+			/* 
+				需求:升序, 前面比后面大  交换.....升序
+				sort原理: return的值大于0, 交换
+				
+				100 50
+				7 6
+				5 1
+				前面比后面大===return的值大于0
+				
+				需求: 降序, 后面比前面大 交换...降序
+				1 100
+				50 200
+				9 18
+				
+				sort原理: return的值大于0, 交换
+				后面比前面大===return的值大于0
+			*/
+		</script>
+	</body>
+</html>

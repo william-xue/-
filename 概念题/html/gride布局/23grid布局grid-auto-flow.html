@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .wrapper,
+      .wrapper-1,
+      .wrapper-2 {
+        margin: 50px;
+      }
+      .wrapper {
+        display: grid;
+        grid-template-columns: 100px 200px 100px;
+        grid-auto-flow: row;
+        grid-gap: 5px;
+        grid-auto-rows: 50px;
+      }
+      .wrapper-1 {
+        display: grid;
+        grid-auto-columns: 100px;
+        grid-auto-flow: column;
+        grid-gap: 5px;
+        grid-template-rows: 50px 50px;
+      }
+      .wrapper-2 {
+        display: grid;
+        grid-template-columns: 100px 200px 100px;
+        grid-auto-flow: row dense;
+        grid-gap: 5px;
+        grid-auto-rows: 50px;
+      }
+      .one {
+        background: #19caad;
+      }
+      .two {
+        background: #8cc7b5;
+      }
+      .three {
+        background: #d1ba74;
+      }
+      .four {
+        background: #bee7e9;
+      }
+      .five {
+        background: #e6ceac;
+      }
+      .six {
+        grid-column-start: span 3;
+        background: #ecad9e;
+      }
+      .seven {
+        background: #beedc7;
+      }
+      .eight {
+        background: #f4606c;
+      }
+      .nine {
+        background: #a0eee1;
+      }
+      .item {
+        text-align: center;
+        font-size: 200%;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>先行后列</h1>
+    <div class="wrapper">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>先列后行</h1>
+    <div class="wrapper-1">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>先行后列：dense</h1>
+    <div class="wrapper-2">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+    s
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function fn1() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("fn1的返回值");
+          }, 2000);
+        });
+      }
+      function fn2() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("fn2的返回值");
+          }, 3000);
+        });
+      }
+      function* gen() {
+        let r0 = yield fn1();
+        console.log(r0);
+        let r1 = yield 3;
+        console.log(1, r1);
+        let r2 = yield fn2();
+        console.log(2, r2);
+      }
+      let g = gen();
+      // g.next().value.then((val) => {
+      //   console.log(val);
+      //   g.next().value.then((val2) => {
+      //     console.log(val2);
+      //   });
+      // });
+      function run(g, v) {
+        // 第一次调用next传入的参数是会丢失 不会传递到yield的返回值r1中 当调用fn1的then 的时候拿到的val在传给next就会给到r1
+        let { value, done } = g.next(v);
+        Promise.resolve(value).then((val) => {
+          if (!done) run(g, val);
+        });
+      }
+      run(g);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <div id="box"></div>
+        <div id="box1"></div>
+        <button id="btn1">1</button>
+        <button id="btn2">2</button>
+        <script src="../js/Reactive.js"></script>
+        <script>
+          /**
+           */
+          let data = {
+            a: 5,
+            b: {
+              c: 3,
+              d: {
+                f: 6,
+              },
+            },
+            age: 15,
+          };
+          let reactive = new Reactive();
+          let obj = reactive.proxy(data);
+          function watcher(source, cb, options = {}) {
+            function travserse(target, seen = new Set()) {
+              if (
+                typeof target !== "object" ||
+                target === null ||
+                seen.has(target)
+              )
+                return;
+              seen.add(target);
+              for (const key in target) {
+                if (typeof target[key] === "object") {
+                  target[key] = travserse(target[key], seen);
+                }
+              }
+              return { ...target };
+            }
+            function onInvalidatecleanup(fn) {
+              cleanup = fn;
+            }
+            function job() {
+              if (cleanup) {
+                cleanup();
+              }
+              newValue = effectFn();
+              cb(newValue, oldValue, onInvalidatecleanup);
+              oldValue = newValue;
+            }
+
+            let newValue, oldValue;
+            let cleanup;
+            let getter;
+            if (typeof source === "function") {
+              getter = () => source();
+            } else if (typeof source === "object") {
+              getter = () => travserse(source);
+            }
+            let effectFn = reactive.effect(() => getter(), {
+              lazy: true,
+              scheduler() {
+                job();
+              },
+            });
+            if (options.immediate) {
+              job();
+            } else {
+              oldValue = effectFn();
+            }
+          }
+          watcher(
+            () => obj.a,
+            (newValue, oldValue) => {
+              console.log(newValue, oldValue);
+            }
+          );
+          obj.a++;
+        </script>
+      </body>
+    </html>
+  </body>
+</html>

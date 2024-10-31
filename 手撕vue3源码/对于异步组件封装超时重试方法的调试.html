@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let i = 0;
+      function fetch() {
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            if (i === 100) {
+              resolve("success");
+            } else {
+              reject("err");
+            }
+          }, 1000);
+        });
+      }
+      async function loadApi(api, c, onError) {
+        return new Promise(async function (resolve, reject) {
+          try {
+            c--;
+            i++;
+            let res = await api();
+            resolve(res);
+          } catch (error) {
+            console.log(error);
+            let retry, fail;
+            console.log(c);
+            if (c > 0) {
+              retry = () => resolve(loadApi(api, c, onError));
+            } else {
+              fail = () => reject("调用失败");
+            }
+            onError(retry, fail);
+          }
+        });
+      }
+      loadApi(fetch, 3, (retry, fail) => {
+        retry && retry();
+        fail && fail();
+      })
+        .then((val) => {
+          console.log(val);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // function load(onError) {
+      //   let p = fetch();
+      //   return p.catch((err) => {
+      //     return new Promise(function (resolve, reject) {
+      //       const retry = () => resolve(load(onError));
+      //       const fail = () => reject(err);
+      //       onError(retry, fail);
+      //     });
+      //   });
+      // }
+      // load((retry) => {
+      //   retry();
+      //   i++;
+      //   console.log("retry");
+      // }).then((res) => {
+      //   console.log(res);
+      // });
+
+      // 对上面代码的解读
+      // let p2 = fetch();
+      // p2.catch((err) => {
+      //   return new Promise((resolve, reject) => {
+      //     let p2 = fetch();
+      //     resolve(
+      //       p2.catch((err) => {
+      //         return new Promise(function (resolve, reject) {
+      //           i = 2;
+      //           let p2 = fetch();
+      //           resolve(
+      //             p2.catch((err) => {
+      //               console.log(err);
+      //             })
+      //           );
+      //         });
+      //       })
+      //     );
+      //   });
+      // }).then((val) => {
+      //   console.log(val);
+      // });
+
+      // 解析
+      // let p2 = fetch();
+      // p2.catch((err) => {
+      //   i = 1;
+      //   let p2 = fetch();
+      //   return p2;
+      // })
+      //   .catch((val) => {
+      //     i = 3;
+      //     let p2 = fetch();
+      //     return p2;
+      //   })
+      //   .catch((val) => {
+      //     i = 2;
+      //     let p2 = fetch();
+      //     return p2;
+      //   })
+      //   .then((val) => {
+      //     console.log(val);
+      //   });
+
+      // 练习测试
+      // function load() {
+      //   let p2 = fetch();
+      //   return p2.catch((val) => {
+      //     i++;
+      //     console.log(i);
+      //     return load();
+      //   });
+      // }
+      // load().then((val) => {
+      //   console.log(val);
+      // });
+    </script>
+  </body>
+</html>

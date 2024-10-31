@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./Reactive.js"></script>
+    <script>
+      /**
+       */
+      let obj = {};
+      let pro = {
+        bar: 1,
+      };
+      let reactive = new Reactive();
+      let child = reactive.proxy(obj);
+      let parent = reactive.proxy(pro);
+      Object.setPrototypeOf(child, parent);
+      reactive.effect(() => {
+        console.log(child.bar);
+      });
+      child.bar = 2;
+    </script>
+  </body>
+</html>

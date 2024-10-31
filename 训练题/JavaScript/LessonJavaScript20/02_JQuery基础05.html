@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JQuery基础05</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#div1 {
+				width: 500px;
+				height: 500px;
+				background-color: lightblue;
+				overflow: hidden;
+				margin: 100px;
+				position: relative;
+			}
+			#div2 {
+				width: 350px;
+				height: 400px;
+				background-color: lightcoral;
+				margin: 50px;
+				overflow: hidden;
+				position: relative;
+				padding: 20px;
+				border:5px solid blue;
+			}
+			#div3 {
+				width: 150px;
+				height: 250px;
+				background-color: red;
+				padding: 20px;
+				border: 2px solid black;
+				margin: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<div id="div2">
+				<div id="div3"></div>
+			</div>
+		</div>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			/* 
+				JQ获取元素尺寸
+				1. width(), height() 元素的content大小
+				2. innerWidth(), innerHeight() 元素的内容大小加上padding大小
+				3. outerWidth(), outerHeight() 元素的内容大小加上padding大小加上border大小
+				4. outerWidth(true), outerHeight(true) 元素的内容大小加上padding大小加上border大小加上margin大小
+			 */
+			// console.log($("#div3").width(), $("#div3").height());
+			// console.log($("#div3").innerWidth(), $("#div3").innerHeight());
+			// console.log($("#div3").outerWidth(), $("#div3").outerHeight());
+			// console.log($("#div3").outerWidth(true), $("#div3").outerHeight(true));
+			
+			
+			/* 
+				JQ获取元素位置
+				1. offset() 返回的是目标元素的边框的外边缘距离浏览器窗口左边和上边的距离对象
+				2. position() 返回的是目标元素的margin的外边缘距离离它最近的, 设置了非static定位的祖先元素的左边框和上边框的内边缘
+				以上两个方法均会放回一个位置对象, 该对象里存储两个值, left和top, 用于表示元素的位置
+			 */
+			console.log($("#div3").offset().left, $("#div3").offset().top);
+			console.log($("#div3").position().left, $("#div3").position().top);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+  .ball {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      left: 200px;
+      top: 500px;
+      animation: move 3s linear infinite;
+      border-radius: 50%;
+    }
+    @keyframes move {
+      0% {
+        left: 200px;
+      }
+      50% {
+        left: 800px;
+      }
+      100% {
+        left: 200px;
+      }
+    }
+</style>
+
+<body>
+  <button id="btn">开始</button>
+  <div class="ball"></div>
+  <div id="text">text</div>
+
+  <script>
+    // 总结
+    // 1 直接调用task会卡死 原因是同步任务直接阻塞页面的渲染 导致卡死
+    // 2 使用微任务调用 浏览器是每16ms进行一次渲染 如果使用微任务的话 可能在开始不会阻塞页面渲染 但是浏览器执行完同步任务后会清空微任务，然后在执行1000次的同步任务还是会导致卡死
+    // 3 使用宏任务 使用宏任务会把任务分散到不同的渲染帧中，不同浏览器有不同处理方式 拿谷歌为例子，如果在某一帧分散过来的宏任务很多就会导致当前的帧渲染好了 但是超过了16ms会影响下一针的渲染 下一针就会渲染的慢就会造成那种卡顿现象
+    function task() {
+      let time = Date.now();
+      while (true) {
+        console.log(1);
+        if (Date.now() - time > 1) {
+          time = Date.now();
+          break;
+        }
+      }
+    }
+    function run() {
+      for (let i = 0; i < 1000; i++) {
+        handleTasek(task)
+      }
+    }
+    function runTask(task) {
+      handleTasek(task);
+    }
+
+    // // 处理方式1
+    // function handleTasek(task, resolve) {
+    //   // requestIdleCallback表示浏览器在16ms之内渲染完后调用的回调函数
+    //   requestIdleCallback((e) => {
+    //     // e.timeRemaining()表示剩余渲染时间
+    //     if (e.timeRemaining() > 0) {
+    //       task();
+    //     } else {
+    //       handleTase(task, resolve);
+    //     }
+    //   });
+    // }
+
+    // // 处理方式2 兼容性写法
+    function handleTasek(task) {
+      let time = Date.now();
+      // requestAnimationFrame表示浏览器每16ms执行一次
+      requestAnimationFrame((e) => {
+        let time2 = Date.now();
+        if (time2 - time <16) {
+          task();
+        } else {
+          handleTasek(task);
+        }
+      });
+    }
+
+ 
+    btn.onclick = run;
+    
+  </script>
+</body>
+
+</html>

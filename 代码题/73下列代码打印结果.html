@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function changeObjProperty(o) {
+        // o 相当于 let o = webSite
+        // o.siteUrl = "http://www.baidu.com" 会影响webSite
+        o.siteUrl = "http://www.baidu.com";
+        // 这段相当于重新赋值一个对象 取消了对webSite的引用
+        o = new Object();
+        o.siteUrl = "http://www.google.com";
+      }
+      let webSite = new Object();
+      changeObjProperty(webSite);
+      console.log(webSite.siteUrl, o);
+    </script>
+  </body>
+</html>

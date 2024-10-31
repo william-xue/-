@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 表达式的副作用  b=a++这个赋值表达式产生了一个副作用 让a的值加了个1
+      var a = 42;
+      var b = a++;
+      // a=42的副作用是 a=42的返回值是42 并且把结果赋值给c c就是42了
+      let c = eval("a = 42");
+      // 副作用的应用 正常写法
+      function vowels(str) {
+        let matches;
+        if (str) {
+          matches = str.match(/[aeiou]/g);
+          if (matches) {
+            return matches;
+          }
+        }
+      }
+      // 带有副作用的写法 因为matches = str.match(/[aeiou]/g) 的副作用是返回一个数组
+      function vowels2(str) {
+        let matches;
+        if (str && (matches = str.match(/[aeiou]/g))) return matches;
+      }
+      console.log(vowels2("Hello world"));
+    </script>
+  </body>
+</html>

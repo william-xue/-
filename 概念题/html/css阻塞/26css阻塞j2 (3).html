@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <!-- link会阻塞dom的渲染 不会阻塞他的解析 link之前浏览器能把dom解析完成并且渲染 渲染到一半时候遇到link阻碍渲染就会停止，继续解析link的css解析完后再继续渲染后面的h1 -->
+  <style>
+    h1 {
+      color: red;
+    }
+  </style>
+  <body>
+    <h1>hello World</h1>
+    <link
+      href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css"
+      rel="stylesheet"
+    />
+    <h1>hello World</h1>
+  </body>
+</html>

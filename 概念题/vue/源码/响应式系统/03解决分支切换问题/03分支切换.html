@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">点击</button>
+    <button id="btn2">点击</button>
+
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <script>
+      /**
+       * 解决分支切换的核心思想就是
+       每次执行副作用函数之前进行解绑操作 当执行副作用函数的时候重新增加绑定
+       解绑操作：因为每个属性下面对应的是副作用函数 副作用函数下面保存属性对应副作用函数列表
+        当我们执行set 触发trigger执行副作用函数的时候就可以拿到当前执行的副作用函数和当前属性下副作用函数的列表 进而进行解绑
+        
+       *
+       */
+      let data = {
+        test: "test",
+        ok: true,
+      };
+      let i = 0;
+      let activeEffect = null;
+      let bucket = new WeakMap();
+      function track(target, key) {
+        if (!activeEffect) return target[key];
+
+        let depsMap = bucket.get(target);
+        if (!depsMap) {
+          bucket.set(target, (depsMap = new Map()));
+        }
+        let deps = depsMap.get(key);
+        if (!deps) {
+          depsMap.set(key, (deps = new Set()));
+        }
+        // deps存的是每个属性的副作用函数set
+        deps.add(activeEffect);
+        // 副作用函数下的deps存的是当前函数下一个或多个属性的副作用函数set
+        // 如果两个函数操作的属性是一样的 那么他们属性下的副作用函数会有多个 通过引用也会影响到activeEffect.deps下每个属性里副作用函数的个数
+        activeEffect.deps.push(deps);
+      }
+      function trigger(target, key) {
+        let depsMap = bucket.get(target);
+        if (!depsMap) return true;
+        let effects = depsMap.get(key);
+        if (!effects) return true;
+        const efectsToRun = new Set(effects);
+        efectsToRun.forEach((effect) => {
+          effect && effect();
+        });
+      }
+      function effect(fn) {
+        const effectFn = () => {
+          cleanup(effectFn);
+          activeEffect = effectFn;
+          fn();
+        };
+        effectFn.deps = [];
+        effectFn();
+      }
+      function cleanup(effectFn) {
+        console.log(effectFn.deps, "cleanup3");
+        for (let i = 0; i < effectFn.deps.length; i++) {
+          const deps = effectFn.deps[i];
+          console.log(deps, "deps");
+          deps.delete(effectFn);
+        }
+        effectFn.deps.length = 0;
+      }
+      let handle = {
+        get(target, key) {
+          console.log("get5");
+          track(target, key);
+          return target[key];
+        },
+        set(target, key, newValue) {
+          console.log("set");
+          target[key] = newValue;
+          trigger(target, key);
+          return true;
+        },
+      };
+      let obj = new Proxy(data, handle);
+      effect(() => {
+        test2.innerText = obj.ok ? obj.test : "not";
+      });
+
+      btn.onclick = function () {
+        obj.ok = false;
+      };
+
+      console.log(bucket);
+
+      // setTimeout(() => {
+      //   obj.test = "xxx";
+      //   console.log(bucket);
+      // }, 2000);
+    </script>
+  </body>
+</html>

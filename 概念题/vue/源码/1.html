@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">点击</button>
+
+    <div id="test"></div>
+    <div id="test2"></div>
+    <script>
+      let ARRAY_METHOD = [
+        "push",
+        "pop",
+        "shift",
+        "unshift",
+        "reverse",
+        "sort",
+        "splice",
+      ];
+
+      let array_methods = Object.create(Array.prototype);
+
+      ARRAY_METHOD.forEach((method) => {
+        array_methods[method] = function () {
+          // 调用原来的方法
+          console.log("调用的是拦截的 " + method + " 方法", arguments);
+
+          // 将数据进行响应式化
+          for (let i = 0; i < arguments.length; i++) {
+            observe(arguments[i]); // 这里还是有一个问题, 在引入 Watcher 后解决
+          }
+
+          let res = Array.prototype[method].apply(this, arguments);
+          // Array.prototype[ method ].call( this, ...arguments ); // 类比
+          return res;
+        };
+      });
+      Array.prototype.a = array_methods;
+      console.dir(Array);
+      let arr = [1, 2, 3];
+      arr.a.push(5);
+    </script>
+  </body>
+</html>

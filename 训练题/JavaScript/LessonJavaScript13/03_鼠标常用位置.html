@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_鼠标常用位置</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				width: 5000px;
+				height: 5000px;
+				position: relative;
+			}
+			#div1 {
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				position: absolute;
+				left: 2000px;
+				/* right: 0; */
+				top: 2000px;
+				/* bottom: 0; */
+				/* margin: auto; */
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			/* 
+				鼠标位置的常用属性
+				1. clientX/clientY 鼠标距离浏览器左端和上端的距离
+				2. offsetX/offsetY 鼠标距离事件源对象左端和上端的距离
+				3. pageX/pageY 鼠标距离这个实际页面左端和上端的距离
+				4. screenX/screenY 鼠标距离屏幕左端和上端的距离
+			 */
+			// div1.onclick = function(e){
+			// 	var even = e || event;
+			// 	console.log(`clientX:${even.clientX}, clientY:${even.clientY}`);
+			// 	console.log(`offsetX:${even.offsetX}, offsetY:${even.offsetY}`);
+			// 	console.log(`pageX:${even.pageX}, pageY:${even.pageY}`);
+			// 	console.log(`screenX:${even.screenX}, screenY:${even.screenY}`);
+			// }
+			div1.onmousedown = function(e){
+				var even = e || event;
+				// var x = even.clientX - this.offsetLeft;
+				// var y = even.clientY - this.offsetTop;
+				var x = even.offsetX;
+				var y = even.offsetY;
+				document.onmousemove = function(e){
+					var even = e || event;
+					div1.style.left = even.pageX - x + "px";
+					div1.style.top = even.pageY - y + "px"
+				}
+			}
+		</script>
+	</body>
+</html>

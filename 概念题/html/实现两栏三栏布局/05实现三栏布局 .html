@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 浮动布局 -->
+    <style>
+      .float {
+        width: 100%;
+        height: 40px;
+      }
+      .f-left {
+        width: 100px;
+        height: 100%;
+        background-color: blue;
+        float: left;
+      }
+      .f-right {
+        width: 100px;
+        height: 100%;
+        background-color: yellow;
+        float: right;
+      }
+      .f-main {
+        height: 100%;
+        background-color: skyblue;
+        margin-left: 100px;
+        margin-right: 100px;
+      }
+    </style>
+    <!-- 通过浮动漂浮在空中的特性 left和right分别左右浮动漂浮在空中 第三个main元素就会被自动推上来 左右分别覆盖两端 因为main的width是auto 会把margin的值计算到宽度中-->
+    <!-- 所以就可以通过margin来控制main的宽度 -->
+    <div class="float">
+      <div class="f-left"></div>
+      <div class="f-right"></div>
+      <div class="f-main"></div>
+    </div>
+    <!-- 圣杯布局 -->
+    <style>
+      .container {
+        overflow: hidden;
+        padding: 0 200px;
+      }
+      .container > div {
+        position: relative;
+        float: left;
+        height: 100px;
+      }
+      .center {
+        width: 100%;
+        background-color: red;
+      }
+      .left {
+        width: 200px;
+        background-color: green;
+        margin-left: -100%;
+        left: -200px;
+      }
+      .right {
+        width: 200px;
+        background-color: blue;
+        margin-left: -200px;
+        right: -200px;
+      }
+    </style>
+    <div class="container">
+      <!-- 优先渲染 -->
+      <div class="center">center</div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </div>
+    <!-- 绝对定位 -->
+    <style>
+      .container2 {
+        position: relative;
+        height: 50px;
+        background-color: red;
+      }
+      .center2 {
+        background-color: blue;
+        height: 100%;
+        margin: 0 200px;
+      }
+      .left2 {
+        width: 200px;
+        height: 100%;
+        background-color: yellow;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .right2 {
+        width: 200px;
+        height: 100%;
+        background-color: skyblue;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    </style>
+    <div class="container2">
+      <!-- 优先渲染 -->
+      <div class="center2">center</div>
+      <div class="left2">left</div>
+      <div class="right2">right</div>
+    </div>
+    <!-- 比翼双飞布局 -->
+    <style>
+      .container3 {
+        overflow: hidden;
+      }
+      .container3 > div {
+        position: relative;
+        float: left;
+        height: 100px;
+      }
+      .center3 {
+        width: 100%;
+        height: 100%;
+      }
+      .left3 {
+        width: 200px;
+        background-color: green;
+        margin-left: -100%;
+      }
+      .right3 {
+        width: 200px;
+        background-color: blue;
+        margin-left: -200px;
+      }
+      .main3 {
+        height: 100%;
+        background-color: red;
+        margin: 0 200px;
+      }
+    </style>
+    <div class="container3">
+      <!-- 优先渲染 -->
+      <div class="center3">
+        <div class="main3"></div>
+      </div>
+      <div class="left3">left</div>
+      <div class="right3">right</div>
+    </div>
+  </body>
+</html>

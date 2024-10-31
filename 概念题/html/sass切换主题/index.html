@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" theme-data="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <style>
+    
+  </style>
+  <body>
+    <div class="item">123</div>
+    <button id="btn">点击</button>
+  </body>
+  <script>
+    btn.onclick = function () {
+      const html = document.querySelector("html");
+      const theme = html.getAttribute("theme-data");
+      if (theme === "dark") {
+        html.setAttribute("theme-data", "light");
+      } else {
+        html.setAttribute("theme-data", "dark");
+      }
+    };
+  </script>
+</html>

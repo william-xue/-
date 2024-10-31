@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>01_数组</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				数组: 用于存放大量数据的集合
+				JS里的特点:
+					1. 有序, 数组会为每个存储的值标定一个序号, 序号从0开始
+					2. 一个数组里可以存放的值的数据类型可以任意.
+					
+				语法:
+					var 数组名 = [值1, 值2, 值3,....];
+			 */
+			var arr1 = [1, 2, 3, 4, 5];
+			var arr2 = ["北京", "上海", "广州", "深圳"];
+			var arr3 = [10, "abc", true, null, {}, [20, 30], function abc(){}];
+			
+			var a = 10;
+			var arr4 = [a, a++, a+10, a>20];
+			
+			var arr5 = [100, , , 400, 500];
+			
+			var arr6 = [100, , , 400, ];
+			
+			var arr7 = [,,,,,];
+			// console.log(arr7[2]);
+			// 如果最后一个逗号后没有值, 系统会忽略掉, 不会将其计入元素个数, 但是中间的逗号后如果没有值, 系统会计入元素个数
+			// console.log(arr1);
+			// console.log(arr2);
+			// console.log(arr3);
+			// console.log(arr4);
+			// console.log(arr5);
+			// console.log(arr6);
+			// console.log(arr7);
+			
+			/* 
+				如何操作数组??
+				1. 如何从数组中取出某个序号对应的值
+					办法: 通过值对应的序号获取, 序号我们称之为"下标"  语法: 数组名[下标]
+				2. 如何修改数组中的某个值
+					办法: 先通过下标找到对应的值, 然后直接对其赋值即可
+				3. 如何修改整个数组
+					办法: 直接给数组重新赋值一个新数组
+			 
+			 */
+			// var a1 = [100, 200, 300, 400, 500, 600];
+			// console.log(a1[2]);
+			/* 
+				遍历数组, 我们可以通过循环, 一般是for
+				循环变量一般从0开始, 循环条件一般小于数组的元素个数, 可以直接写数字, 也可以写数组的length属性;
+			*/
+			// for (var i = 0; i < a1.length; i++) {
+			// 	console.log(a1[i]);
+			// }
+			// 时刻注意, 下标不要"越界", 如果下标真的"越界", 取出的值为undefined
+			// console.log(a1[100]);
+			
+			
+			// a1[4] = "abc";
+			// console.log(a1);
+			// a1[100] = "傻子!";
+			// console.log(a1);
+			
+			/* 
+				练习1: 声明一个空数组, 并向其存储10个随机, 随机数范围自定义
+			 */
+			var ranArr = [];
+			for(var i = 0; i < 10; i++) {
+				ranArr[i] = Math.floor(Math.random()*101);
+			}
+			console.log(ranArr);
+			
+			// var a2 = [1,2,3,4,5];
+			// console.log(a2);
+			// a2 = ["a", "b", "c"];
+			// console.log(a2);
+		</script>
+	</body>
+</html>

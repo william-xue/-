@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_修改this的指向</title>
+	</head>
+	<body>
+		<button id="btn1">按钮1</button>
+		<script type="text/javascript">
+			/* 
+				this的指向的是可以被修改的, JS里修改this的指向的办法一共有三种
+				1. 触发函数.call(修改的this代指对象, 参数1, 参数2, ....) 
+				2. 触发函数.apply(修改的this代指对象, 参数数组)
+				3. 非立刻触发函数.bind(修改的this代指对象, , 参数1, 参数2, ....) 该方法有返回值, 返回值为一个新的函数, 这个新函数里的this就是已经被修改过的this
+			 */
+			
+			function fn1(a1, a2){
+				console.log(this, a1, a2);
+			}
+			fn1.call(666, 1, 2);
+			fn1.call(document.body, "abc", "def");
+			fn1.call([1,2,3], true, false);
+			
+			fn1.apply(666, [1, 2]);
+			fn1.apply(document.body, ["abc", "def"]);
+			fn1.apply([1,2,3], [true, false]);
+			
+			function btnClick(a1, a2){
+				console.log(this, a1, a2);
+			}
+			var newFunc = btnClick.bind(666, 100, 200);
+			btn1.onclick = newFunc;
+			
+			/* 
+				面试题: call, apply和bind三者的比较
+				
+				相同点: 都可以修改this的指向
+				不同点: 
+					1. call和apply适用于立刻触发的函数, bind适用于非立刻触发的函数
+					2. call方法以实参列表的形式传入实参, apply以数组的形式传入实参
+			 */
+		</script>
+	</body>
+</html>

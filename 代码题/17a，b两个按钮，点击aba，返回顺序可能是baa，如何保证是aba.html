@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="a">a</button>
+    <button id="b">b</button>
+    <script>
+      let ab = document.getElementById("a");
+      let bb = document.getElementById("b");
+      let arr = [];
+      async function run() {
+        console.log(arr);
+        for (let i = 0; i < arr.length; i++) {
+          let res = await arr[i]();
+          console.log(res);
+        }
+      }
+      function a() {
+        return new Promise(function (resolve) {
+          setTimeout(() => {
+            resolve("a");
+          }, 2000);
+        });
+      }
+      function b() {
+        return new Promise(function (resolve) {
+          setTimeout(() => {
+            resolve("b");
+          }, 300);
+        });
+      }
+      ab.onclick = function () {
+        arr.push(a);
+        console.log(arr);
+        if (arr.length === 3) {
+          run();
+        }
+      };
+      bb.onclick = function () {
+        arr.push(b);
+        console.log(arr);
+        if (arr.length === 3) {
+          run();
+        }
+      };
+    </script>
+  </body>
+</html>

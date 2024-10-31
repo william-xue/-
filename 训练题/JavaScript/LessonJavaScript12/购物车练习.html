@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车练习</title>
+		<style type="text/css">
+			table,
+			tr,
+			td {
+				border: 1px solid;
+				margin: 60px auto;
+				border-collapse: collapse;
+			}
+
+			p {
+				font-size: 25px;
+				text-align: center;
+			}
+
+			td {
+				padding: 10px;
+			}
+
+			tr:hover {
+				background-color: #C5C5C5;
+			}
+
+			thead {
+				background-color: #C5C5C5;
+			}
+		</style>
+	</head>
+	<body>
+		<p>商品</p>
+		<table id="product">
+			<thead>
+				<tr>
+					<th>商品</th>
+					<th>单价</th>
+					<th>颜色</th>
+					<th>库存</th>
+					<th>好评率</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>鼠标</td>
+					<td>80</td>
+					<td>黑色</td>
+					<td>893</td>
+					<td>988</td>
+					<td><button>添加购物车</button></td>
+				</tr>
+				<tr>
+					<td>键盘</td>
+					<td>150</td>
+					<td>黑色</td>
+					<td>9022</td>
+					<td>966</td>
+					<td><button>添加购物车</button></td>
+				</tr>
+				<tr>
+					<td>手机壳</td>
+					<td>60</td>
+					<td>透明</td>
+					<td>765</td>
+					<td>998</td>
+					<td><button>添加购物车</button></td>
+				</tr>
+				<tr>
+					<td>U盘</td>
+					<td>70</td>
+					<td>红色</td>
+					<td>482</td>
+					<td>1009</td>
+					<td><button>添加购物车</button></td>
+				</tr>
+				<tr>
+					<td>蓝牙耳机</td>
+					<td>100</td>
+					<td>蓝色</td>
+					<td>8937</td>
+					<td>876</td>
+					<td><button>添加购物车</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>购物车</p>
+		<table id="cart">
+			<thead>
+				<td>商品</td>
+				<td>单价(元)</td>
+				<td>数量</td>
+				<td>全额</td>
+				<td>删除</td>
+			</thead>
+			<tbody id="cartArea"></tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3">总计:</td>
+					<td id="total"></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+		<script type="text/javascript">
+			// 给所有按钮添加点击事件
+			var addBtns = document.querySelectorAll("#product tbody button");
+			for (var i = 0; i < addBtns.length; i++) {
+				addBtns[i].onclick = addCart;
+			}
+			
+			// 添加商品函数
+			function addCart() {
+				//点击按钮, 获取需要的商品信息
+				var currentTr = this.parentNode.parentNode;
+				var childrenTds = currentTr.children;
+				
+				var pName = childrenTds[0].innerHTML;
+				var pPrice = childrenTds[1].innerHTML;
+				
+				/* 
+					判断是否添加过此商品
+					1. 未添加: 加一行
+					2. 加过: 数量+1
+				 */
+				// 判断之前是否添加过该商品, 通过商品名称判断
+				var cartTrs = document.querySelectorAll("#cartArea tr");
+				for (var i = 0; i < cartTrs.length; i++) {
+					var cartTrsTd = cartTrs[i].children;
+					if(cartTrsTd[0].innerHTML.trim() == pName.trim()){
+						// 之前添加过该商品, 数量+1
+						var countInput = cartTrsTd[2].children[1];
+						countInput.value = countInput.value - 0 + 1;
+						// 处理全额
+						cartTrsTd[3].innerHTML = proAllPrice(pPrice, countInput.value);
+						// 处理总价
+						allProAllPrice();
+						return;
+					}
+				}
+				// 未添加过商品
+				var addTr = document.createElement("tr");
+				cartArea.appendChild(addTr);
+				
+				// addTr.innerHTML = "<td>" + pName + "</td><td>" + pPrice + "</td><td><button>-</button><input type='number' value='1' readonly/><button>+</button></td><td>" + pPrice + "</td><td><button>删除</button></td>";
+				addTr.innerHTML = `
+					<td>
+						${pName}
+					</td>
+					<td>
+						${pPrice}
+					</td>
+					<td>
+						<button onclick='minus(this)'>-</button>
+						<input type='number' value='1' readonly/>
+						<button onclick='plus(this)'>+</button>
+					</td>
+					<td class='qe'>
+						${pPrice}
+					</td>
+					<td>
+						<button onclick='deleteP(this)'>删除</button>
+					</td>
+				`;
+				// 处理总价
+				allProAllPrice();
+			}
+			// 删除商品的函数
+			function deleteP(_this) {
+				cartArea.removeChild(_this.parentNode.parentNode);
+				allProAllPrice();
+			}
+			
+			// 数量减1函数
+			function minus(_this) {
+				var inputEle = _this.nextElementSibling;
+				if(inputEle.value > 1) {
+					inputEle.value = inputEle.value - 1;
+				}
+				var proPrice = _this.parentNode.previousElementSibling.innerHTML;
+				_this.parentNode.nextElementSibling.innerHTML = proAllPrice(proPrice, inputEle.value); 
+				allProAllPrice();
+			}
+			// 数量加1函数
+			function plus(_this){
+				var inputEle = _this.previousElementSibling;
+				inputEle.value = inputEle.value - 0 + 1;
+				var proPrice = _this.parentNode.previousElementSibling.innerHTML;
+				_this.parentNode.nextElementSibling.innerHTML = proAllPrice(proPrice, inputEle.value); 
+				allProAllPrice();
+			}
+			
+			// 处理全额的函数
+			function proAllPrice(p, c){
+				return (p-0) * (c-0);
+			}
+			// 处理总价的函数
+			function allProAllPrice(){
+				var allMoney = document.querySelectorAll(".qe");
+				var m = 0;
+				for(var i = 0; i < allMoney.length; i++) {
+					m += allMoney[i].innerHTML - 0;
+				}
+				total.innerHTML = m;
+			}
+		</script>
+	</body>
+</html>

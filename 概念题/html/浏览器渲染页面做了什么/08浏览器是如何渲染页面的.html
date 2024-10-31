@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script defer src="./1.js">
+        /**
+       * 1 分为三个进程 主进程 渲染进程 网络进程
+       * 2 dns解析
+       * 整个渲染流程分为多个阶段，分别是： HTML 解析、样式计算、布局、分层、绘制、分块、光栅化、画
+       * 
+          * 1 对用户输入内容进行处理
+          * 2 网络进程发http请求
+          * 3 接收http报文后浏览器进行渲染
+          * 4 网络进程和渲染进程开启通道进行数据传输 渲染进程接收到文档后进行提交然后渲染
+          *     1 dom树生成  通过栈来维护标签结构 开标签压栈 闭标签解析出栈  进行dom解析  不同标签会进行不同处理 script标签会识别处理 带async和defer会异步下载  内嵌的直接生成
+          *     2 stylesheet生成  css的渲染树生成  将不同来源的css文件整合成css渲染树
+          *     3 对dom节点进行样式赋值  整合成布局树然后计算  计算过程会过滤掉一些不需要用到的节点 比如display为none的节点或者link
+          *     4 进行分层渲染  相当于多图层渲染paint
+          *     5 重绘和重排
+          *         3.1重绘（repaint）： 渲染树节点发生改变，但不影响该节点在页面当中的空间位置及大小。譬如某个div标签节点的背景颜色、字体颜色等等发生改变，但是该div标签节点的宽、高、内外边距并不发生变化，此时触发浏览器重绘（repaint）。
+                    3.2重排（reflow）： 也有称回流，当渲染树节点发生改变，影响了节点的几何属性（如宽、高、内边距、外边距、或是float、position、display：none;等等），导致节点位置发生变化，此时触发浏览器重排（reflow），需要重新生成渲染树。譬如JS为某个p标签节点添加新的样式：“display:none;”。导致该p标签被隐藏起来，该p标签之后的所有节点位置都会发生改变。此时浏览器需要重新生成渲染树，重新布局，即重排（reflow）
+
+          五.何时会引起重排？
+              （1）页面首次渲染。
+              （2）元素尺寸改变——边距、填充、边框、宽度和高度
+              （3）元素位置改变——display、float、position、overflow等等；
+              （4）内容改变——比如文本改变或者图片大小改变而引起的计算值宽度和高度改变；
+              （5）操作DOM时；
+
+          六.减少重排，优化性能
+              （1）不要一个个的修改 DOM 的样式，应通过 class 来修改。
+              （2）实现元素的动画，它的position属性，最好是设为absoulte或fixed，这样不会影响其他元素的布局
+              （3）使用DocumentFragment将需要多次修改的DOM元素缓存，最后一次性append到真实DOM中渲染
+              （4）可以将需要多次修改的DOM元素设置display:none，操作完再显示。（因为隐藏元素不在render树内，因此修改隐藏元素不会触发回流重绘）
+
+
+            浏览器工作流程：构建DOM -> 构建CSSOM -> 构建渲染树 -> 布局 -> 绘制。
+            CSSOM会阻塞渲染，只有当CSSOM构建完毕后才会进入下一个阶段构建渲染树。
+            通常情况下DOM和CSSOM是并行构建的，但是当浏览器遇到一个script标签时，DOM构建将暂停，直至脚本完成执行。但由于JavaScript可以修改CSSOM，所以需要等CSSOM构建完毕后再执行JS。
+            如果你想首屏渲染的越快，就越不应该在首屏就加载 JS 文件，建议将 script 标签放在 body 标签底部
+          *
+       *
+      */
+    </script>
+    <script>
+      let promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(1);
+        }, 1000);
+      });
+      let p1 = () => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(1);
+          }, 1000);
+        });
+      };
+      let p2 = () => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject(1);
+          }, 1000);
+        });
+      };
+      let p3 = () => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(1);
+          }, 1000);
+        });
+      };
+      async function run() {
+        let res1 = await p1();
+        let res2 = await p2();
+        let res3 = await p3();
+        console.log(res1, res2, res3);
+      }
+      run();
+    </script>
+    <div id="box">111</div>
+  </body>
+</html>

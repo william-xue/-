@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_元素拖拽效果</title>
+		<style type="text/css">
+			* {
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			.div1 {
+				width: 200px;
+				height: 200px;
+				background-color: blue;
+				text-align: center;
+				line-height: 200px;
+				font-size: 50px;
+				color: white;
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 10;
+				border-radius: 50%;
+			}
+			.div2 {
+				width: 200px;
+				height: 200px;
+				background-color: blue;
+				text-align: center;
+				line-height: 200px;
+				font-size: 50px;
+				color: white;
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">1</div>
+		<div class="div2">2</div>
+		<script type="text/javascript">
+			var div1Ele = document.querySelector(".div1");
+			var div2Ele = document.querySelector(".div2");
+			div1Ele.onmousedown = function(e){
+				var even = e || event;
+				var x = even.clientX - this.offsetLeft;
+				var y = even.clientY - this.offsetTop;
+				document.onmousemove = function(e){
+					var even = e || event;
+					div1Ele.style.left = even.clientX - x + "px";
+					div1Ele.style.top = even.clientY - y + "px";
+					// 判断是否有重合部分
+					// if(crash(div1Ele, div2Ele)){
+					// 	div2Ele.style.background = "red";
+					// }else {
+					// 	div2Ele.style.background = "blue";
+					// }
+					if(crash1(div1Ele, div2Ele)){
+						div2Ele.style.background = "red";
+					}else {
+						div2Ele.style.background = "blue";
+					}
+				}
+			}
+			div1Ele.onmouseup = function(){
+				document.onmousemove = null;
+			}
+			
+			// 碰撞检测的函数
+			function crash(e1, e2){
+				/* 获取元素的四个边的位置关系 */
+				var e1Left = e1.offsetLeft;
+				var e1Right = e1Left + e1.offsetWidth;
+				var e1Top = e1.offsetTop;
+				var e1Bottom = e1Top + e1.offsetHeight;
+				
+				var e2Left = e2.offsetLeft;
+				var e2Right = e2Left + e2.offsetWidth;
+				var e2Top = e2.offsetTop;
+				var e2Bottom = e2Top + e2.offsetHeight;
+				
+				if(e1Left <= e2Right && e1Right >= e2Left && e1Top <= e2Bottom && e1Bottom >= e2Top) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+			
+			function crash1(e1, e2){
+				// 获取两个圆的圆心位置
+				var e1PointX = e1.offsetLeft + e1.offsetWidth/2;
+				var e1PointY = e1.offsetTop + e1.offsetHeight/2;
+				
+				var e2PointX = e2.offsetLeft + e2.offsetWidth/2;
+				var e2PointY = e2.offsetTop + e2.offsetHeight/2;
+				
+				// 计算圆心之间的距离
+				var distance = Math.sqrt(Math.pow(e1PointX-e2PointX,2)+Math.pow(e1PointY-e2PointY, 2));
+				if(distance <= e1.offsetWidth/2+e2.offsetWidth/2) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		</script>
+	</body>
+</html>

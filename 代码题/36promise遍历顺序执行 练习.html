@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let p1 = function (val) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            console.log("p1");
+            resolve("ajax请求返回1");
+          }, 3000);
+        });
+      };
+      let p2 = function (val) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            console.log("p2");
+            resolve("ajax请求返回2");
+          }, 2000);
+        });
+      };
+      let p3 = function (val) {
+        return new Promise(function (resolve, reject) {
+          console.log("p3");
+          resolve("老三同步");
+        });
+      };
+      let p = Promise.resolve("开始");
+      let arr = [p1, p2, p3];
+      while (arr.length) {
+        let fn = arr.shift();
+        p = p.then(fn);
+      }
+      p.then((val) => {
+        console.log(val);
+      });
+
+      // p1("开始")
+      //   .then((val) => {
+      //     console.log("p1", val);
+      //     return p2(val);
+      //   })
+      //   .then((val) => {
+      //     console.log("p2", val);
+      //     return p3(val);
+      //   })
+      //   .then((val) => {
+      //     console.log("p3", val);
+      //   });
+    </script>
+  </body>
+</html>

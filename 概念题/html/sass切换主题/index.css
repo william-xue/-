@@ -1,0 +1,14 @@
+.item {
+  width: 100px;
+  height: 100px;
+}
+html[theme-data=light] .item {
+  color: #000;
+  background-color: #fff;
+}
+html[theme-data=dark] .item {
+  color: #fff;
+  background-color: #000;
+}
+
+/*# sourceMappingURL=index.css.map */

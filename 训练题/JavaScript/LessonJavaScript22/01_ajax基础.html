@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_ajax基础</title>
+	</head>
+	<body>
+		<input type="text" placeholder="用户名" id="i1">
+		<input type="text" placeholder="密码" id="i2">
+		<button id="btn1">get请求</button>
+		<button id="btn2">post请求</button>
+		
+		<script type="text/javascript">
+			/* 
+				AJAX 前端的网络请求
+				
+				是客户端向服务端发起的请求(request)
+				
+				服务端接收到本次请求后, 对请求做分析, 了解本次请求的意图(图片, 数据, 文件等...), 之后对本次请求做响应(response)
+				
+				客户端最终会拿到服务端响应的数据, 进而对数据做进一步的处理
+				
+				我们目前的哪些操作会发起网络请求
+				1. 有些标签会发起网络请求, 如具有src或者href或者action属性或者url样式的标签
+				2. form表单
+				3. 浏览器本身(在浏览器的地址栏)
+				4. JS发起网络请求(ajax, axios, fetch...)
+			 */
+			/* 
+				AJAX: Asynchronous Javascript And XML
+				异步的Javascript和XML
+				
+				这不是一门新的编程语言, 还是JS
+				
+				异步: 异步代码的执行不会阻塞其后面的代码; 在发起网络请求时, 客户端在拿到服务端返回的数据之前, 不需要等待, 可以继续执行后面的代码, 当服务端的数据返回值, 通过其绑定的回调函数的触发来拿到返回的数据  
+				同步: 同步的代码执行会等待其结果的返回, 相当于对代码进行了阻塞; 在发起网络请求时, 客户端在拿到服务端返回的数据之前, 后面的代码不执行, 直到拿到服务端返回的结果, 才会继续向下执行代码.
+			 */
+			/* 
+				ajax之所以能发起网络请求, 依赖于一个核心对象: XMLHttpRequest对象
+			 */
+			btn1.onclick = function() {
+				/*
+					1. 创建网络请求对象
+					IE不支持XMLHttpRequest对象, 所以我们需要对IE进行兼容
+				*/
+				if (window.XMLHttpRequest) {
+					var request = new XMLHttpRequest();
+				} else {
+					var request = ActiveXObject("Microsoft.XMLHTTP");
+				}
+
+				/*
+					2. 监听网络请求的状态, 捕捉网络请求成功时的状态, 进而获取请求成功的数据
+					在一次网络请求的发起中, 网络请求的状态是不断发生变化的, 可以分为如下几个阶段
+						1: 请求已建立
+						2: 请求已被发送
+						3: 请求已处理, 并已经获取到了部分数据
+						4: 请求已完成, 并已获取到了所有数据
+				我们需要通过请求对象的readyState属性来进行判断
+				
+				readyState==4仅仅能判断出我们拿到了服务器的数据, 但是本次请求是否成功,我们无法知道, 需要进一步判断
+				通过http的状态码来判断本次请求是否成功!!!
+				http的状态码: 表示本次请求的具体状态
+				1xx: 服务端接收到请求, 需要请求者继续操作
+				2xx: 成功, 操作被成功接收且正确处理  200
+				3xx: 重定向, 需要请求者进一步操作, 304
+				4xx: 客户端错误 404
+				5xx: 服务端错误 500
+				6xx: 服务端错误
+				*/
+				request.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status >= 200 && this.status < 300) {
+							// 真的请求成功了, 我们可以获取数据了, 原生的AJAX, 服务端返回的数据, 存储在请求对象里, 我们可以通过请求对象的responseText属性中存储
+							console.log(this.responseText);
+						}
+					}
+				}
+
+				/*
+					3. 设置请求的地址和请求类型
+					open("请求类型", "请求地址", 是否异步请求)
+				*/
+				// request.open("GET", "http://10.10.11.224:6789/netGet", true);
+				/*
+					如果发起get请求, 且想传递数据, 数据的格式为键值对格式, 即key=value, 将键值对直接拼接到url地址的后面, 以?开头, 多个键值对之间用&分隔
+				*/
+				request.open("GET", `http://10.10.11.224:6789/netGet?username=${i1.value}&password=${i2.value}`, true);
+				//4. 发起网络请求
+				request.send();
+
+			}
+
+
+			btn2.onclick = function() {
+				/*
+					1. 创建网络请求对象
+					IE不支持XMLHttpRequest对象, 所以我们需要对IE进行兼容
+				*/
+				if (window.XMLHttpRequest) {
+					var request = new XMLHttpRequest();
+				} else {
+					var request = ActiveXObject("Microsoft.XMLHTTP");
+				}
+
+				/*
+					2. 监听网络请求的状态, 捕捉网络请求成功时的状态, 进而获取请求成功的数据
+				*/
+				request.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status >= 200 && this.status < 300) {
+							// 真的请求成功了, 我们可以获取数据了, 原生的AJAX, 服务端返回的数据, 存储在请求对象里, 我们可以通过请求对象的responseText属性中存储
+							console.log(this.responseText);
+						}
+					}
+				}
+
+				/*
+					3. 设置请求的地址和请求类型
+					open("请求类型", "请求地址", 是否异步请求)
+				*/
+				request.open("POST", `http://10.10.11.224:6789/netPost`, true);
+				/*
+					4. 设置请求的数据的格式
+					因为post请求在将来传递数据时, 可能传递的数据格式各种各样, 所以, 我们需要在发起post请求时指定本次请求的数据格式
+					post请求的常用数据格式:
+						1. 键值对格式 key=value
+						2. json数据格式
+						3. 表单数据格式form-data格式
+				*/
+			   request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				//5. 发起网络请求
+				request.send(`username=${i1.value}&password=${i2.value}`);
+			}
+
+
+			/* 
+				GET请求和POST请求的区别
+				以上两种是最常用的网络请求的类型, 但是网络请求的类型不止GET和POST
+				注意:不要通过字面意思去立即get和post的功能, get和post两种请求数据的方式既可以向服务器发送数据, 也可以从服务器获取数据
+				get和post的区别:
+				1. get请求如果需要传递数据, 数据是以键值对的形式直接拼接到url网址的后面, 而post请求如果需要传递数据, 数据不会拼接在url网址的后面, 而且将数据存到请求体里
+				2. get请求传递的数据大小由限制, 最多1024字节, 而post请求传递的数据大小没有限制
+				3. get方法提交的数据, 因为直接拼接到url网址的后面, 直接可见, 所以存在安全问题. 而post请求传递的数据存在请求体里, 不可见, 相对安全
+			 */
+		</script>
+	</body>
+</html>

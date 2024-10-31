@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #box {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: red;
+      width: 40px;
+      height: 40px;
+    }
+    .new {
+      position: absolute;
+      left: 500px;
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+    }
+  </style>
+  <body>
+    <div id="box"></div>
+    <button id="btn">点击</button>
+    <!-- ui渲染的线程和js执行的主线程不在一个线程内   例子如下settimeout中如果是改变dom的样式会直接不行不会受到for循环的影响  而进行加的操作的时候会受到for循环的阻碍-->
+    <script>
+      let num = 100;
+      for (let i = 0; i < 10000; i++) {
+        for (let j = 0; j < 1000; j++) {
+          num += i + j;
+        }
+      }
+      console.log(num, "1");
+      box.style.left = 100 + "px";
+
+      setTimeout(() => {
+        console.log(num, "3");
+        num *= 100;
+        console.log(num, "4");
+      }, 0);
+      setTimeout(() => {
+        console.log(box.offsetLeft);
+      }, 1000);
+      num *= 100;
+      console.log(num, "2");
+    </script>
+  </body>
+</html>

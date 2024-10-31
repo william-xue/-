@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // json.stringfy序列化数组
+      let arr = [1, 2, 3];
+      console.log(JSON.stringify(arr)); // "[1,2,3]"含有双引号的数组字符串
+      // 不安全的json值  undefined null function symbol 转化都为undefined
+      console.log(JSON.stringify(undefined));
+      console.log(JSON.stringify(function () {}));
+      console.log(JSON.stringify(Symbol("11")));
+      // 如果不安全的属性在数组中会转化为null
+      let arr2 = [1, 2, function () {}];
+      console.log(JSON.stringify(arr2));
+      // 如果不安全的值在对象中那么会丢失属性
+      let a = {
+        a: "11",
+        b: function () {},
+        c: Symbol("1"),
+        d: undefined,
+        n: null,
+        age: "ss",
+        sex: "nan",
+        arr: [1, 2, 3],
+      };
+      console.log(JSON.stringify(a));
+      // json.string的第二个和第三个参数
+      // 第二个参数如果是数组 表示要序列化那些属性
+      console.log(JSON.stringify(a, ["a", "age"]));
+      // 第二个参数如果是函数的话 可以自定义序列化格式
+      console.log(
+        JSON.stringify(a, function (key, value) {
+          if (typeof value === "function") return "true";
+          return value;
+        })
+      );
+    </script>
+  </body>
+</html>

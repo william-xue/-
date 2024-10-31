@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+     * 一. 语法分析
+     *      分析该js脚本代码块的语法是否正确，如果出现不正确，则向外抛出一个语法错误（SyntaxError），停止该js代码块的执行，然后继续查找并加载下一个代码块；如果语法正确，则进入预编译阶段。
+            下面阶段的代码执行不会再进行语法校验，语法分析在代码块加载完毕时统一检验语法
+       二. 预编译阶段
+            1. js的运行环境
+              全局环境（JS代码加载完毕后，进入代码预编译即进入全局环境）
+              函数环境（函数调用执行时，进入该函数环境，不同的函数则函数环境不同）
+              eval（不建议使用，会有安全，性能等问题）
+            2. 函数调用栈/执行栈
+            3. 执行上下文的创建
+               创建变量对象（Variable Object）
+               建立作用域链（Scope Chain）
+               确定this的指向
+     *   
+    */
+  </script>
+</body>
+</html>

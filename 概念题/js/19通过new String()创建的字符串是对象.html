@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 使用对象进行封装基本类型
+      let a = new String("asc");
+      let b = new Number(2);
+      console.log(a);
+      console.log(typeof a);
+      console.log(typeof b);
+      // 使用valueof来拆封对象
+      console.log(a.valueOf());
+      console.log(typeof a.valueOf());
+      console.log(b.valueOf());
+      console.log(typeof b.valueOf());
+
+      let arr = new Array(5).fill(0);
+      console.log(arr.valueOf());
+      console.log(arr.toString());
+
+      let obj = new Object({
+        a: "z",
+        b: 5,
+      });
+      console.log(obj.valueOf());
+      console.log(obj.toString());
+    </script>
+  </body>
+</html>

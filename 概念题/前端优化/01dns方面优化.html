@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="prefetch"
+      href="https://i0.hdslb.com/bfs/archive/083ff9bf7cb75f98b9756745344df476a1d04a71.jpg@672w_378h_1c.webp"
+      crossorigin
+      as="image"
+    />
+  </head>
+  <!-- <img src="https://i0.hdslb.com/bfs/archive/083ff9bf7cb75f98b9756745344df476a1d04a71.jpg@672w_378h_1c.webp">11</img> -->
+
+  <body>
+    <!-- 
+    DNS预解析
+    基本我们访问远程服务的时候，不会直接使用服务的出口 IP，而是使用域名。所以请求的一个重要环节就是域名解析。这是一个比较耗时的过程，我们可以通过以下手段进行加速
+    1 DNS Prefetch 提前解析将要使用的DNS
+    <link rel="dns-prefetch" href="//m1.lefile.com">
+    2 preconnect 不仅要求浏览器预解析指定域名的DNS，还需要预先链接
+    <link rel="preconnect" href="//m1.lefile.cn/" crossorigin="anonymous" />
+    3 prefetch 要求浏览器获取整个的指定资源但是不允许浏览器对资源做预处理和执行（告诉浏览器页面可能需要的资源，浏览器不一定会加载这些资源）
+    <link rel="prefetch" href="//p1.lefile.cn/fes/cms/2018/11/23/4tz6y9vx1ktskvw86pxr56uw8bu7gx527894.png" crossorigin as="image" />
+    4 preload 与prefetch差不多，但它会告诉浏览器页面必定需要的资源，浏览器一定会加载这些资源
+    <link rel="preload"" href="https://p1.lefile.cn/fes/cms/2018/11/23/4tz6y9vx1ktskvw86pxr56uw8bu7gx527894.png" crossorigin as="image" />
+    5 prerender 允许浏览器对资源做预处理和执行
+    <link rel="prerender" href="https://m2.lefile.cn/global/js/jquery-1.11.1.min.js" />
+    上面的方法需要在head里面添加：
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+   -->
+  </body>
+</html>

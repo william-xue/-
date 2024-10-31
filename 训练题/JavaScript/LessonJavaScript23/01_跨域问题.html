@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_跨域问题</title>
+	</head>
+	<body>
+		
+		<table border="1" cellspacing="0" cellpadding="10">
+			<tr>
+				<th>当前页面的url</th>
+				<th>请求服务器的url</th>
+				<th>是否跨域</th>
+				<th>原因</th>
+			</tr>
+			<tr>
+				<td>http://www.test.com</td>
+				<td>https://www.test.com</td>
+				<td>是</td>
+				<td>协议名不同(http/https)</td>
+			</tr>
+			<tr>
+				<td>http://www.test.com</td>
+				<td>http://www.baidu.com</td>
+				<td>是</td>
+				<td>域名不同(www.test.com/www.baidu.com)</td>
+			</tr>
+			<tr>
+				<td>http://127.0.0.1:8848/index.html</td>
+				<td>http://127.0.0.1:6789</td>
+				<td>是</td>
+				<td>端口号不同(8848/6789)</td>
+			</tr>
+			<tr>
+				<td>http://www.test.com/index.html</td>
+				<td>http://www.test.com/a/b/data.php</td>
+				<td>否</td>
+				<td>同源</td>
+			</tr>
+		</table>
+		<button id="btn1">ajax发请求</button>
+		<button id="btn2">jsonp发请求</button>
+		<script type="text/javascript">
+			/* 
+				跨域:
+				1. 什么是跨域?
+				当客户端的位置的url里的协议名, 域名, 端口三者与所请求的服务端的url里的协议名, 域名, 端口有一个不一致, 就认为跨域
+				
+				2. 为什么会存在跨域问题?
+				JS有"同源策略", 这是浏览器的基本安全功能, 同源策略会阻止一个域的JS向另一个域的内容进行交互
+				
+				3. 如果跨域, 浏览器会阻止哪些操作?
+					3.1 不允许通过JS发起网络请求
+					3.2 无法读取非同源页面里的cookie, localStorage
+					3.3 无法操作非同源页面里的DOM
+					
+				4. 如何解决跨域问题?
+					4.1 前端主导的解决跨域的办法  jsonp解决跨域
+					4.2 后端主导的解决跨域的办法  CORS解决跨域
+			 */
+			
+			/* 
+				jsonp跨域 (json with padding)
+				
+				jsonp解决跨域的特点: jsonp是解决客户端与服务端跨域常用的办法, 最大的特点: 简单好用, 兼容性好(兼容低版本IE); 缺点: 只能发起get请求, 无法发起post请求
+				
+				jsonp解决跨域的原理: 利用html标签发起网络请求不存在"同源策略"的特点, 通过标签发起请求, 实现了跨域的数据通信
+			 */
+			btn1.onclick = function(){
+				if (window.XMLHttpRequest) {
+					var request = new XMLHttpRequest();
+				} else {
+					var request = ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				request.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status >= 200 && this.status < 300) {
+							console.log(this.responseText);
+						}
+					}
+				}
+				
+				request.open("GET", "http://10.10.11.224:6789/netGet123", true);
+				//4. 发起网络请求
+				request.send();
+			}
+			
+			btn2.onclick = function(){
+				//1. 创建一个script标签
+				var scriptEle = document.createElement("script");
+				//2. 给script标签设置src属性
+				scriptEle.src = "http://10.10.11.224:6789/netGet123";
+				//3. 将script标签添加到当前文档中
+				document.body.appendChild(scriptEle);
+				
+				//4. 网络请求发起之后, 将script标签删掉
+				document.body.removeChild(scriptEle);
+			}
+			function abc(data){
+				console.log("hello, world!", data);
+			}
+		</script>
+		
+	</body>
+</html>

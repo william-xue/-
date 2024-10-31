@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_事件</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#div1 {
+				width: 200px;
+				height: 200px;
+				background-color: red;
+			}
+			#div2 {
+				width: 200px;
+				height: 200px;
+				background-color: yellow;
+			}
+			#div3 {
+				width: 200px;
+				height: 200px;
+				background-color: blue;
+			}
+			#div4 {
+				width: 200px;
+				height: 200px;
+				background-color: green;
+			}
+			#div5 {
+				width: 200px;
+				height: 200px;
+				background-color: cyan;
+			}
+			section {
+				font-size: 50px;
+				text-align: center;
+				width: 300px;
+				height: 300px;
+				border: 2px solid;
+				line-height: 300px;
+				color: white;
+			}
+			#div6 {
+				width: 200px;
+				height: 200px;
+				background-color: purple;
+			}
+			#div7 {
+				width: 200px;
+				height: 200px;
+				background-color: gold;
+			}
+			#div8 {
+				width: 200px;
+				height: 200px;
+				background-color: orange;
+			}
+			#div9 {
+				width: 200px;
+				height: 200px;
+				background-color: lightcoral;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<div id="div2"></div>
+		<div id="div3"></div>
+		<div id="div4"></div>
+		<div id="div5"></div>
+		<section id="cn"></section>
+		<div id="div6"></div>
+		<div id="div7"></div>
+		<div id="div8"></div>
+		<div id="div9"></div>
+		<form action="###">
+			<input type="text" id="i1">
+			<input type="submit"/>
+		</form>
+		<script type="text/javascript">
+			/* 
+				JS 是一门以事件为驱动的语言, 我们需要实现任何逻辑, 都需要借助事件为触发起始点
+				
+				我们目前只会给元素绑定事件, 并不能在事件触发之后,获取到更加详细的事件数据信息, 比如: 鼠标事件触发之后想获取到鼠标的位置, 键盘事件触发之后想获取到对应的按键...
+				
+				如何获取事件触发之后的详细数据???
+				JS将事件触发之后的详细数据, 封装成了一个对象, 我们称之为"事件对象", 任何一个事件里都可以直接获取.
+				获取方式, 事件触发的函数里, 直接通过event获取
+				
+				注意: 低版本的火狐浏览器 是无法直接获取到event对象的, 需要通过兼容性写法获取事件对象, 给事件函数填写形参, 第一个形参就是事件对象
+			 */
+			
+			/* 
+				事件分类:
+				1. 鼠标事件
+				2. 键盘事件
+				3. 表单事件
+				4. 移动端事件
+			 */
+			function randomColor(){
+				var r = Math.floor(Math.random()*256);
+				var g = Math.floor(Math.random()*256);
+				var b = Math.floor(Math.random()*256);
+				return `rgb(${r}, ${g}, ${b})`;
+			}
+			// 1. 鼠标左键单击事件 onclick
+			div1.onclick = function(e){
+				// 兼容低版本火狐的写法
+				var even = e || event;
+				this.style.background = randomColor();
+			}
+			
+			//2. 鼠标左键双击事件 ondblclick
+			div2.ondblclick = function(){
+				this.style.background = randomColor();
+			}
+			
+			/* 
+				3.1 鼠标移入事件 onmouseenter
+				3.2 鼠标移出事件 onmouseleave
+				
+				4.1 鼠标移入事件 onmouseover
+				4.2 鼠标移出事件 onmouseout
+				
+				注意: onmouseenter和onmouseleave的效率要高于onmouseover和onmouseout, 因为其不存在"事件冒泡"
+			 */
+			
+			div3.onmouseenter = function(){
+				this.style.background = randomColor();
+			};
+			div3.onmouseleave = function(){
+				this.style.background = randomColor();
+			};
+			
+			div4.onmouseover = function(){
+				this.style.background = randomColor();
+			};
+			div4.onmouseout = function(){
+				this.style.background = randomColor();
+			};
+			
+			//5. 鼠标移动事件 onmousemove
+			div5.onmousemove = function(){
+				this.style.background = randomColor();
+			}
+			
+			cn.onmousemove = function(){
+				var rn = Math.floor(Math.random()*27);
+				this.style.background = randomColor();
+				this.innerHTML = rn;
+			}
+			
+			// 6. 鼠标按键按下事件 onmousedown
+			div6.onmousedown = function(e){
+				var even = e || event;
+				switch(even.button){
+					case 0:{console.log("左键");break;}
+					case 1:{console.log("滚轮");break;}
+					case 2:{console.log("右键");break;}
+					default:{console.log("其他键");break;}
+				}
+			}
+			
+			// 7. 鼠标抬起事件 onmouseup
+			div7.onmouseup = function(e){
+				var even = e || event;
+				switch(even.button){
+					case 0:{console.log("左键");break;}
+					case 1:{console.log("滚轮");break;}
+					case 2:{console.log("右键");break;}
+					default:{console.log("其他键");break;}
+				}
+			}
+			
+			//8. 鼠标右键单击事件 oncontextmenu
+			div8.oncontextmenu = function(){
+				this.style.background = randomColor();
+			}
+			
+			//9. 鼠标滚轮事件 onmousewheel
+			div9.onmousewheel = function(){
+				this.style.background = randomColor();
+			}
+			
+			
+			/* 
+			  二. 键盘事件
+			  键盘事件我们一般添加给浏览器窗口
+			 */
+			//1. 键盘按下事件 onkeydown
+			window.onkeydown = function(e){
+				var even = e || event
+				switch(even.keyCode) {
+					case 37:{console.log("左");break;}
+					case 38:{console.log("上");break;}
+					case 39:{console.log("右");break;}
+					case 40:{console.log("下");break;}
+				}
+			}
+			
+			//2. 键盘抬起事件  onkeyup
+			window.onkeyup = function(){
+				console.log("抬起了!");
+			}
+			
+			//3. onkeypress
+			
+			
+			/* 
+				三. 表单事件
+			 */
+			/*
+				1. 控件内容变化事件 onchange
+				该事件会在输入框内容输入完毕(失去焦点, 点击提交按钮, 回车)且与上一次比较内容发生了变化时, change事件才会触发!
+			*/
+			i1.onchange = function(){
+				console.log("change事件触发了!");
+			}
+			
+			//2. 获得焦点事件
+			i1.onfocus = function(){
+				console.log("输入框获得焦点");
+				
+			}
+			//3. 失去焦点事件
+			i1.onblur = function(){
+				console.log("输入框失去焦点");
+			}
+			//4. 内容键入事件 oninput
+			i1.oninput = function(){
+				console.log("内容输入了!");
+			}
+			
+		</script>
+	</body>
+</html>

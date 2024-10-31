@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>flappyBird</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				list-style: none;
+			}
+
+			#box {
+				width: 343px;
+				height: 480px;
+				margin: 100px auto 0;
+				background: url(img/bg.jpg) no-repeat;
+				position: relative;
+				overflow: hidden;
+			}
+
+			#head {
+				width: 236px;
+				height: 77px;
+				background: url(img/head.jpg) no-repeat;
+				position: absolute;
+				top: 100px;
+				left: 50%;
+				margin-left: -118px;
+			}
+
+			#head>img {
+				position: absolute;
+				right: 0;
+				top: 50%;
+				margin-top: -13px;
+				animation: fly 1.5s infinite linear;
+			}
+
+			@keyframes fly {
+				from {
+					top: 50%;
+				}
+
+				25% {
+					top: 25%;
+				}
+
+				50% {
+					top: 50%;
+				}
+
+				75% {
+					top: 75%;
+				}
+
+				to {
+					top: 50%;
+				}
+			}
+
+			#startMenu {
+				margin-top: 300px;
+				text-align: center;
+			}
+
+			#startMenu>img {
+				cursor: pointer;
+			}
+
+			#end {
+				width: 269px;
+				height: 135px;
+				background: url(img/message.jpg) no-repeat;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin: -67.5px 0 0 -134.5px;
+				display: none;
+				z-index: 8;
+			}
+
+			#end span {
+				font-size: 25px;
+				position: absolute;
+				left: 215px;
+			}
+
+			#currentS {
+				top: 35px;
+			}
+
+			#bestS {
+				top: 83px;
+			}
+
+			#score {
+				text-align: center;
+				position: absolute;
+				width: 100%;
+				top: 0;
+				display: none;
+				z-index: 9;
+			}
+
+			#bird {
+				position: absolute;
+				top: 50%;
+				left: 62px;
+				z-index: 10;
+				display: none;
+			}
+
+			#pipes {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: none;
+			}
+
+			/* li的预留css样式 */
+			.pipes {
+				width: 62px;
+				height: 425px;
+				position: absolute;
+				top: 0;
+				left: 343px;
+			}
+
+			/* 上管道的样式 */
+			.upPipe {
+				width: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background: url(img/up_pipe.png) no-repeat center bottom, url(img/up_mod.png);
+			}
+
+			/* 下管道的样式 */
+			.downPipe {
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				background: url(img/down_pipe.png) no-repeat, url(img/down_mod.png);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			<!--游戏标题-->
+			<div id="head">
+				<img src="img/bird.png" />
+			</div>
+			<!--开始游戏按钮-->
+			<div id="startMenu">
+				<img src="img/start.jpg" id="start" />
+			</div>
+			<!--游戏结束的分数板-->
+			<div id="end">
+				<span id="currentS">0</span>
+				<span id="bestS">0</span>
+			</div>
+			<!--顶部的分数-->
+			<div id="score">
+				<img src="img/0.jpg" id="firstS" />
+			</div>
+			<!--小鸟-->
+			<img src="img/down_bird.png" id="bird" />
+			<!--管道容器-->
+			<ul id="pipes"></ul>
+			<!--音频-->
+			<audio src="music/bullet.mp3" id="m1"></audio>
+			<audio src="music/game_music.mp3" id="m2"></audio>
+			<audio src="music/game_over.mp3" id="m3"></audio>
+		</div>
+		<script type="text/javascript">
+			// 创建管道的计时器
+			var pipeTimer = null;
+			// 小鸟下落的计时器
+			var birdDownTimer = null;
+			// 小鸟上升的计时器
+			var birdUpTimer = null;
+			// 记录分数
+			var s = 0;
+			// 开始按钮点击事件
+			startMenu.onclick = function(e) {
+				var even = e || event;
+				even.stopPropagation();
+
+				// 隐藏元素
+				head.style.display = "none";
+				startMenu.style.display = "none";
+
+				// 显示元素
+				score.style.display = "block";
+				bird.style.display = "inline-block";
+				pipes.style.display = "block";
+
+				// 播放游戏背景音乐
+				m2.play();
+				m2.loop = "loop";
+
+				createPipe();
+				pipeTimer = setInterval(createPipe, 5000);
+				birdDownTimer = setInterval(birdDown, 20);
+				box.onclick = boxClick;
+			}
+			// 创建管道的函数
+			function createPipe() {
+				// 创建li
+				var li = document.createElement("li");
+				li.className = "pipes";
+				pipes.appendChild(li);
+
+				/*
+					创建上下管道
+					思路:
+					通过高度固定, 随机一个管道的高度, 计算另一个管道的高度
+				*/
+				// 通过高度 
+				var passH = 150;
+				// 最低高度
+				var minH = 60;
+				// 随机管道的高度区间[minH, li.offsetHeight-passH-minH]
+				// 随机上管道的高度
+				var topH = Math.floor(Math.random() * (li.offsetHeight - passH - minH - minH + 1) + minH);
+				// 计算下管道高度
+				var bottomH = li.offsetHeight - passH - topH;
+
+				// 创建上管道
+				var upPipe = document.createElement("div");
+				upPipe.className = "upPipe";
+				upPipe.style.height = topH + "px";
+				li.appendChild(upPipe);
+
+				// 创建下管道
+				var downPipe = document.createElement("div");
+				downPipe.className = "downPipe";
+				downPipe.style.height = bottomH + "px";
+				li.appendChild(downPipe);
+
+				// 移动管道
+				// 声明一个变量记录管道的left值
+				var leftX = li.offsetLeft;
+				var moveTimer = setInterval(function() {
+					leftX--;
+					li.style.left = leftX + "px";
+					// 当管道完全出了左边界, 删除li
+					if (leftX <= -li.offsetWidth) {
+						pipes.removeChild(li);
+						clearInterval(moveTimer);
+					}
+					// 判断是否得分
+					if (leftX == 0) {
+						//得分
+						s++;
+						birdScore();
+					}
+					// 碰撞检测
+					var allPipes = pipes.children;
+					for (var i = 0; i < allPipes.length; i++) {
+						if (crash(bird, allPipes[i].children[0]) || crash(bird, allPipes[i].children[1])) {
+							gameOver();
+							break;
+						}
+					}
+				}, 20);
+			}
+			// 声明一个变量记录小鸟的速度
+			var speed = 0;
+			// 小鸟下落的函数
+			function birdDown() {
+				// 换图
+				bird.src = "img/down_bird.png";
+				// 模拟下落
+				speed += 0.5;
+				if (speed >= 5) {
+					speed = 5;
+				}
+				bird.style.top = bird.offsetTop + speed + "px";
+				// 判断小鸟是否触底
+				if (bird.offsetTop + bird.offsetHeight > pipes.children[0].offsetHeight) {
+					// 游戏结束
+					gameOver();
+				}
+			}
+
+			// 给box绑定点击事件
+			function boxClick() {
+				// 每次点击清除下落和上升的计时器
+				clearInterval(birdDownTimer);
+				clearInterval(birdUpTimer);
+				// 设置一个初速度
+				speed = 8;
+				// 重新开启一次新的上升
+				birdUpTimer = setInterval(birdUp, 20);
+			}
+
+			// 小鸟上升的函数
+			function birdUp() {
+				bird.src = "img/up_bird.png";
+				// 模拟上升的状态
+				speed -= 0.5;
+				bird.style.top = bird.offsetTop - speed + "px";
+				if (speed <= 0) {
+					//此刻小鸟为静止状态, 下一刻下落
+					//先清除上升的计时器, 再开启下落的计时器
+					clearInterval(birdUpTimer);
+					// 重置初始速度
+					speed = 0;
+					birdDownTimer = setInterval(birdDown, 20);
+				}
+				// 判断是否触顶
+				if (bird.offsetTop <= 0) {
+					// 游戏结束
+					gameOver();
+				}
+			}
+
+			// 游戏结束的函数
+			function gameOver() {
+				// 清除所有的计时器
+				var index = setInterval(function() {}, 1000);
+				for (var i = 0; i <= index; i++) {
+					clearInterval(i);
+				}
+				// 置空点击事件
+				box.onclick = null;
+				//换图
+				bird.src = "img/down_bird.png";
+				// 添加掉落动画
+				bird.style.transition = "all 2s";
+				bird.style.top = pipes.children[0].offsetHeight - bird.offsetHeight + "px";
+				// 停止游戏运行音乐, 播放游戏结束音乐
+				m2.pause();
+				m3.play();
+			}
+
+			// 碰撞检测的函数
+			function crash(e1, e2) {
+				/* 获取元素的四个边的位置关系 */
+				var e1Left = e1.offsetLeft;
+				var e1Right = e1Left + e1.offsetWidth;
+				var e1Top = e1.offsetTop;
+				var e1Bottom = e1Top + e1.offsetHeight;
+
+				var e2Left = e2.parentNode.offsetLeft;
+				var e2Right = e2Left + e2.offsetWidth;
+				var e2Top = e2.offsetTop;
+				var e2Bottom = e2Top + e2.offsetHeight;
+
+				if (e1Left <= e2Right && e1Right >= e2Left && e1Top <= e2Bottom && e1Bottom >= e2Top) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			
+			// 处理顶部分数
+			function birdScore(){
+				// 判断位数
+				var num = (s+"").split("");
+				// 判断是否应该新增分数img标签
+				var scoreImgNum = score.children.length;
+				if(scoreImgNum < num.length){
+					for(var i = 0; i < num.length-scoreImgNum; i++){
+						var scoreImg = document.createElement("img");
+						score.appendChild(scoreImg);
+					}
+				}
+				var allScoreImg = score.children;
+				for (var i = 0; i < allScoreImg.length; i++) {
+					allScoreImg[i].src = "img/" + num[i] + ".jpg";
+				}
+			}
+			
+		</script>
+	</body>
+</html>

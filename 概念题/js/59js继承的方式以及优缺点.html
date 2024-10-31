@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1 原型链继承
+      // 新实例无法向父类构造函数传参。
+      // 继承单一。
+      // 原型上的属性是共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改。
+      function Parent() {
+        this.name = "web前端";
+        this.type = ["JS", "HTML", "CSS"];
+      }
+      Parent.prototype.Say = function () {
+        console.log(this.name);
+      };
+      function Son(age) {
+        this.age = age;
+      }
+      Son.prototype = new Parent();
+      son1 = new Son(12);
+      son2 = new Son(13);
+      son2.Say();
+      console.log(son1.name, son2.name);
+
+      //2 构造函数继承：
+      // 只能继承父类构造函数的属性，无法实现构造函数的复用，每个新实例都有父类构造函数的副本，臃肿
+      function Parent() {
+        this.name = "web前端";
+        this.type = ["JS", "HTML", "CSS"];
+      }
+      function Son() {
+        Parent.call(this);
+      }
+      son1 = new Son();
+      son1.type.push("VUE");
+      console.log(son1.type); //['JS','HTML','CSS','VUE']
+      son2 = new Son();
+      console.log(son2.type); //['JS','HTML','CSS']
+
+      // 第三种：组合继承 将上面两种方式进行组合 调用了两次父类构造函数（耗内存），子类的构造函数会代替原型上的那个父类构造函数。
+
+      // 第四种：原型式继承 缺点和第一种一样 子类的实例是共享的
+      function fun(obj) {
+        function Son() {}
+        Son.prototype = obj;
+        return new Son();
+      }
+      var parent = {
+        name: "张三",
+      };
+      var son1 = fun(parent);
+      var son2 = fun(parent);
+      console.log(son1.name); //张三
+      console.log(son2.name); //张三
+
+      // 第五种：寄生继承  无法使用父类中的方法 而且每次继承都需要自己新创建方法 无法公用消耗内存
+      function fun(obj) {
+        function Son() {}
+        Son.prototype = obj;
+        return new Son();
+      }
+      function JiSheng(obj) {
+        var clone = fun(obj);
+        clone.Say = function () {
+          console.log("我是新增的方法");
+        };
+        return clone;
+      }
+      var parent = {
+        name: "张三",
+      };
+      var parent1 = JiSheng(parent);
+      var parent2 = JiSheng(parent);
+      console.log(parent2.Say == parent1.Say); // false
+
+      // 第六种：寄生式组合继承  解决调用两次以及方法无法公用的问题
+      function JiSheng(son, parent) {
+        var clone = Object.create(parent.prototype); //创建对象
+        son.prototype = clone; //指定对象
+        clone.constructor = son; //增强对象
+      }
+      function Parent(name) {
+        this.name = name;
+        this.type = ["JS", "HTML", "CSS"];
+      }
+      Parent.prototype.Say = function () {
+        console.log(this.name);
+      };
+      function Son(name) {
+        Parent.call(this, name);
+      }
+      JiSheng(Son, Parent);
+      son1 = new Son("张三");
+      son2 = new Son("李四");
+      son1.type.push("VUE");
+      son2.type.push("PHP");
+      console.log(son1.type); //['JS','HTML','CSS','VUE']
+      console.log(son2.type); //['JS','HTML','CSS','PHP']
+      son1.Say(); //张三
+      son2.Say(); //李四
+    </script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+    <div id="box1"></div>
+    <button id="btn1">1</button>
+    <button id="btn2">2</button>
+    <script>
+      let data = {
+        value: 1,
+        ok: true,
+        msg: "22",
+      };
+      let bucket = new WeakMap();
+      let activeEffect = null;
+      let effect_stack = [];
+      let jobQuee = new Set();
+      let handle = {
+        get(target, key) {
+          track(target, key);
+          return target[key];
+        },
+        set(target, key, newValue) {
+          target[key] = newValue;
+          trigger(target, key);
+          return true;
+        },
+      };
+      function cleanup(effectFn) {
+        for (let i = 0; i < effectFn.deps.length; i++) {
+          let deps = effectFn.deps[i];
+          deps.delete(effectFn);
+        }
+        effectFn.deps.length = 0;
+      }
+      function effect(fn, options = {}) {
+        const effectFn = () => {
+          cleanup(effectFn);
+          activeEffect = effectFn;
+          effect_stack.push(activeEffect);
+          fn();
+          effect_stack.pop();
+          activeEffect = effect_stack[effect_stack.length - 1];
+        };
+        effectFn.deps = [];
+        effectFn.options = options;
+        effectFn();
+      }
+      function track(target, key) {
+        if (!activeEffect) return target[key];
+        let depsMap = bucket.get(target);
+        if (!depsMap) {
+          bucket.set(target, (depsMap = new Map()));
+        }
+        let deps = depsMap.get(key);
+        if (!deps) {
+          depsMap.set(key, (deps = new Set()));
+        }
+        deps.add(activeEffect);
+        activeEffect.deps.push(deps);
+      }
+      function trigger(target, key) {
+        let depsMap = bucket.get(target);
+        if (!depsMap) return;
+        let deps = depsMap.get(key);
+        const effectToRun = new Set(deps);
+        for (const effect of effectToRun) {
+          if (effect && effect !== activeEffect) {
+            if (effect.options.scheduler) {
+              effect.options.scheduler(effect);
+            } else {
+              effect();
+            }
+          }
+        }
+      }
+      let p = Promise.resolve();
+      let is_flush = false;
+      function flushJob() {
+        if (is_flush) return;
+        is_flush = true;
+        p.then((val) => {
+          jobQuee.forEach((fn) => {
+            fn();
+            is_flush = false;
+          });
+        })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            is_flush = false;
+          });
+      }
+      let obj = new Proxy(data, handle);
+      effect(
+        () => {
+          console.log(obj.value);
+        },
+        {
+          scheduler(fn) {
+            console.log(1);
+            jobQuee.add(fn);
+            flushJob();
+          },
+        }
+      );
+      obj.value++;
+      obj.value++;
+      console.log("结束了");
+      btn1.onclick = function () {
+        obj.value = 2;
+      };
+      btn2.onclick = function () {
+        obj.msg = "msg_edit";
+      };
+    </script>
+  </body>
+</html>

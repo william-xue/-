@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box-em {
+      font-size: 20px;
+    }
+    .p {
+      font-size: 20em;
+    }
+    .p-rem {
+      font-size: 20rem;
+    }
+  </style>
+  <!-- em是根据父级的fontsize来指定px的倍数大小 -->
+  <!-- rem是根据根节点html的fontsize来指定px的倍数大小 -->
+  <body>
+    <div class="box-em">
+      <div class="p">
+        <span>123</span>
+      </div>
+      <div class="p-rem">
+        <span>456</span>
+      </div>
+    </div>
+  </body>
+</html>

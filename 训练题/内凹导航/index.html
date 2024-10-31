@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./font/iconfont.css" />
+  </head>
+  <style>
+    .box {
+      width: 800px;
+      height: 600px;
+      background-color: black;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ul,
+    li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .iconfont {
+      font-size: 30px;
+      text-align: center;
+    }
+    ul {
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+      position: relative;
+      background-color: #fff;
+      padding: 0 25px;
+    }
+    .container {
+      padding: 20px 40px;
+      box-sizing: border-box;
+    }
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.5s;
+    }
+    .active {
+      transform: translateY(-25px);
+      z-index: 2;
+      color: white;
+    }
+    .indicator {
+      display: block;
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+      border-radius: 50%;
+      /* 100 170 240 */
+      left: 30px;
+      top: 0;
+      transform: translateY(-50%);
+      border: 5px solid black;
+      transition: all 0.5s;
+    }
+
+    .indicator::before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-top-right-radius: 20px;
+      z-index: 2;
+      background-color: #fff;
+      top: 50%;
+      box-shadow: 1px -10px 0 0 black;
+      left: -21px;
+    }
+    .indicator::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-top-left-radius: 20px;
+      z-index: 2;
+      background-color: #fff;
+      top: 50%;
+      box-shadow: 0px -10px 0 0 black;
+      right: -21px;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <ul>
+        <li>
+          <i class="iconfont top">&#xe787;</i>
+          <div class="text">User</div>
+        </li>
+        <li>
+          <i class="iconfont">&#xe639;</i>
+          <div class="text">Home</div>
+        </li>
+        <li>
+          <i class="iconfont">&#xe612;</i>
+          <div class="text">Like</div>
+        </li>
+        <li>
+          <i class="iconfont">&#xe576;</i>
+          <div class="text">Email</div>
+        </li>
+        <li>
+          <i class="iconfont">&#xe72e;</i>
+          <div class="text">Message</div>
+        </li>
+        <div class="indicator"></div>
+      </ul>
+    </div>
+  </body>
+  <script>
+    const lis = document.querySelectorAll('li');
+    const indicator = document.querySelector('.indicator');
+    lis.forEach((li, index) => {
+      li.addEventListener('click', () => {
+        indicator.style.left = `${index * 70 + 30}px`;
+        lis.forEach((li) => {
+          li.classList.remove('active');
+        });
+        li.classList.add('active');
+      });
+    });
+  </script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_变量的作用域</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				JS里的变量是有作用域的
+				作用域: 变量可以被系统识别的范围
+				一个变量只能在其合法的作用域内才可以被系统识别到, 出了其作用域, 系统无法识别该变量, 哪怕这个变量声明过也不行.
+				
+				变量根据其作用域的不同可以分为两种:
+				1. 全局变量: 在函数的大括号外声明的变量, 其作用域是整个html文档
+				2. 局部变量: 在函数的大括号内声明的变量, 其作用域只在被声明的函数的大括号内
+				
+				函数的形参, 本质上也是局部变量
+			 */
+			// for(var i = 0; i < 10; i++){
+				
+			// }
+			// console.log(i);
+			if(false){
+				var b = 10;
+			}
+			console.log(b);
+			
+			
+			function fn1(n1, n2){
+				var a = 10;
+				console.log(a);
+				console.log(b);
+				console.log(n1, n2);
+			}
+			var b = 20;
+			console.log(b);
+			fn1();
+			console.log(n1, n2);
+		</script>
+	</body>
+</html>

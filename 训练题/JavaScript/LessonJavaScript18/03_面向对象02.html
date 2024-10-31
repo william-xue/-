@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_面向对象02</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 普通封装函数, 创建大量对象 */
+			function createStu(name, age, sex) {
+				var stu = {
+					name: name,
+					age: age,
+					sex: sex,
+					sayHi: function() {
+						console.log(`你好, 我叫${this.name}, 我今年${this.age}岁`);
+					}
+				}
+				return stu;
+			}
+			var stu1 = createStu("寇钊", 18, "男");
+			var stu2 = createStu("张名洲", 58, "男");
+			console.log(stu1, stu2);
+
+			/* 
+				构造函数创建对象
+			 */
+			function Student(name, age, sex) {
+				this.name = name;
+				this.age = age;
+				this.sex = sex;
+				this.sayHi = function() {
+					console.log(`你好, 我叫${this.name}, 我今年${this.age}岁`);
+				}
+			}
+			/* 
+			面试题
+				JS面向对象里 调用构造函数时的new关键字的作用
+				1. 创建一个空对象  var obj = {};
+				2. 设置原型链(将空对象的__proto__设置成该构造函数的原型对象) obj.__proto__ = Student.prototype;
+				3. 调用Student方法, 并修改其内部this的指向为这个空对象, 给空对象赋值 Student.call(obj);
+				4. 将赋完值的对象返回 return obj;
+				
+			 */
+			var stu3 = new Student("寇钊", 18, "男");
+			var stu4 = new Student("张名洲", 58, "男");
+			console.log(stu3, stu4);
+			
+		</script>
+	</body>
+</html>

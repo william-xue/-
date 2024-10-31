@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>05_面向对象04</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				继承: 面向对象的三大特性之一
+			 */
+			/* 
+				类1: 普通僵尸
+					属性: 速度, 位置, 伤害, 血量
+					方法: 前进, 啃, 掉血, 死亡
+					
+				类2: 铁桶僵尸
+					属性: 速度, 位置, 伤害, 血量, 道具(桶)
+					方法: 前进, 啃, 掉血, 掉道具, 死亡
+			 */
+			
+			//继承方法1: 通过修改this的指向实现继承
+			//继承方法2: 通过原型链实现继承
+			
+			function Person(name, age, sayHi){
+				this.name = name;
+				this.age = age;
+				this.sayHi = sayHi;
+			}
+			Person.prototype.nation = "中国";
+			// var p1 = new Person("张三", 20, function(){});
+			
+			function Student(name, age, sayHi, school, goToClass){
+				// 调用父类的构造函数同时修改this的指向给子类实例对象赋值
+				Person.call(this, name, age, sayHi);
+				this.school = school;
+				this.goToClass = goToClass;
+			}
+			
+			// var stu1 = new Student("张三", 20, function(){console.log(`你好, 我叫${this.name}`)}, "北京大学", function(){console.log(`${this.name}要去上课了`)});
+			// stu1.goToClass();
+			// stu1.sayHi();
+			// console.log(stu1.nation);
+			
+			
+			function Animal(name, age, food){
+				this.name = name;
+				this.age = age;
+				this.food = food;
+			}
+			Animal.prototype.color = "randomColor";
+			
+			function Godzilla(skill){
+				this.skill = skill;
+			}
+			// 原型链继承
+			Godzilla.prototype = new Animal("小蜥蜴", 2000, "原子弹");
+			// 修复constructor指向问题
+			Godzilla.prototype.constructor = Godzilla;
+			Godzilla.prototype.friend = "小猴子";
+			// 实例化一个Godzilla对象
+			var g1 = new Godzilla("原子吐息");
+			console.log(g1.name, g1.age, g1.food, g1.skill, g1.friend);
+		</script>
+	</body>
+</html>

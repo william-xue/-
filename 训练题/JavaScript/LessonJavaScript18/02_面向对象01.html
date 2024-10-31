@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_面向对象01</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				编程思想:
+				1. 面向对象(OOP): 以事物为中心
+				2. 面向过程(OPP): 以事件为中心
+				
+				例子: 把大象装冰箱
+				面向过程: 分步骤, 根据步骤逐一封装方法, 之后依次调用方法, 完成整个需求
+				面向对象: 分析参与整个事件需要参与的事物, 着重分析每个事物的特征和行为
+				
+				冰箱:
+				 特征: 尺寸, 颜色, 品牌, 能耗, 重量, 容量...
+				 行为: 冷冻, 保鲜, 制冰...
+				 
+				大象:
+				 特征: 身高, 体重, 品种, 年龄...
+				 行为: 吃, 喝, 拉, 撒, 睡, 喷水, 拔树...
+				 
+				人:
+				 特征: 身高, 体重, 性别, 姓名, 籍贯...
+				 行为: 吃, 喝, 拉, 撒, 睡
+				 
+				 需要通过分析出来的事物所具有的公共特征和行为, 去创建对应的"类"(class)
+				 类创建完毕之后, 就可以根据类去创建对应的"对象"(object) 
+				
+				类: 具有公共特征和行为的事物的抽象
+				对象: 类的实例
+				
+				JS的面向对象的概念里是没有"类"的概念的
+				但是有一个功能与"类"相似的东西, 在行使"类"的功能, 我们称之为"构造函数" 
+				构造函数看起来, 有两个特点:
+				1. 函数名首字母大写
+				2. 调用的时候需要new关键字配合调用
+				
+				JS里创建对象的两种方式:
+				1. 字面量/语法糖 直接创建对象
+				2. 通过构造函数创建对象
+			 */
+			
+			/* 
+				1. 字面量/语法糖创建对象
+				语法: 内部实现 new Object()
+					var 对象名 = { 
+						// 属性 特征
+						属性名1:属性值1,
+						属性名2:属性值2,
+						...
+						// 方法 行为
+						方法名1:function(){},
+						方法名2:function(){},
+						...
+					};  
+					注意: 属性名和方法名直接写, 不要加引号, 属性值根据所需要的类型自行确定, 属性值可以是任意数据类型
+			 */
+			// 练习1: 创建一个对象, 属性: 姓名, 年龄, 性别, 学校, 专业; 方法: 上课, 考试, 做作业, 方法里只需要输出一行log即可
+			var stu1 = {
+				//属性
+				name:"陈祥铭",
+				age:73,
+				sex:"男",
+				school:"夕阳红敬老院",
+				major:"二人转社团团长",
+				wife:{
+					name:"如花",
+					age:84,
+					sex:"女"
+				},
+				//方法
+				goToClass:function(){
+					console.log("上课", this);
+				},
+				exam:function(){
+					console.log("考试");
+				},
+				doHomework:function(){
+					console.log("做作业", this);
+				}
+			};
+			// console.log(stu1);
+			/* 
+				如何操作对象?
+				JS里操作对象的属性或者方法
+				1. 点语法   对象.属性名  对象.方法名()
+			 */
+			// console.log(stu1.name, stu1.age);
+			// stu1.goToClass();
+			// stu1.exam();
+			// stu1.doHomework();
+			// var fn = stu1.doHomework;
+			// window.fn();
+			
+			// console.log(stu1.wife.age);
+			
+			var stu = {
+				name:"张三",
+				age:20,
+				sex:"男",
+				sayHi:function(){
+					console.log(`你好, 我叫${this.name}, 我今年${this.age}岁`);
+				}
+			}
+			var stu1 = {
+				name:"李四",
+				age:22,
+				sex:"女",
+				sayHi:function(){
+					console.log(`你好, 我叫${this.name}, 我今年${this.age}岁`);
+				}
+			}
+		
+		</script>
+	</body>
+</html>

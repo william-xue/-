@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_分支结构</title>
+	</head>
+	<body>
+		<fieldset>
+			<legend><h2>练习1</h2></legend>
+			<input type="text" placeholder="请输入字母" id="i1">
+			<button onclick="judgeSex()">判断性别</button>
+		</fieldset>
+		
+		<fieldset>
+			<legend><h2>练习2</h2></legend>
+			<input type="number" placeholder="年龄" id="i2">
+			<button onclick="judgeAge()">判断性别</button>
+		</fieldset>
+		
+		
+		<fieldset>
+			<legend><h2>练习3</h2></legend>
+			<input type="number" placeholder="数字1" id="n1">
+			<input type="number" placeholder="数字2" id="n2">
+			<button onclick="twoMax()">两个数较大值</button>
+		</fieldset>
+		
+		<fieldset>
+			<legend><h2>练习4</h2></legend>
+			<input type="number" placeholder="数字1" id="n1">
+			<input type="number" placeholder="数字2" id="n2">
+			<input type="number" placeholder="数字3" id="n3">
+			<button onclick="threeMax()">三个数较大值</button>
+		</fieldset>
+		
+		<fieldset>
+			<legend><h2>练习5</h2></legend>
+			<input type="number" placeholder="请输入年份" id="year">
+			<button onclick="leepYear()">判断闰年</button>
+		</fieldset>
+		<!-- 
+			程序运行的三大结构:
+			1. 顺序结构: 代码从上到下, 逐行执行, 每行代码执行一遍, 不会重复执行, 也不会不执行
+			2. 分支结构: 根据不同的情况, 执行不同的代码
+			3. 循环结构: 重复执行某段代码
+		
+		
+			表达式和语句:
+			1. 表达式: 由常量, 变量, 运算符组成的式子; 表达式都有结果, 我们操作表达式其实都是在操作表达式的结果
+			2. 程序运行的最小单位, js里可以通过分号或者系统提供的语句的完整语法判断一个语句
+		 -->
+		 <script type="text/javascript">
+			// var a = 1;
+			// var b = 10;
+			// 1+2
+			// a+b
+			// a
+			// a>5
+			// a++
+			// 5
+			// console.log(a+2);
+			// var c = a+2;
+			
+			/*
+				分支语句 if...else语句和switch...case语句
+			*/
+		   /* 
+			 if语句的第一种形式
+			 语法:
+				 if(表达式){
+					代码块... 
+				 }
+				执行原理: 小括号里的表达式的值为真, 执行大括号里的代码, 表达式的结果为假, 大括号里的代码不执行 
+		   */
+		 //    if(4%2) {
+			// 	console.log("hello!");
+			// }
+			
+		//练习1: 用户输入内容, 点击按钮, 如果用户输入的是m, 弹一个警告框,内容为男性, 否则, 不弹框
+			function judgeSex() {
+				/*
+				1. 获取输入框里的内容
+					1.1 获取输入框的value属性即可获取到内容
+						1.1.1 获取到那个input标签, js的document.getElementById()方法可以帮助我们通过id获取html元素
+				
+				将内容与字母m做判断, 如果相等, 执行alert语句, 如果不等, 不执行alert语句
+				*/
+			   var i1Ele = document.getElementById("i1");
+			   var i1EleValue = i1Ele.value;
+			   // console.log(typeof i1EleValue);
+			   if(i1EleValue == "m") {
+				   alert("男性");
+			   }
+			}
+			
+			//练习2: 接收用户的输入的内容, 内容只能是数字, 如果数字在[18,25], alert("合法年龄")
+			function judgeAge() {
+				var ageValue = document.getElementById("i2").value;
+				if(ageValue >= 18 && ageValue <= 25) {
+					alert("合法");
+				}
+			}
+			
+			/*
+				if语句的第二个形式
+				语法:
+					if(表达式) {
+						代码块1...
+					}else {
+						代码块2...
+					}
+				执行原理: 如果表达式的结果为真, 执行if后面大括号里的代码; 如果结果为假, 执行else后面大括号里的代码
+				if...else语句, 一定会有一个大括号里的代码被执行, 那么另外一个一定不会被执行
+			*/
+		   // if(true){
+			  //  alert(123);
+		   // }else {
+			  //  alert(456);
+		   // }
+		   
+		   // 练习3: 分别输入两个数, 点击按钮, 弹框出两个数的较大值
+		   function twoMax() {
+			   var num1V = document.getElementById("n1").value;
+			   var num2V = document.getElementById("n2").value;
+			   /*
+					当比较两个值时, 如果两个值的类型相同, 并不会触发隐式转化, 只有当两个值的类型不同时, 系统才会启动隐式转化.
+					所以, 如果我们不将输入框的两个值中的任意一个改成数字类型, 那么这两个值都是字符串, 系统在比较的时候, 不会启动隐式转化, 实际上也就不是两个数字在比较大小, 而是字符串在比较大小, 字符串是可以进行大小比较的, 原理:
+					逐个字符依次比较, 依据的是ASCII码中字符对应的数字大小, 所以本质上还是数字在比大小.
+			   */
+			   if(num1V > num2V){
+				   alert(num1V);
+			   }else {
+				   alert(num2V)
+			   }
+		   }
+		   
+		   // 练习4: 输入3个数, 弹框出3个数的最大值
+		   function threeMax(){
+			   var v1 = document.getElementById("n1").value - 0;
+			   var v2 = document.getElementById("n2").value - 0;
+			   var v3 = document.getElementById("n3").value - 0;
+			   var max;
+			   if(v1 > v2) {
+				   // v1大于v2
+				   if(v1 > v3) {
+					   // alert(v1);
+					   max = v1;
+				   }else {
+					   // alert(v3);
+					   max = v3;
+				   }
+			   }else {
+				   // v2大于v1
+				   if(v2 > v3) {
+					   // alert(v2);
+					   max = v2;
+				   }else {
+					   // alert(v3);
+					   max = v3;
+				   }
+			   }
+			   alert(max);
+		   }
+		   
+		   /*
+			 练习5: 输入一个年份, 求闰年
+			 闰年判断标准: 年份能被400整除 或者 能被4整除但不能被100整除的 年份
+		   */
+		  function leepYear() {
+			  var year = document.getElementById("year").value - 0;
+			  if(year % 400 == 0 || year % 4 == 0 && year % 100 != 0) {
+				  alert("闰年");
+				  
+			  }else {
+				  alert("平年");
+			  }
+		  }
+		  
+		  /*
+			三目运算符 其实三目可以在某些情况下代替if...else语句
+			表达式1 ? 表达式2 : 表达式3
+			
+			执行原理: 如果表达式1的值为真, 整个式子的结果是表达式2的值, 如果表达式1的值为假, 整个式子的结果是表达式3的值
+		  */
+		  // var a = 10;
+		  // var b = 20;
+		  // var twoMax = a > b ? a : b;
+		  
+		  // var c = 30;
+		  // var threeMax = a > b ? (a > c ? a : c) : (b > c ? b : c);
+		  
+		  /* 
+			if语句的第三种形式
+				语法:
+				if(条件表达式1) {
+					代码块1...
+				}else if(条件表达式2) {
+					代码块2...
+				}... {
+					...
+				}else {
+					代码块3...
+				}
+				执行原理: 依次判断if后小括号里的条件表达式的值, 如果某个条件表达式成立, 就执行其对应大括号里的代码, 一旦某个大括号里的代码执行了, 其他的就不再走了. 如果当前小括号里的条件表达式不成立, 判断下一个if小括号里的是否成立, 依次类推, 如果所有的条件表达式都不成立, 最终进else
+		  */
+		 /*
+			练习6: 输入一个分数, 判断学习程度
+			[100, 90] 弹框弹出优秀
+			(90, 80] 弹框弹出良好
+			(80, 70] 弹框弹出中等
+			(70, 60] 弹框弹出及格
+			60以下 弹框弹出不及格
+		  */
+		 </script>
+	</body>
+</html>

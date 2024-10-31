@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  // 如果函数里返回的是简单数据类型那么不会改变实例 如果返回的是对象那么new出来的实例就是当前返回的对象
+  function A(){
+    // return 1
+    return {}
+  }
+  let a=new A()
+  let b=A()
+  console.log(b);
+  console.log(a);
+  let obj={}
+</script>
+</body>
+</html>

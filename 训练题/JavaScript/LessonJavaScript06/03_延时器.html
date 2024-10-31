@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_延时器</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				如果想让某些代码延迟一段时间再触发, 可以考虑使用延时器
+				语法：
+				setTimeout(函数体, 延迟时间(毫秒))
+				返回值: 延时器的序号
+				
+				setTimeout与setIntervalu的比较：
+				1. setTimeout只会触发一次, setInterval会重复触发
+				2. 两者的执行都是由一个新的子线程来控制, 不会阻塞主线程里其他代码的执行
+				
+				清除延时器 clearTimeout(延时器的序号)
+			 */
+			console.log(11111);
+			var num = setTimeout(function(){
+				console.log("延时器触发了！");
+			}, 3000);
+			console.log(22222);
+			
+			clearTimeout(num);
+		</script>
+	</body>
+</html>

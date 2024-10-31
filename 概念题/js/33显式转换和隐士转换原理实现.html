@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Object.prototype.valueOf = function () {
+        console.log("原型上的valueof", this);
+        return "valueof";
+      };
+      Object.prototype.toString = function () {
+        console.log("原型上的toString");
+        return "tostring";
+      };
+      let a = {
+        value: "123",
+      };
+      // 1 隐士转换 a+'' 调用了valueof方法
+      let c = a + "";
+      // console.log(c);
+      // 2 显示转换String(a) 调用了tostring方法
+      let res = String(a);
+      console.log(res);
+      // 对象进行 隐士转化的时候 先调用valueof方法(先查自身 再查原型) 返回什么值就是什么 如果没有valueof那么就会调用tostring方法 和valueof一样
+      // 如果进行字符串的显示转化的时候 只调用tostring方法 不会调用valueof方法
+
+      // 数组的转化( arr + "") 先调用了valueOf进行转化 再通过tostring转化为字符串 最后进行相加
+      // 数组的转化( String(arr)) 调用tostring转化为字符串
+      console.log("----------------------------------------------");
+      let arr = [1, 2, 3];
+      let arr2 = [4, 5, 6];
+      arr.valueOf = function () {
+        console.log(this);
+        return [];
+      };
+      arr.toString = function () {
+        console.log("tostring");
+        return "1";
+      };
+      let result = arr + "";
+      console.log(result);
+    </script>
+  </body>
+</html>

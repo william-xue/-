@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="parent"></div>
+    <script>
+      let queue = [];
+      let p = Promise.resolve();
+      function random() {
+        return Math.random();
+      }
+      p.then(() => {
+        queue.forEach((fn) => {
+          console.log(fn());
+        });
+      });
+      for (let i = 0; i < 10; i++) {
+        console.log(1);
+        queue.push(random);
+      }
+
+      let obj = {
+        name: "zs",
+        age: 15,
+      };
+      let proxyObj = new Proxy(obj, {
+        get(target, key) {
+          console.log(target, key);
+        },
+        set() {},
+      });
+      console.log(proxyObj.name);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+$theme: (
+  light: (
+    color: #000,
+    backgroundColor: #fff,
+  ),
+  dark: (
+    color: #fff,
+    backgroundColor: #000,
+  ),
+);
+$curTheme: light;
+@mixin useTheme() {
+  @each $key, $style in $theme {
+    $curTheme: $key !global;
+    html[theme-data="#{$key}"] & {
+      @content;
+    }
+  }
+}
+
+@function getVar($key) {
+  @return map-get($theme, $curTheme, $key);
+}
+.item {
+  width: 100px;
+  height: 100px;
+  @include useTheme {
+    color: getVar("color");
+    background-color: getVar("backgroundColor");
+  }
+}

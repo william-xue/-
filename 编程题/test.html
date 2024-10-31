@@ -1,0 +1,67 @@
+!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let s = Symbol("");
+      let oc = { name: "zs", age: 15 };
+      let obj = {
+        [s]: "ss",
+        dsa: "ds",
+        date: new Date(),
+        reg: /223/,
+        func: function () {
+          console.log(1);
+        },
+        num: new Number(2),
+        str: new String("22"),
+        array: [oc, oc],
+      };
+      oc.obj = obj;
+      let getType = function (value) {
+        let str = Object.prototype.toString.call(value).split(" ")[1];
+        let type = str.substr(0, str.length - 1);
+        return type;
+      };
+      function deepClone(obj, map = new WeakMap()) {
+        const Constructor = obj.constructor;
+        const cloneObj = {};
+        if (map.has(obj)) {
+          return map.get(obj);
+        }
+        switch (getType(obj)) {
+          case "String":
+          case "Number":
+          case "Function":
+            return obj;
+          case "Date":
+          case "RegExp":
+            return new Constructor(obj);
+          case "Array":
+            let arr = new Constructor();
+            obj.map((val, index) => {
+              arr[index] = deepClone(val, map);
+            });
+            return arr;
+        }
+        map.set(obj, cloneObj);
+        [...Object.keys(obj), ...Object.getOwnPropertySymbols(obj)].map(
+          (val) => {
+            let result = deepClone(obj[val], map);
+            cloneObj[val] = result;
+          }
+        );
+        console.log(map);
+        return cloneObj;
+      }
+      let result = deepClone(obj);
+      result.array[1].age = 18;
+      console.log(result);
+    </script>
+  </body>
+</html>

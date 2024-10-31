@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var a = { n: 1 };
+      var b = a;
+      a.x = a = { n: 2 };
+      // a.x这种对象访问是从左向右进行的 如果是a=a={n:2}的话就是从右向左进行
+      // a.x  操作的是{n:1}这个对象  a={n:2} 操作的是a这个变量
+      // 因为b等于的是{n:1}这个对象所以 b.x是有
+      console.log(a.x); //undefined
+      console.log(b.x); // n:2
+    </script>
+  </body>
+</html>

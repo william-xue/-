@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Demo extends React.Components {
+        state = {
+          a: 0,
+        };
+        componentDidMount() {
+          // 前兩次在自身的生命周期中调用isBatchingUpdates 为true 两个更新方法被加入到dirtyComponents队列中回头调用，并且相同的会被合并只调用一次
+          // 所以不是同步显示出结果
+          this.setState({
+            a: a + 1,
+          });
+          console.log(a); // 0
+          this.setState({
+            a: a + 1,
+          });
+          console.log(a); // 0
+          setTimeout(() => {
+            // 后两次是属于 setTimeout 中的代码，触发时 isBatchingUpdates 为 false，所以能够直接进行更新，所以连着输出 2，3。
+            // settimeout是添加到js事件环中的异步事件环 所以没有被
+            this.setState({
+              a: a + 1,
+            });
+            console.log(a); // 2
+            this.setState({
+              a: a + 1,
+            });
+            console.log(a); // 3
+          }, 0);
+        }
+      }
+    </script>
+  </body>
+</html>

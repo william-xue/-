@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .box {
+        /* rotate写前面 后面的translate会影响rotate的中心旋转点 半径就是tranlate移动的长度  */
+        transform: rotate(var(--x)) translate(50px);
+        /* 这样就不会影响到了  */
+        transform: translate(50px) rotate(var(--x));
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    ul li {
+      list-style-type: none;
+      text-align: center;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    ul {
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    body,
+    html {
+      height: 100%;
+      overflow: hidden;
+    }
+    .box {
+      height:400px;
+      background-color: #fff;
+      margin: 220px auto;
+      overflow: hidden;
+    }
+    ul li {
+      color: black;
+      font-size: 14px;
+      height: 30px;
+      line-height: 30px;
+      transition: all 0.3s;
+      opacity: 0.5;
+    }
+    li.light {
+      font-size: 20px;
+      opacity: 1;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <ul></ul>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>

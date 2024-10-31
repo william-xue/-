@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.time("myCode");
+      function loop() {
+        let time = Date.now();
+        while (true) {
+          if (Date.now() - time > 5000) {
+            break;
+          }
+        }
+      }
+      setTimeout(() => {
+        console.log("settimeout2");
+      }, 1);
+      setTimeout(() => {
+        loop();
+        console.log("settimeout1");
+      }, 0);
+      console.timeEnd("myCode");
+    </script>
+  </body>
+</html>

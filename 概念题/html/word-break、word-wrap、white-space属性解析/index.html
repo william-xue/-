@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      #box {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #ccc;
+        /*  white-space
+          属性1 nowrap 让内部的文字永不换行
+          属性2 pre  会保留代码中的空格和换行符 不会自动换行
+          属性3 pre-wrap 会保留代码中的空格和换行符 并且会自动换行
+          属性4 pre-line 代码中的换行符保留 空格自动合并 并且会自动换行
+        */
+        white-space:pre-line 
+
+        /*    word-break
+        属性1 keep-all 所有“单词”一律不拆分换行，注意，我这里的“单词”包括连续的中文字符（还有日文、韩文等），或者可以理解为只有空格可以触发自动换行
+        属性2 break-all 所有单词碰到边界一律拆分换行
+        */
+
+        /*   word-wrap
+        属性1 break-word 这个属性也是控制单词如何被拆分换行的
+        */
+      }
+    </style>  
+    <div id="box">
+        Hi&nbsp;&nbsp;, This        
+        is a incomprehensibilities long word.
+        <br />
+        你好&nbsp;&nbsp;， 
+        这 是一个不可思议的长单词
+    </div>
+    <!-- word-break  -->
+  </body>
+</html>

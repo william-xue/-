@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      
+ meta标签中 http-equiv属性
+        http-equiv顾名思义，相当于http的文件头作用。
+        meta标签中http-equiv属性语法格式是：
+        <meta http-equiv="参数" content="具体的描述">
+
+ cache-control(指定请求和响应遵循的缓存机制)
+    用法1.
+    说明：指导浏览器如何缓存某个响应以及缓存多长时间。这一段内容我在网上找了很久，但都没有找到满意的。最后终于在Google Developers中发现了我想要的答案。
+        举例:
+        <meta http-equiv="cache-control" content="no-cache">
+        共有以下几种用法：
+        no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存 跳过强制缓存 直接使用协商缓存。
+        no-store: 不允许缓存，每次都要去服务器上，下载完整的响应。（安全措施）
+        public : 缓存所有响应，但并非必须。因为max-age也可以做到相同效果
+        private : 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）
+        maxage : 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。
+        no-transform/no-siteapp:告诉浏览器不要转码
+    用法2.(禁止百度自动转码)
+        说明：用于禁止当前页面在移动端浏览时，被百度自动转码。虽然百度的本意是好的，但是转码效果很多时候却不尽人意。所以可以在head中加入例子中的那句话，就可以避免百度自动转码了。举例：
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+expires(网页到期时间)
+    说明:用于设定网页的到期时间，过期后网页必须到服务器上重新传输。举例：
+        <meta http-equiv="expires" content="Sunday 26 October 2016 01:00 GMT" />
+        E. refresh(自动刷新并指向某页面)
+    说明：网页将在设定的时间内，自动刷新并调向设定的网址。举例:
+        <meta http-equiv="refresh" content="2；URL=http://www.lxxyx.win/"> //意思是2秒后跳转向我的博客
+
+Set-Cookie(cookie设定)
+    <meta http-equiv="Set-Cookie" content="name, date"> //格式
+    <meta http-equiv="Set-Cookie" content="User=Lxxyx; path=/; expires=Sunday, 10-Jan-16 10:00:00 GMT"> //具体范例
+
+X-UA-Compatible 高速浏览器以什么浏览器引擎来渲染页面 比如ie7/8/9
+
+meta标签中 name属性
+    referrer
+      no-referrer
+      不显示referrer的任何信息在请求头中。
+
+      no-referrer-when-downgrade
+      这是默认值。当从https网站跳转到http网站或者请求其资源时（安全降级HTTPS→HTTP），不显示referrer的信息，其他情况（安全同级HTTPS→HTTPS，或者HTTP→HTTP）则在referrer中显示完整的源网站的URL信息。
+
+      same-origin
+      表示浏览器只会显示referrer信息给同源网站，并且是完整的URL信息。所谓同源网站，是协议、域名、端口都相同的网站。
+
+      origin
+      表示浏览器在referrer字段中只显示源网站的源地址（即协议、域名、端口），而不包括完整的路径。
+
+      strict-origin
+      该策略更为安全些，和origin策略相似，只是不允许referrer信息显示在从https网站到http网站的请求中（安全降级）。
+
+      origin-when-cross-origin
+      当发请求给同源网站时，浏览器会在referrer中显示完整的URL信息，发个非同源网站时，则只显示源地址（协议、域名、端口）
+
+      strict-origin-when-cross-origin
+      和origin-when-cross-origin相似，只是不允许referrer信息显示在从https网站到http网站的请求中（安全降级）。
+
+      unsaft-url
+      浏览器总是会将完整的URL信息显示在referrer字段中，无论请求发给任何网站。
+
+applicable-device
+      pc 告诉浏览器可以适用于pc
+      mobile 告诉浏览器可以适用于移动端
+
+ 
+  
+ -->
+  </body>
+</html>

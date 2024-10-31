@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 比较规则的定义  如果一个类型是数字 另一个类型是其他那么就把其他类型转化为数值类型
+      //                如果一个类型是布尔类型 另一个类型是其他类型 那么就把布尔转化为数值  在依据规范1
+
+      // null 和 undefined在==中是相同的 除此之外和任何值都不同
+      let a = null;
+      let b;
+      console.log(a == b); // true
+      console.log(a == null); // true
+      console.log(b == null); // true
+      console.log(a == undefined); // true
+
+      console.log(a == "");
+      console.log(a == 0, "null和0");
+      console.log(a == false);
+      console.log(b == "");
+      console.log(b == 0, "b 0");
+      console.log(b == false, "b false");
+
+      // 对象和非对象之间的比较
+      // 执行arr==n的时候arr会执行(valueOf，toString)被拆封成4
+      let arr = [4];
+      let n = 4;
+      console.log(arr == n); //true
+
+      let str = "aa";
+      let strObj = Object(str); // 等同于new String（str）
+      console.log(str == strObj); // true
+
+      // 这种情况下封装null或者undefined 封装成的是[object Object] 而不是空
+      // 而NaN拆封后还是NaN 而NaN本身和NaN不相等所以是false
+      let unde = null; // null
+      let undefine = undefined;
+      let Nan = NaN;
+      let objUnde = Object(Nan); // {}
+      console.log(unde == objUnde); //false
+      console.log(objUnde.toString(), "objunde"); //false
+
+      // 一些比较怪异的判断
+      console.log("0" == false); //true
+      console.log(false == 0); //true
+      console.log(false == ""); // true
+      console.log(false == []); // true
+      console.log("" == 0); //true
+      console.log("" == []); //true
+      console.log(0 == []); //true
+
+      // 难以理解的
+      console.log("" == [null]); // true 因为[null]会被转换成 ""
+      console.log([] == ![]); // true 首先![] 转换成false 然后就变成false==""
+
+      // 对象的比较无论是== 还是===比较的都是对象的地址不会进行toPrimitive的转化
+      let ao = { a: 42 };
+      let bo = { a: 43 };
+      console.log(ao == bo);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<!-- 方法1 flex -->
+<style>
+  .container1{
+    height: 800px;
+    width: 500px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .header1{
+    height: 80px;
+    border: 1px solid red;
+  }
+  .footer1{
+    height: 80px;
+    border: 1px solid red;
+  }
+  .main1{
+    flex: 1;
+    overflow: auto;
+  }
+  .content1{
+    height: 8000px;
+  }
+</style>
+<body>
+  <div class="container1">
+    <div class="header1"></div>
+    <div class="main1">
+      <div class="content1"></div>
+    </div>
+    <div class="footer1"></div>
+  </div>
+</body>
+<!-- 方法2 定位 -->
+<style>
+  .container2{
+    position: relative;
+    height: 800px;
+    width: 500px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  .header2{
+    position: absolute;
+    height: 80px;
+    border: 1px solid red;
+    top: 0;
+    width: 100%;
+  }
+  .footer2{
+    position: absolute;
+    height: 80px;
+    border: 1px solid red;
+    bottom: 0;
+    width: 100%;
+
+  }
+  .main2{
+    position: absolute;
+    overflow: auto;
+    top: 80px;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+  }
+  .content2{
+    height: 8000px;
+  }
+</style>
+<body>
+  <div class="container2">
+    <div class="header2"></div>
+    <div class="main2">
+      <div class="content2"></div>
+    </div>
+    <div class="footer2"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+    <button id="btn">11</button>
+    <button id="btn2">21</button>
+    <script>
+      let data = {
+        a: 1,
+        ok: true,
+        c: 2,
+      };
+      let bucket = new Map();
+      let effectStack = [];
+      let activateEffect;
+      function track(target, key) {
+        let depsMap = bucket.get(target);
+        if (!activateEffect) return;
+        if (!depsMap) {
+          bucket.set(target, (depsMap = new Map()));
+        }
+        let deps = depsMap.get(key);
+        if (!deps) {
+          depsMap.set(key, (deps = new Set()));
+        }
+        deps.add(activateEffect);
+        activateEffect.deps.push(deps);
+      }
+      function trigger(target, key) {
+        let depsMap = bucket.get(target);
+        if (!depsMap) return;
+        let deps = depsMap.get(key);
+        const effectToRun = new Set();
+        deps.forEach((fn) => {
+          if (fn !== activateEffect) {
+            effectToRun.add(fn);
+          }
+        });
+
+        effectToRun.forEach((effectFn) => {
+          if (effectFn.options.scheduler) {
+            effectFn.options.scheduler(effectFn);
+            return;
+          }
+          effectFn && effectFn();
+        });
+      }
+      function reactive(data) {
+        let handle = {
+          get(target, key) {
+            track(target, key);
+            return target[key];
+          },
+          set(target, key, newValue) {
+            target[key] = newValue;
+            trigger(target, key);
+            return target[key];
+          },
+        };
+        let obj = new Proxy(data, handle);
+        return obj;
+      }
+      function cleanup(effectFn) {
+        let deps = effectFn.deps;
+        for (let i = 0; i < deps.length; i++) {
+          deps[i].delete(effectFn);
+        }
+        effectFn.deps.length = 0;
+      }
+      function effect(fn, options = {}) {
+        const effectFn = () => {
+          cleanup(effectFn);
+          activateEffect = effectFn;
+          effectStack.push(activateEffect);
+          let value = fn();
+          effectStack.pop();
+          activateEffect = effectStack[effectStack.length - 1];
+          return value;
+        };
+        effectFn.deps = [];
+        effectFn.options = options;
+        if (options.lazy) {
+          return effectFn;
+        } else {
+          effectFn();
+        }
+      }
+      let obj = reactive(data);
+      function computed(getter) {
+        let obj;
+        let cache = false;
+        let res;
+        let effectFn = effect(getter, {
+          lazy: true,
+          scheduler() {
+            cache = false;
+            console.log("set");
+            trigger(obj, "value");
+          },
+        });
+        obj = {
+          get value() {
+            if (cache) {
+              return res;
+            } else {
+              cache = true;
+              res = effectFn();
+              track(obj, "value");
+              return res;
+            }
+          },
+        };
+        return obj;
+      }
+
+      function watcher(source, cb, options = {}) {
+        function travserse(source, set = new Set()) {
+          if (
+            typeof source !== "object" ||
+            set.has(source) ||
+            source === null
+          ) {
+            return source;
+          }
+          let obj = {};
+          set.add(source);
+          for (const key in source) {
+            obj[key] = travserse(source[key], set);
+          }
+          return obj;
+        }
+        let getter;
+        let cleanup;
+        function onInvalidateCleanup(fn) {
+          cleanup = fn;
+        }
+        function job() {
+          if (cleanup) {
+            cleanup();
+          }
+          newValue = effectFn();
+          cb(newValue, oldValue, onInvalidateCleanup);
+          oldValue = newValue;
+        }
+        if (typeof source === "function") {
+          getter = () => source();
+        } else {
+          getter = () => travserse(source);
+        }
+        let oldValue, newValue;
+        let effectFn = effect(() => getter(), {
+          lazy: true,
+          scheduler: () => {
+            job();
+          },
+        });
+        if (options.immediate) {
+          job();
+        } else {
+          oldValue = effectFn();
+        }
+      }
+      watcher(
+        obj,
+        (newValue, oldValue, onInvalidateCleanup) => {
+          let expires = false;
+          onInvalidateCleanup(() => {
+            expires = true;
+          });
+          console.log(expires);
+        },
+        {
+          immediate: true,
+        }
+      );
+      obj.a++;
+      obj.c++;
+    </script>
+  </body>
+</html>

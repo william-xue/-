@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">点击</button>
+
+    <div id="test"></div>
+  </body>
+
+  <script>
+    let data = {
+      test: "test",
+      test1: "test1",
+    };
+    let activeEffect = null;
+    let bucket = new WeakMap();
+    function effect(fn) {
+      activeEffect = fn;
+      fn();
+    }
+    let handle = {
+      get(target, key) {
+        if (!activeEffect) return target[key];
+        let depsMap = bucket.get(target);
+        if (!depsMap) {
+          bucket.set(target, (depsMap = new Map()));
+        }
+        let deps = depsMap.get(key);
+        if (!deps) {
+          depsMap.set(key, (deps = new Set()));
+        }
+        deps.add(activeEffect);
+        return target[key];
+      },
+      set(target, key, newValue) {
+        let depsMap = bucket.get(target);
+        target[key] = newValue;
+        if (!depsMap) return true;
+        let effects = depsMap.get(key);
+        if (!effects) return true;
+        effects.forEach((effect) => {
+          effect && effect();
+        });
+        return true;
+      },
+    };
+    let obj = new Proxy(data, handle);
+    effect(() => {
+      test.innerText = obj.test;
+    });
+    effect(() => {
+      test.innerText = obj.test;
+    });
+    console.log(bucket);
+    btn.onclick = function () {
+      obj.test = "22";
+      obj.noExit = "no exit";
+    };
+  </script>
+</html>

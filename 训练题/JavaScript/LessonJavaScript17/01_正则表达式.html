@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_正则表达式</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				正则表达式
+				作用: 用来对数据进行匹配, 提取, 判断
+				正则是一门新的语法, 不是JS独有的, 前端, 后端, 移动端都有正则表达式
+				
+				难点: 我们将来的需求时各式各样的, 所以正则规则的书写各式各样, 没有统一的标准.
+				优点: 你不会写, 可以查!
+				
+				要求: 能书写简单的正则, 能看懂复杂的正则
+			 */
+			// 练习: 封装一个函数: 判断一个字符串里是否包含数字
+			function hasNum(n){
+				// var nArr = n.split("");
+				// for (var i = 0; i < nArr.length; i++) {
+				// 	if(nArr[i] >= 0 && nArr[i] <= 9){
+				// 		return true;
+				// 	}
+				// }
+				// return false;
+				
+				// for (var i = 0; i < n.length; i++) {
+				// 	if(n[i] >= 0 && n[i] <= 9){
+				// 		return true;
+				// 	}
+				// }
+				// return false;
+				
+				return /\d\d/.test(n);
+			}
+			// console.log(hasNum("abc"));
+			// console.log(hasNum("a19b2c"));
+			
+			/* 
+				正则表达式基础知识
+				1. 正则里的符号分两种
+					a. 普通字符  字符本身的意义就是正则里表示的意义(小写字母, 大写字母, 数字, 汉字, _)
+					b. 元字符  具有特殊意义的符号或者符号的组合(\d, \D, \s, \S, \w, \W, *, +, ?, ., $, &, ^, -, 等)
+			 */
+			
+			/* 
+			  JS里如何书写正则表达式?  regular expression
+			  写法1: 标准创建对象的语法 创建正则对象
+				语法: var reg1 = new RegExp(参数1, 参数2);
+				参数1: 正则规则, 必填
+				参数2: 规则属性, 选填
+					i: 忽略大小写
+					g: 全局匹配
+					m:
+				注意: 参数1和参数2在书写的时候, 必须都写成字符串
+				
+			  写法2: 语法糖/字面量 创建正则对象
+				语法: var reg1 = /参数1/参数2;
+				参数1: 正则规则, 必填
+				参数2: 规则属性, 选填
+					i: 忽略大小写
+					g: 全局匹配
+					m:
+				注意: 参数1和参数2在书写的时候, 必须都不要写成字符串, 直接写
+			 */
+			// var str1 = "tomorrow is Sunday";
+			// var reg1 = new RegExp("row", "i");
+			// 正则对象自带的test方法用于判断数据是否符合该正则规则
+			// console.log(reg1.test(str1));
+			
+			// var reg1 = /sunday/i;
+			// console.log(reg1.test(str1));
+			
+			/* 
+				元字符
+				\d: 表示的数字
+				\D: 表示非数字
+				\s: 表示空白符(空格, Tab, 回车)
+				\S: 表示非空白符 	
+				\w: 表示(a-z, A-Z, 0-9, _)
+				\W: 表示非(a-z, A-Z, 0-9, _)
+				.: 表示除了\n, \r之外的所有符号
+				****************************************
+				正则里表示数量的符号
+				+: 表示数量>=1
+				?: 表示数量是0或者1
+				*: 表示数量>=0
+				{n}: 表示数量为n
+				{n,}: 表示数量>=n
+				{n,m}: 表示数量>=n且<=m
+				
+				+ === {1,}
+				? === {0,1}
+				* === {0,}
+				**************************************
+				集合匹配
+				[]: 匹配的是中括号里出现的任意一个 在目标字符串里出现过的字符, 只要有一个能匹配上, 规则匹配成功; 如果中括号里一个都匹配不上, 规则匹配失败;
+				[^]: 匹配的是目标字符串里任意一个不在中括号里出现的字符. 如果有任意一个符号没有在中括号里出现过, 规则匹配成功; 如果目标字符串的所有字符都在中括号里出现过, 规则匹配失败
+				*******************************************
+				连字符, 表示一个连续的范围 -
+				\d: 0-9
+				小写字母: a-z
+				大写字母: A-Z
+				所有的汉字: 按照Unicode的编码可以表示所有汉字, 取值范围\u4e00-\u9fa5
+				
+			 */
+			// var str2 = "abc2d3efg";
+			// var reg2 = /\d\D\d\d/;
+			// console.log(reg2.test(str2));
+			
+			// 转义符: 一些字母或数字前加"\"来去表示不能直接显示一些的符号, \0, \t, \n等
+			// 空白符 指的是空格, \n, \r, \t
+			// var str3 = "ab\tc";
+			// var reg3 = /\s\S/;
+			// console.log(reg3.test(str3));
+			
+			// var str4 = "1\0";
+			// var reg4 = /\w\W/;
+			// console.log(reg4.test(str4));
+			
+			// var str5 = "1";
+			// var reg5 = /\./;
+			// console.log(reg5.test(str5));
+			
+			// var str6 = "http://www.baidu.com";
+			// var reg6 = /(http:\/{2})?w{3}\.\w+\.com/;
+			// console.log(reg6.test(str6));
+			
+			// var str7 = "bie du le zhe shi yi hang pin yin";
+			// var reg7 = /[xyz]/;
+			// console.log(reg7.test(str7));
+			
+			// var str8 = "bie du le zhe shi yi hang pin yin";
+			// var reg8 = /[^bie dulzhsyangp]/;
+			// console.log(reg8.test(str8));
+			
+			// var str9 = "ptth";
+			// var reg9 = /[^http]/;
+			
+			var bookArr = ["哈利波特.txt", "飘.txt", "JavaScript.txt", "Python.txt", "花flowerC语言.txt", "我是陈祥铭的爸爸.txt", "time.txt", "水浒传.txt","es.txt", "禅与摩托车维修.txt", "C.txt"];
+			var bookReg = /[\u4e00-\u9fa5]\.txt/g;
+			var bookNameReg = /[\u4e00-\u9fa5]/g;
+			for(var i = 0; i < bookArr.length; i++){
+				
+				if(bookReg.test(bookArr[i])) {
+					console.log(bookArr[i], bookArr[i].match(bookNameReg).join(""));
+				}
+			}
+			/* 
+				正则表达式的全局匹配原理, 并修复问题!!
+			 */
+			/* 
+				通过正则, 对数据进行提取
+				字符串的方法 match(正则表达式)
+				返回值: 匹配到的数据数组
+			 */
+			// var str10 = "tomo sunday rrow is sunday";
+			// var reg10 = /Sunday/ig;
+			// console.log(str10.match(reg10));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./Reactive.js"></script>
+    <script>
+      // 问题
+      // let obj = reactive({ name: "zs", age: 15 });
+      // let newObj = { ...obj };
+      // // 这种情况下当我改变newObj.name的时候副作用函数不会执行原因是...obj会把newObj变成{ name: "zs", age: 15 }没有代理了
+      // effect(() => {
+      //   console.log(newObj.name);
+      // });
+      // obj.name = "ls";
+
+      // 解决方案 将newObj进行toRef
+      // 原理
+      let obj = reactive({ name: "zs", age: 15 });
+      let newObj = { ...toRefs(obj) };
+      console.log(newObj);
+      effect(() => {
+        console.log(newObj.age.value);
+      });
+      newObj.age.value = 18;
+    </script>
+  </body>
+</html>

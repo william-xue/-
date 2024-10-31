@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+    keep-alive
+      我们知道HTTP协议采用“请求-应答”模式，当使用普通模式，即非KeepAlive模式时，每个请求/应答客户和服务器都要新建一个连接，完成 之后立即断开连接（HTTP协议为无连接的协议）；当使用Keep-Alive模式（又称持久连接、连接重用）时，Keep-Alive功能使客户端到服 务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接。keep-Alive优点：更高效，性能更高
+
+    分散域名处理多个图片 js css 文件
+      我们可以对某些URL的域名分散处理，比如我们的图片域名，一般用类似http://img.guoweiwei.com的域名，当一个页面包含20多张图片的时候，那至少有10几个请求会被阻挡，而如果我们分散到不同域名的时候，至少这20个图片请求会并发进行,网站打开速度会明显提升很多。类似的，可以对一些css/js的域名同样处理
+    
+    如何把css文件加载顺序进行排序
+      与 JavaScript 类似，我们的 CSS 也是可以按需加载的。 1. 按需加载 2. 合并文件(减少请求数) 3. 请求的优先级排序（根据文件重要性进行请求排序） 在响应式的页面中，可能涉及media，即在可能在400px的页面下只需要max400.css,而不需要max500.css，针对这个问题，link 标签上其实有一个 media 属性来处理媒体查询下的加载优先级。浏览器会优先下载匹配当前环境的样式资源，相对的，其他非匹配的优先级会下降
+
+      <link rel="stylesheet" href="a.css" media="all" />
+      <link rel="stylesheet" href="max500.css" media="(max-width: 500px)" />
+      <link rel="stylesheet" href="max400.css" media="(max-width: 400px)" />
+      这样拆分后，当页面大于400px时，max500.css 的优先级会降低，注：只是降低并非不加载
+
+   -->
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function fn1() {
+        console.log(1);
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(1);
+            console.log("2000");
+          }, 2000);
+        });
+      }
+      function fn2() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(2);
+            console.log("3000");
+          }, 3000);
+        });
+      }
+      // 同步执行
+      async function fn() {
+        let n1 = fn2();
+        let n2 = fn1();
+        await n1;
+        await n2;
+      }
+      // 异步执行
+      async function fna() {
+        await fn1();
+        await fn2();
+      }
+      // function run() {
+      //   fn();
+      //   fna();
+      // }
+      fna();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class MyPromise {
+      static resolve(value) {
+        this.status = 'fullfieled'
+        this.value = value
+        this.callbackStack.forEach(fn => {
+          fn(value)
+        })
+      }
+      constructor(fn) {
+        this.status = 'pending'
+        this.callbackStack = new Set()
+        this.value = ''
+        fn(MyPromise.resolve.bind(this));
+      }
+      then(callback) {
+        return new MyPromise(function (resolve) {
+          if (this.status === 'pending') {
+            this.callbackStack.add((value) => {
+              this.value = callback(value)
+              resolve(this.value)
+            })
+          } else if (this.status === 'fullfieled') {
+            this.value = callback(this.value)
+            resolve(this.value)
+          }
+
+        }.bind(this))
+      }
+    }
+
+    let p2 = new MyPromise((resolve) => {
+        resolve('sss')
+    }).then(res => {
+      console.log(res);
+      return '332'
+    }).then(res2 => {
+      console.log(res2);
+    })
+  </script>
+</body>
+
+</html>

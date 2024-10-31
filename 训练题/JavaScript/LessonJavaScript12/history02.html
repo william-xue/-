@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>history02</title>
+	</head>
+	<body>
+		<h2>history02页面</h2>
+		<a href="history03.html">点击跳转到history03页面</a>
+		<button id="forwordBtn">前进</button>
+		<button id="backBtn">后退</button>
+		<input type="text" placeholder="请输入内容">
+		<script type="text/javascript">
+			forwordBtn.onclick = function(){
+				history.forward();
+			}
+			backBtn.onclick = function(){
+				history.back();
+			}
+		</script>
+	</body>
+</html>

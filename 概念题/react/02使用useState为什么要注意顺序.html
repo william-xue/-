@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 因为react进行useState的时候是用了一个数组进行保存setter 和 state 并且使用游标curson作为索引去触发setter更新state
+      // 下例子 如果firstRender为true首次渲染了initName 数组里面一共存在三个变量 initname firstname lastname 游标有三个
+      // 当第二次渲染更新的时候数组里只剩下firstname lastname 当游标为0的时候useState(initName) 游标为1的时候就是useState("Yardley")就会出现游标异常的情况
+      let firstRender = true;
+
+      function RenderFunctionComponent() {
+        let initName;
+
+        if (firstRender) {
+          [initName] = useState("Rudi");
+          firstRender = false;
+        }
+        const [firstName, setFirstName] = useState(initName);
+        const [lastName, setLastName] = useState("Yardley");
+
+        return <Button onClick={() => setFirstName("Fred")}>Fred</Button>;
+      }
+    </script>
+  </body>
+</html>

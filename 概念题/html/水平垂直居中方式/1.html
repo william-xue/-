@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+.wp {
+  /*writing-mode: vertical-lr; 将子集的文字方向设置为垂直方向 然后text-align:center就能够垂直方向居中  */
+    height: 300px;
+    border: 1px solid #ccc;
+    writing-mode: vertical-lr; 
+    text-align: center;
+}
+.wp-inner {
+  /*writing-mode: horizontal-tb; 将子集的文字方向设置为水平方向 然后text-align:center就能够水平居中  */
+    border: 1px solid red;
+    writing-mode: horizontal-tb;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.box {
+    display: inline-block;
+    margin: auto;
+    text-align: left;
+}
+
+
+
+</style>
+<body>
+  <div class="wp">
+    <div class="wp-inner">
+      <div class="box">123123</div>
+    </div>
+</div>
+</body>
+</html>

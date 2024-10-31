@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button id="myButton">点击按钮</button>
+  </body>
+  <script>
+    document.getElementById("myButton").addEventListener(
+      "click",
+      function (ev) {
+        alert(1);
+      },
+      true
+    );
+    document.body.addEventListener(
+      "click",
+      function (ev) {
+        alert(2);
+      },
+      true
+    );
+    document.addEventListener(
+      "click",
+      function (ev) {
+        alert(3);
+      },
+      true
+    );
+  </script>
+</html>

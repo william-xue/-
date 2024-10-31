@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+    
+     * 首先说import，他只是一个引用,在你没有用到它得时候它不会执行。
+        需要执行的时候，再到模块里面取值，webpack则是根据你的引入方式去判断模块的类型，然后进行相关的转译，import引入，babel会默认把ES6的模块转译为ComminJS规范，然后把node_modules里面的依赖打包成IIFE（自执行函数(function(modules){})([])）,模块会传入到数组里面，函数经过运行之后最终将模块通过module.exports导出
+
+     * 
+    */
+      let sa = Symbol.for("sa");
+      let b = Symbol.for("sa");
+      let map = new Map();
+      map.set(sa, "111");
+      console.log(map.get(b));
+    </script>
+  </body>
+</html>

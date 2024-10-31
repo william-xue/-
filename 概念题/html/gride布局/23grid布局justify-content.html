@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .wrapper,
+      .wrapper-1,
+      .wrapper-2,
+      .wrapper-3,
+      .wrapper-4,
+      .wrapper-5,
+      .wrapper-6 {
+        display: grid;
+        grid-template-columns: 100px 200px 100px;
+        grid-gap: 5px;
+        grid-auto-rows: 50px;
+        justify-content: start;
+      }
+      .wrapper-1 {
+        justify-content: end;
+      }
+      .wrapper-2 {
+        justify-content: center;
+      }
+      .wrapper-3 {
+        justify-content: space-around;
+      }
+      .wrapper-4 {
+        justify-content: space-between;
+      }
+      .wrapper-5 {
+        justify-content: space-evenly;
+      }
+      .wrapper-6 {
+        justify-content: stretch;
+      }
+      .one {
+        background: #19caad;
+      }
+      .two {
+        background: #8cc7b5;
+      }
+      .three {
+        background: #d1ba74;
+      }
+      .four {
+        background: #bee7e9;
+      }
+      .five {
+        background: #e6ceac;
+      }
+      .six {
+        background: #ecad9e;
+      }
+      .seven {
+        background: #beedc7;
+      }
+      .eight {
+        background: #f4606c;
+      }
+      .nine {
+        background: #a0eee1;
+      }
+      .item {
+        text-align: center;
+        font-size: 200%;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>justify-content: start;</h1>
+    <div class="wrapper">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>justify-content: end;</h1>
+    <div class="wrapper-1">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>justify-content: center;</h1>
+    <div class="wrapper-2">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>justify-content: space-around;</h1>
+    <div class="wrapper-3">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>justify-content:space-between</h1>
+
+    <div class="wrapper-4">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>justify-content: space-evenly;</h1>
+    <div class="wrapper-5">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+
+    <h1>justify-content: stretch;</h1>
+    <div class="wrapper-5">
+      <div class="one item">One</div>
+      <div class="two item">Two</div>
+      <div class="three item">Three</div>
+      <div class="four item">Four</div>
+      <div class="five item">Five</div>
+      <div class="six item">Six</div>
+      <div class="seven item">Seven</div>
+      <div class="eight item">eight</div>
+      <div class="nine item">Nine</div>
+    </div>
+  </body>
+</html>

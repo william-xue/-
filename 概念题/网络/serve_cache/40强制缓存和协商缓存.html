@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 缓存分为三类
+       *  1 memory cache 2 disk cache  3 Service Worker 等
+       *  1 memory cache
+       *    指的是内存 当tab关闭后就会失效
+       *  2 disk cache
+       *    磁盘缓存 生命周期很长 通过max-age设置缓存时间 一般缓存打死不变的文件
+       *  3 Service Worker
+       *    可以新创建一个service-woker.js文件然后进行自定义配置  需要缓存那些文件后续就会使用 Service Worker 缓存 看案例1.html
+       * 强制缓存 直接向浏览器拿文件 返回200状态码
+       * Expires 具体失效时间
+       *  1 由于是绝对时间，用户可能会将客户端本地的时间进行修改，而导致浏览器判断缓存失效，重新请求该资源。此外，即使不考虑自信修改，时差或者误差等因素也可能造成客户端与服务端的时间不一致，致使缓存失效。
+          2 写法太复杂了。表示时间的字符串多个空格，少个字母，都会导致非法属性从而设置失效。
+       * Cache Control 按秒指定失效时间 优先级高于Expires
+          这两者的区别就是前者是绝对时间，而后者是相对时间。如下：
+            Cache-control: max-age=2592000
+          max-age：即最大有效时间，在上面的例子中我们可以看到
+          must-revalidate：如果超过了 max-age 的时间，浏览器必须向服务器发送请求，验证资源是否还有效。
+          no-cache：虽然字面意思是“不要缓存”，但实际上还是要求客户端缓存内容的，只是是否使用这个内容由后续的对比来决定。
+              当设置为no-cache的时候直接走协商缓存 但是当页面中同一个资源多次加载的话第二次请求同种资源用的也是memory cache 但是不会显示出来
+          no-store: 真正意义上的“不要缓存”。所有内容都不走缓存，包括强制和对比。
+              不走任何缓存 无论是强制缓存还是协商缓存都不会使用
+          public：所有的内容都可以被缓存 (包括客户端和代理服务器， 如 CDN)
+          private：所有的内容只有客户端才可以缓存，代理服务器不能缓存。默认值。
+       * 
+       * 
+       * 协商缓存
+       * Last-Modified & If-Modified-Since  
+       *  1服务器通过 Last-Modified 字段告知客户端，资源最后一次被修改的时间，例如
+            Last-Modified: Mon, 10 Nov 2018 09:10:11 GMT
+          2浏览器将这个值和内容一起记录在缓存数据库中。
+          3下一次请求相同资源时时，浏览器从自己的缓存中找出“不确定是否过期的”缓存。因此在请求头中将上次的 Last-Modified 的值写入到请求头的 If-Modified-Since 字段
+          4服务器会将 If-Modified-Since 的值与 Last-Modified 字段进行对比。如果相等，则表示未修改，响应 304；反之，则表示修改了，响应 200 状态码，并返回数据。
+          但是他还是有一定缺陷的：
+          1如果资源更新的速度是秒以下单位，那么该缓存是不能被使用的，因为它的时间单位最低是秒。
+          2如果文件是通过服务器动态生成的，那么该方法的更新时间永远是生成的时间，尽管文件可能没有变化，所以起不到缓存的作用。
+        Etag & If-None-Match
+          为了解决上述问题，出现了一组新的字段 Etag 和 If-None-Match
+          Etag 存储的是文件的特殊标识(一般都是 hash 生成的)，服务器存储着文件的 Etag 字段。之后的流程和 Last-Modified 一致，只是 Last-Modified 字段和它所表示的更新时间改变成了 Etag 字段和它所表示的文件 hash，把 If-Modified-Since 变成了 If-None-Match。服务器同样进行比较，命中返回 304, 不命中返回新资源和 200。
+        
+    */
+    </script>
+  </body>
+</html>

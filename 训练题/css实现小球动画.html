@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @property --x {
+        syntax: "<length>";
+        inherits: false;
+        initial-value: 0px;
+      }
+      @property --y {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 0deg;
+      }
+      .bar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f34545;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        background-color: black;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: move 2s linear infinite;
+      }
+      @keyframes move {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg) translateX(15px);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg) translateX(15px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <div class="dot"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * script引入外部插件的时候是有下载和执行两个阶段
+       * 正常不加async和defer正常下载和执行都会阻塞浏览器解析dom树
+       * defer 属性会让script延迟加载  多个defer的script会并行下载执行 按下载好的顺序依次执行 执行时机是在页面解析完成 DOMContentLoaded之前执行
+       * async 属性会让script延迟加载  多个async的script会并行下载执行 谁先下载完谁执行 执行时机是在dom可能解析完可能解析到一半或者完全解析完执行
+       * async会阻塞dom解析 defer不会
+       *
+       */
+    </script>
+  </body>
+</html>

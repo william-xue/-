@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JQuery基础03</title>
+		<style type="text/css">
+			div {
+				width: 200px;
+				height: 200px;
+				float: left;
+				margin: 0 20px;
+			}
+			#a {
+				background-color: red;
+			}
+			#b {
+				background-color: yellow;
+			}
+			#c {
+				background-color: blue;
+			}
+			fieldset {
+				clear: both;
+			}
+			#d {
+				background-color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="a"></div>
+		<div id="b"></div>
+		<div id="c"></div>
+		<hr style="clear: both;">
+		<div id="d"></div>
+		<fieldset>
+			<legend><h2>显示隐藏动画</h2></legend>
+			<button>显示</button>
+			<button>隐藏</button>
+			<button>特殊效果1</button>
+		</fieldset>
+		<fieldset>
+			<legend><h2>上拉下拉动画</h2></legend>
+			<button>上拉</button>
+			<button>下拉</button>
+			<button>特殊效果1</button>
+		</fieldset>
+		<fieldset>
+			<legend><h2>淡入淡出动画</h2></legend>
+			<button>淡出</button>
+			<button>淡入</button>
+			<button>淡出到</button>
+			<button>特殊效果1</button>
+		</fieldset>
+		<fieldset>
+			<legend><h2>自定义动画</h2></legend>
+			<button>自定义动画</button>
+			<button>自定义动画组</button>
+		</fieldset>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			$("fieldset:eq(0) button:eq(0)").click(function(){
+				$("#a").show(1000);
+				$("#b").show("fast"); // slow, normal, fast
+				$("#c").show(2000, function(){
+					alert("cDiv已完全显示");
+				});
+			});
+			$("fieldset:eq(0) button:eq(1)").click(function(){
+				$("#a").hide(1000);
+				$("#b").hide("fast"); // slow, normal, fast
+				$("#c").hide(2000, function(){
+					alert("cDiv已完全隐藏");
+				});
+			});
+			$("fieldset:eq(0) button:eq(2)").click(function(){
+				$("#a").toggle(1000);
+				$("#b").toggle("fast"); // slow, normal, fast
+				$("#c").toggle(2000, function(){
+					alert("cDiv动画执行完毕!");
+				});
+			});
+			
+			$("fieldset:eq(1) button:eq(0)").click(function(){
+				$("#a").slideUp(1000);
+				$("#b").slideUp("normal");
+				$("#c").slideUp(2000, function(){
+					alert("cDiv上拉完毕!");
+				});
+			});
+			$("fieldset:eq(1) button:eq(1)").click(function(){
+				$("#a").slideDown(1000);
+				$("#b").slideDown("normal");
+				$("#c").slideDown(2000, function(){
+					alert("cDiv下拉完毕!");
+				});
+			});
+			$("fieldset:eq(1) button:eq(2)").click(function(){
+				$("#a").slideToggle(1000);
+				$("#b").slideToggle("normal");
+				$("#c").slideToggle(2000, function(){
+					alert("cDiv执行完毕!");
+				});
+			});
+			
+			$("fieldset:eq(2) button:eq(0)").click(function(){
+				$("#a").fadeOut(1000);
+				$("#b").fadeOut("fast");
+				$("#c").fadeOut(2000, function(){
+					alert("cDiv淡出效果完毕!");
+				});
+			});
+			$("fieldset:eq(2) button:eq(1)").click(function(){
+				$("#a").fadeIn(1000);
+				$("#b").fadeIn("fast");
+				$("#c").fadeIn(2000, function(){
+					alert("cDiv淡入效果完毕!");
+				});
+			});
+			$("fieldset:eq(2) button:eq(2)").click(function(){
+				$("#a").fadeTo(1000, 0.5);
+				$("#b").fadeTo("fast", 0.3);
+				$("#c").fadeTo(2000, 0.1, function(){
+					alert("cDiv淡入效果完毕!");
+				});
+			});
+			$("fieldset:eq(2) button:eq(3)").click(function(){
+				$("#a").fadeToggle(1000);
+				$("#b").fadeToggle("fast");
+				$("#c").fadeToggle(2000, function(){
+					alert("cDiv效果执行完毕!");
+				});
+			});
+			
+			$("fieldset:eq(3) button:eq(0)").click(function(){
+				/* 
+					animate(样式对象, 动画运动时间, 回调函数)
+					注意: 只有数字值可创建动画（比如 "margin:30px"）。字符串值无法创建动画（比如 "background-color:red"）。
+					还可以通过+=或者-=创建相对动画
+				 */
+				$("#d").animate({
+					width:"+=10",
+					height:"+=10",
+					// borderRadius:"50%"
+				}, 1000, function(){
+					alert("dDiv动画执行完毕");
+				});
+			});
+			$("fieldset:eq(3) button:eq(1)").click(function(){
+				$("#d").animate({
+					width:300,
+				}, 1000).animate({
+					height:300,
+				}, 1000).animate({
+					borderRadius:"50%",
+				}, 1000, function(){
+					alert("动画组执行完毕!");
+				});
+			});
+		</script>
+	</body>
+</html>

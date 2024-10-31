@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>函数拓展</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				1. 回调函数: 将一个函数体当做实参传入到另外一个函数里, 那么这个充当实参的函数就叫回调函数
+					适用场景:
+						1.1 解决异步数据回传问题
+						1.2 解决获取保密数据问题
+				
+				2. 闭包函数: 将一个函数声明写到另外一个函数声明里, 形成了函数声明的嵌套写法, 里面的函数可以只声明, 也可以作为外部函数的返回值返回, 这样里面的函数声明我们称之为闭包函数
+					闭包函数的特点:
+					1. 在闭包函数里可以访问到其外部函数里的局部变量
+					2. 一旦闭包函数里使用了外部函数里的局部变量, 闭包就会将其的生命周期延长至与全局变量的生命周期保持一致
+			 */
+			// 解决异步数据回传问题
+			// function network(fn){
+				// 发起网络请求
+				// ........5s
+			// 	setTimeout(function(){
+			// 		var data = "我是祥铭的爸爸~";
+			// 		fn(data);
+			// 	}, 5000);
+			// }
+			
+			// function downLoad(fn){
+			// 	//机密......
+			// 	var jd = 50;
+			// 	fn(jd);
+			// }
+			// downLoad(function(jd){
+			// 	console.log(jd);
+			// })
+			// console.log(11111);
+			// network(function(d){
+			// 	console.log(d);
+			// });
+			// console.log(22222);
+			
+			
+			function fn1(){
+				var n = 100;
+				function fn2(){
+					n++;
+					console.log(n);
+				}
+				return fn2;
+			}
+			// fn1();
+			// fn1();
+			// fn1();
+			// fn1();
+			// fn1();
+			var fn = fn1();
+			
+			fn();
+			fn();
+			fn();
+			fn();
+			fn();
+			fn();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
+    }
+  </style>
+  <div id="app">
+    <div id="about"></div>
+    <button v-on:click="handle">Toggle</button>
+  </div>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+      // function Create(node) {
+      //   var notiful = Vue.extend({
+      //     template: `
+      //          <p >{{name}}</p>
+      //      `,
+      //     data() {
+      //       return {
+      //         name: "liuhuas",
+      //       };
+      //     },
+      //   });
+      //   var noti = new notiful().$mount();
+      //   node.appendChild(noti.$el);
+      // }
+      new Vue({
+        el: "#app",
+        watch:{
+          show:{
+            handler(val){
+              val?this.create(document.getElementById("about"), this.show):''
+            }
+          }
+        },
+        data: {
+          show: false,
+        },
+        mounted() {
+
+        },
+        methods: {
+          handle(){
+            this.show=!this.show
+            console.log(this.show);
+          },
+          create(node) {
+            var notiful = Vue.extend({
+              template: `
+              <transition name='fade'>
+               <p v-show="this.show">{{name}}</p>
+                </transition>
+           `,
+              data() {
+                return {
+                  name: "liuhuas",
+                };
+              },
+            });
+            var noti = new notiful().$mount();
+            node.appendChild(noti.$el);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

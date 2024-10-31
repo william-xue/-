@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>锅打灰太狼</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .box {
+        width: 320px;
+        height: 480px;
+        margin: 50px auto 0;
+        background: url(img/game_bg.jpg) no-repeat;
+        position: relative;
+      }
+
+      .score {
+        font-size: 20px;
+        color: white;
+        position: absolute;
+        left: 64px;
+        top: 10px;
+      }
+
+      .progress {
+        height: 16px;
+        position: absolute;
+        left: 64px;
+        top: 66px;
+      }
+
+      .startMenu,
+      .endMenu {
+        width: 60%;
+        height: 40%;
+        position: absolute;
+        color: red;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        font-size: 35px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .endMenu {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="score">0</div>
+      <img src="img/progress.png" class="progress" />
+      <div class="startMenu">
+        <p>开始游戏</p>
+        <p>游戏说明</p>
+      </div>
+      <div class="endMenu">
+        <p>游戏结束</p>
+        <p>再来一局</p>
+      </div>
+    </div>
+    <script type="text/javascript">
+      // 得分
+      var scoreEle = document.querySelector(".score");
+      // 进度条
+      var progressEle = document.querySelector(".progress");
+      // 开始游戏按钮
+      var startGameBtn = document.querySelector(".startMenu>p:nth-child(1)");
+      // box
+      var boxEle = document.querySelector(".box");
+      // 开始游戏菜单
+      var startMenu = document.querySelector(".startMenu");
+      // 结束菜单
+      var endMunu = document.querySelector(".endMenu");
+      // 再来一局按钮
+      var againBtn = document.querySelector(".endMenu>p:nth-child(2)");
+      againBtn.onclick = function () {
+        // 刷新页面
+        // location.reload();
+        history.go(0);
+      };
+
+      // 开始游戏
+      startGameBtn.onclick = function () {
+        // 隐藏开始菜单
+        startMenu.style.display = "none";
+        // 倒计时
+        countDown();
+        // 创建狼
+        // ???????????
+        // requestAnimationFrame(createWolf);
+        createWolf();
+      };
+      // 倒计时函数
+      function countDown() {
+        var progressWidth = progressEle.clientWidth;
+        var timer1 = setInterval(function () {
+          progressWidth -= 2;
+          progressEle.style.width = progressWidth + "px";
+          if (progressWidth <= 0) {
+            // 游戏结束
+            clearInterval(timer1);
+            cancelAnimationFrame(requestIndex);
+            endMunu.style.display = "block";
+          }
+        }, 100);
+      }
+      // 创建狼
+      var flag = 200;
+      var locationArr = [
+        [110, 137],
+        [30, 182],
+        [30, 245],
+        [195, 166],
+        [114, 216],
+        [210, 236],
+        [41, 318],
+        [130, 298],
+        [219, 319],
+      ];
+      function randomNumber(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+      }
+      // 未被打击的换图计时器
+      var changeSrcTimer;
+      // 存储被创建的图片
+      var wolf;
+      // 记录狼的类型
+      var name;
+      var requestIndex = 0;
+      function createWolf() {
+        flag++;
+        if (flag >= 150) {
+          flag = 0;
+          // 动态创建img
+          wolf = document.createElement("img");
+          // 随机位置
+          var randomIndex = randomNumber(0, locationArr.length - 1);
+          wolf.style.position = "absolute";
+          wolf.style.left = locationArr[randomIndex][0] + "px";
+          wolf.style.top = locationArr[randomIndex][1] + "px";
+          // 修改图片大小
+          wolf.style.width = "80px";
+          // 给每个图片绑定点击事件
+          wolf.onclick = hitWolf;
+          // 随机图片类型
+          name = Math.random() > 0.8 ? "x" : "h";
+          // 插入到文档里
+          boxEle.appendChild(wolf);
+          // 换图
+          // 声明一个变量记录图片的序号
+          var index = 0;
+          // 声明一个布尔值记录是否应该递增还是递减
+          var flagSrc = true; // true++  false--
+          changeSrcTimer = setInterval(function () {
+            console.log("meipai");
+            wolf.src = "img/" + name + index + ".png";
+            if (flagSrc) {
+              index++;
+              if (index == 5) {
+                flagSrc = false;
+              }
+            } else {
+              index--;
+              if (index == 0) {
+                clearInterval(changeSrcTimer);
+                // 图片删除
+                boxEle.removeChild(wolf);
+              }
+            }
+          }, 100);
+        }
+        requestIndex = requestAnimationFrame(createWolf);
+      }
+
+      // 声明一个变量存储得分
+      var s = 0;
+      // 声明一个布尔值处理重复点击
+      var isClick = true;
+      function hitWolf() {
+        if (!isClick) {
+          return;
+        }
+        isClick = !isClick;
+        if (name == "h") {
+          s += 10;
+        } else {
+          s -= 10;
+        }
+        scoreEle.innerHTML = s;
+        clearInterval(changeSrcTimer);
+        // 更换被打击的图片
+        var hitIndex = 6;
+        var hitTimer = setInterval(function () {
+          wolf.src = "img/" + name + hitIndex + ".png";
+          hitIndex++;
+          if (hitIndex == 9) {
+            clearInterval(hitTimer);
+            boxEle.removeChild(wolf);
+            isClick = true;
+          }
+        }, 100);
+      }
+      window;
+    </script>
+  </body>
+</html>

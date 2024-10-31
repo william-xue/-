@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="ipt" />
+    <script>
+      var ipt = document.querySelector("#ipt");
+      ipt.oninput = debounce(function (e) {
+        console.log(this, e);
+      });
+
+      function debounce(callback) {
+        var timer = null;
+        return function (e) {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            callback && callback.call(this, e);
+          }, 1000);
+        };
+      }
+    </script>
+  </body>
+</html>

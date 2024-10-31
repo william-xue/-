@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./Reactive.js"></script>
+    <script>
+      /**
+       * 对于数组方法的响应式监听
+       * 1 首先对于数组中includes indexOf等方法的处理
+       * 2 对于能够改变数组长度的方法 如push pop shift unshift等方法的处理
+       */
+
+      // let obj = {};
+      // let data = reactive([obj]);
+      // effect(() => {
+      //   console.log("inculdes");
+      //   // 出现这种问题的原因是 data[0]属于get操作拿到的也是代理后的对象 data.includes方法会遍历数组也会进行get操作然后会重新代理一次data[0] 就会导致两个对象拿到的是不同的地址肯定是false
+      //   // 解决方案就是使用map保存一下 访问过得data[0] 然后下次查看map中是否有 如果有就直接拿不重新生成新的代理对象
+      //   console.log(data.includes(obj));
+      // });
+
+      let arr = [1, 2, 3, 4];
+      let data = reactive(arr);
+      // 当我两次在副作用函数中执行push的时候会出现爆栈的现象  原因是当我push的时候数组的长度会被访问和修改 当访问的时候length会和effect绑定  当修改的时候会执行effect
+      // 所以第一次length被绑定和修改  当执行第二个effect的时候因为第一次length已经被绑定了所以执行的时候会执行第一个effect 然后第一个又会执行第二个length绑定的effect 就会无限执行
+      // 解决思路就是屏蔽length  当我们push的时候不绑定length属性 因为push的目的只是塞元素到数组中 不需要读取数组 所以没有其他的副作用
+      effect(() => {
+        console.log("effect1");
+        data.push(1);
+      });
+      effect(() => {
+        console.log("effect1");
+        data.push(1);
+      });
+      console.log(bucket);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function resolve(val) {
+        this.status = "fullfield";
+        this.value = val;
+        setTimeout(() => {
+          this.thenFn.forEach((fn) => {
+            fn(this.value);
+          });
+        }, 0);
+      }
+      function reject() {}
+      class MyPromise {
+        constructor(fn) {
+          this._fn = fn;
+          this.thenFn = [];
+          this.status = "pending";
+          this._fn(resolve.bind(this), reject);
+        }
+        then(fn) {
+          return new MyPromise(
+            function (resolve) {
+              if (this.status === "pending") {
+                this.thenFn.push(() => {
+                  this.value = fn(this.value);
+                  if (this.value instanceof MyPromise) {
+                    this.value.then((val) => {
+                      resolve(val);
+                    });
+                  } else {
+                    resolve(this.value);
+                  }
+                });
+              }
+              if (this.status === "fullfield") {
+                setTimeout(() => {
+                  this.value = fn(this.value);
+                  if (this.value instanceof MyPromise) {
+                    this.value.then((val) => {
+                      resolve(val);
+                    });
+                  } else {
+                    resolve(this.value);
+                  }
+                }, 0);
+              }
+            }.bind(this)
+          );
+        }
+      }
+      MyPromise.all = function (arr) {
+        let len = arr.length;
+        let result = [];
+        let j = 0;
+        return new MyPromise(function (resolve) {
+          if (arr.length === 0) {
+            resolve(result);
+          }
+          arr.map((p, i) => {
+            // 用index来保证进来的p和出去的结果位置是对应的
+            if (p instanceof MyPromise) {
+              p.then((val) => {
+                result[i] = val;
+                j++;
+                if (j === len) {
+                  resolve(result);
+                }
+              });
+            } else {
+              result[i] = p;
+              j++;
+              if (j === len) {
+                resolve(result);
+              }
+            }
+          });
+        });
+      };
+      let p1 = 2;
+      console.log(1);
+      let p2 = new MyPromise(function (resolve, reject) {
+        setTimeout(() => {
+          resolve("2000 s");
+        }, 2000);
+      })
+        .then((val) => {
+          console.log(val);
+          return new MyPromise(function (resolve) {
+            setTimeout(() => {
+              resolve("返回一个promise");
+            }, 1000);
+          });
+        })
+        .then((val) => {
+          console.log(val);
+        });
+    </script>
+  </body>
+</html>

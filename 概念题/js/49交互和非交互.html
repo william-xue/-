@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 情景1 非交互 两个函数是ajax的回调 但是返回时间不确定 但是两个内部处理的是一个对象中两个不同的变量不会相互影响叫做非交互
+      let a = {};
+      function foo(res) {
+        a.foo = res;
+      }
+      function bar(res) {
+        a.bar = res;
+      }
+      setTimeout(bar, Math.floor(Math.random() * 1000));
+      setTimeout(foo, Math.floor(Math.random() * 1000));
+      // 情景2 交互  两个函数也是ajax的回调 返回时间不确定 但是处理的是一个数组 需要指定哪个返回值在数组的第几位
+      let arr = [];
+      function fn(res) {
+        if (res === "bar") {
+          arr[0] = res;
+        }
+        if (res === "foo") {
+          arr[1] = res;
+        }
+      }
+      setTimeout(() => {
+        fn("bar");
+      }, Math.floor(Math.random() * 1000));
+
+      setTimeout(() => {
+        fn("foo");
+      }, Math.floor(Math.random() * 1000));
+    </script>
+  </body>
+</html>

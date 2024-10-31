@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      width: 600px;
+      height: 200px;
+      margin: 200px auto;
+      display: flex;
+      justify-content: space-around;
+      position: relative;
+    }
+    .time {
+      position: absolute;
+      top: 160px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 80px;
+    }
+    .light {
+      width: 150px;
+      height: 150px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+    .box.red .red {
+      background-color: red;
+    }
+    .box.yellow .yellow {
+      background-color: yellow;
+    }
+    .box.green .green {
+      background-color: green;
+    }
+    .time{
+      font-family: monospace;
+    }
+    
+  </style>
+  <body>
+    <div class="box red">
+      <div class="light red"></div>
+      <div class="light yellow"></div>
+      <div class="light green"></div>
+      <div class="time">0</div>
+    </div>
+    <script>
+      // 红绿灯
+      // 1 红灯持续默认3s
+      // 2 绿灯持续默认4s
+      // 3 黄灯持续默认2s
+      // 类的功能包含
+      // 到时间后切换灯的颜色  当到达这个灯的时候需要记录开始的时间 now time
+      // 获取当前灯的剩余时间
+      // 已知当前灯 下一个灯的颜色 如果是红的下一个是黄灯  如果是绿灯下一个是黄灯 如果是黄灯那么需要判断上一个是什么灯 如果是红灯下一个就是黄灯需要动态变更
+      // 外部需要有一个监视者 持续观察当前灯剩余时间 =持续时间- (当前时间-开始时间） 当我剩余时间<=0的时候就需要切换到下一个灯
+
+      class Light {
+        constructor(options = { red: 3, green: 4, yellow: 2, inital: 'red' }) {
+          const { red, green, yellow, inital } = options;
+          this._currentLight = inital;
+          this._remainTime = 0;
+          this._time = Date.now();
+          this._isSwitch = false;
+          this._lights = {
+            red: {
+              remain: red,
+              next: 'green',
+            },
+            green: {
+              remain: green,
+              next: 'yellow',
+            },
+            yellow: {
+              remain: yellow,
+            },
+          };
+        }
+        // 下一个灯
+        _next() {
+          if (this._currentLight === 'red') {
+            this._lights['yellow']['next'] = 'green';
+          } else if (this._currentLight === 'green') {
+            this._lights['yellow']['next'] = 'red';
+          }
+        }
+        // 切换灯颜色
+        _switch() {
+          this._isSwitch = true;
+          this._time = Date.now();
+          this._next();
+          this._currentLight = this._lights[this._currentLight]['next'];
+          this._isSwitch = false;
+        }
+        // 获取当前灯的颜色以及剩余时间
+        getCurrentLight() {
+          if (this._isSwitch) {
+            return;
+          }
+          // 获取当前的灯 以及当前灯的剩余时间
+          this._remainTime =
+            this._lights[this._currentLight].remain -
+            Math.floor((Date.now() - this._time) / 1000);
+          if (this._remainTime <= 0) {
+            this._switch();
+            return this.getCurrentLight();
+          }
+          return {
+            color: this._currentLight,
+            remain: this._remainTime,
+          };
+        }
+      }
+      const light = new Light();
+      function raf() {
+        window.requestAnimationFrame(raf);
+        const { color, remain } = light.getCurrentLight();
+        document.querySelector('.time').innerHTML = remain;
+        console.log(color);
+        document.querySelector('.box').className = `box ${color}`;
+      }
+      raf();
+    </script>
+  </body>
+</html>

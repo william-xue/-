@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      @property --x {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 0deg;
+      }
+      .bar {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        background-color: red;
+        border-radius: 50%;
+        margin-top: 100px;
+        position: relative;
+      }
+      .smallbar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: blue;
+        position: absolute;
+        left: 35px;
+        top: 35px;
+        transform: rotate(var(--x)) translate(50px);
+        animation: r 3s linear infinite;
+      }
+      @keyframes r {
+        to {
+          --x: 360deg;
+        }
+      }
+    </style>
+    <div class="bar">
+      <div class="smallbar">3</div>
+    </div>
+  </body>
+</html>

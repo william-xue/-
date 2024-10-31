@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [];
+      for (let i = 0; i < 1000; i++) {
+        arr.push({
+          value: i,
+          id: i,
+        });
+      }
+      let t1 = +new Date();
+      let page = 0;
+      let limit = 200;
+      let totalPage = Math.ceil(arr.length / limit);
+      // console.time('列表时间')
+      // 懒加载  先requestAnimationFrame渲染第一帧加载出前200条数据  然后后面一直放到宏任务栈中持续加载直到加载完毕
+      function renderList() {
+        console.log(page,'page');
+        if (page < totalPage) {
+          let t1 = +new Date();
+
+          for (let i = page * limit; i < page * limit + limit; i++) {
+            let div = document.createElement("div");
+            div.innerHTML = arr[i].value;
+            document.body.appendChild(div);
+          }
+          page++;
+          requestAnimationFrame(renderList);
+        }
+      }
+      renderList()
+      // for (let i = 0; i < arr.length; i++) {
+      //   let div = document.createElement("div");
+      //   div.innerHTML = arr[i].value;
+      //   document.body.appendChild(div);
+      // }
+      console.log(222);
+      // console.timeEnd("列表时间");
+     
+    </script>
+  </body>
+</html>

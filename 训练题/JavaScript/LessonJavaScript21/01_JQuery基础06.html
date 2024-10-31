@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_Jquery基础06</title>
+		<style type="text/css">
+			#div1 {
+				width: 200px;
+				height: 200px;
+				border: 2px solid;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			/* 
+				JQ事件
+				1. jq对象.事件名函数();
+				2. jq对象.on();
+			 */
+			function randomColor(){
+				var r = Math.floor(Math.random()*256);
+				var g = Math.floor(Math.random()*256);
+				var b = Math.floor(Math.random()*256);
+				return `rgb(${r}, ${g}, ${b})`;
+			}
+			// $("#div1").click(function(){
+			// 	$(this).css("background-color", randomColor());
+			// });
+			
+			/* 
+				1. on()绑定事件基础版
+				语法:
+					$().on("事件名", 回调函数);
+			 */
+			// $("#div1").on("click", function(){
+			// 	$(this).css("background-color", randomColor());
+			// });
+			
+			
+			/* 
+				2. on() 一次绑定多个事件
+				语法:
+					$().on("事件名1 事件名2 ...", 回调函数);
+			 */
+			// $("#div1").on("mouseenter mouseleave click", function(){
+			// 	$(this).css("background-color", randomColor());
+			// });
+			
+			
+			/* 
+				3. on()一次绑定多个事件, 每个事件触发不同的函数
+				语法:
+					$().on({
+						事件名1:回调函数1,
+						事件名2:回调函数2,
+						...
+					});
+			 */
+			$("#div1").on({
+				mouseenter:function(){
+					$(this).animate({
+						width:"+=20"
+					}, 300);
+				},
+				mouseleave:function(){
+					$(this).animate({
+						height:"+=20"
+					}, 300);
+				},
+				click:function(){
+					$(this).css("background-color", randomColor());
+				}
+			});
+			
+		</script>
+	</body>
+</html>

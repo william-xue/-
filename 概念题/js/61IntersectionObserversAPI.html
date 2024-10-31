@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #root {
+      overflow: auto;
+      height: 800px;
+    }
+  </style>
+  <body>
+    <div id="root">
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="1" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="2" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="3" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="4" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="5" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="6" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="7" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="8" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="9" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="0" />
+      <div style="height: 100px; background: #ccc; width: 100%"></div>
+      <img style="height: 200px; width: 100%" title="11" />
+    </div>
+    <script>
+      let box = document.getElementById("root").getAttribute("title");
+      console.log(box);
+      function callback(entries) {
+        console.log(entries);
+        console.log(entries[0].target.getAttribute("title"));
+      }
+      let io = new IntersectionObserver(callback, {
+        root: document.getElementById("root"),
+      });
+      let imageList = [...document.querySelectorAll("img")];
+      imageList.forEach((img) => {
+        io.observe(img);
+      });
+    </script>
+  </body>
+</html>

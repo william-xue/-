@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>JQuery基础01</title>
+	</head>
+	<body>
+		<div id="div1" style="display: none;">这是div1</div>
+		<div id="div2">这是div2</div>
+		<ul>
+			<li>列表项1</li>
+			<li>列表项2</li>
+			<li>列表项3</li>
+			<li>列表项4</li>
+			<li style="visibility: hidden;">列表项5</li>
+			<li>列表项6</li>
+			<li>列表项7</li>
+			<li>列表项8</li>
+			<li>列表项9</li>
+			<li>列表项10</li>
+		</ul>
+		<!-- 
+			autofocus属性: 让输入框默认获得焦点
+			disabled属性: 让表单控件禁用
+			checked属性: 让选框默认选中
+		 -->
+		<input type="text" autofocus>
+		<input type="password">
+		<input type="checkbox" disabled>
+		<input type="radio" checked>
+		<input type="submit">
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			/* 
+				jQuery 是一个高效、精简并且功能丰富的 JavaScript 工具库。它提供的 API 易于使用且兼容众多浏览器，这让诸如 HTML 文档遍历和操作、事件处理、动画和 Ajax 操作更加简单。
+				
+				1. JQ查找元素
+				2. JQ操作DOM
+				3. JQ动画
+			 */
+			
+			/* 
+				一. JQ获取元素
+				语法:
+					$("选择器")
+				返回值: Jq对象
+				
+				牢记: $()方法只要调用, 得到的一定是jq对象, 不再是之前的DOM对象. Jq对象有一套自己的方法, 这些方法只能由jq对象使用, 且jq对象不再支持之前的DOM对象的所有方法和属性
+			 */
+			// var jq1 = $("#div1");
+			// var jq2 = $("ul li");
+			// var dom1 = document.querySelector("#div1");
+			// console.log(jq1,jq2,dom1);
+			
+			/* 
+				二. 如何操作jq对象的css样式
+				设置样式 
+				语法: 
+					一次设置一个样式
+					css("样式名", "样式值")
+					一次设置多个样式
+					css({
+						样式名:"样式值",
+						样式名:"样式值",
+						...
+					})
+				注意: 如果jq对象里有多个元素, 设置样式时, 全部设置上
+				
+				获取样式
+				语法: 
+					css("样式名")
+					返回值: 获取到的样式值
+				注意: 如果jq对象里有多个元素, 获取样式时, 只能获取到第一个
+			 */
+			// $("#div1").css("width", 200);
+			// $("#div1").css("height", 200);
+			// $("#div1").css("background", "red");
+			// $("#div2").css({
+			// 	width:200,
+			// 	height:200,
+			// 	background:"blue"
+			// });
+			// $("ul li").css("background", "pink");
+			
+			// console.log($("#div1").css("background"));
+			// console.log($("div").css("background"));
+
+			/* 
+				三. jq对象和dom对象之间如何相互转化?
+					
+					jq对象转dom对象: 通过下标从jq对象里取出, 取出的就是dom对象
+					dom对象转jq对象: 将dom对象直接放进$()里, 返回出来的就是jq对象
+					
+			 */
+			// var jqDiv1 = $("#div1");
+			// console.log(jqDiv1);
+			// jqDiv1[0].style.background = "red";
+			
+			// var domDiv1 = document.querySelector("#div1");
+			// $(domDiv1).css("background", "red");
+			
+			
+			/* 
+				四. JQ常用的伪类选择器
+			 */
+			// :first 找到jq对象里第一个对象
+			// $("li:first").css("background", "red");
+			// :last 找到jq对象里最后一个对象
+			// $("li:last").css("background", "blue");
+			// :even 找到jq对象里序号为偶数的对象, 序号从0开始
+			// $("li:even").css("background", "blue");
+			// :odd 找到jq对象里序号为奇数的对象, 序号从0开始
+			// $("li:odd").css("background", "red");
+			// :eq(index) 找到jq对象里序号为index的对象, 序号从0开始
+			// var index = 5;
+			// $(`li:eq(${index})`).css("background", "yellow");
+			// $("li").eq(index).css("background", "yellow")
+			
+			// :gt(index) 找到jq对象里序号大于index的所有对象, 序号从0开始
+			// $("li:gt(5)").css("background", "red");
+			// :lt(index) 找到jq对象里序号小于index的所有对象, 序号从0开始
+			// $("li:lt(5)").css("background", "blue");
+			
+			// :hidden 找到当前隐藏的元素, 首先默认不显示的标签, 如head, meta等, 其次, 人为设置了display:none的标签
+			// console.log($(":hidden"));
+			// :visible  找到当前显示的元素, 首先默认显示的标签, 如html, body等, 其次, 没设置display:none的标签
+			// console.log($(":visible"));
+			
+			// :disabled 获取到禁用的表单元素
+			console.log($(":disabled"));
+			// :enabled 获取到可用的表单元素
+			console.log($(":enabled"));
+			// :checked 获取到的是被选中的选框控件
+			setTimeout(function(){
+				console.log($(":checked"));
+			}, 3000);
+			// :focus 获取到的是获得焦点的输入框控件
+			setTimeout(function(){
+				console.log($(":focus"));
+			}, 3000);
+		</script>
+	</body>
+</html>

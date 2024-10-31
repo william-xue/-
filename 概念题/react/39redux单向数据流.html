@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+    单向数据流调用<code> store.dispatch(action) -> reducer(state, action) -> store.getState()</code>
+
+（1）调用sote.dispath(action)（这里的action和上面提到的action不是一个概念，这个是一个纯的对象，上面是一个action creator）
+
+{ type: 'LIKE_ARTICLE', ID: 1 }
+你可以在任何地方调用 store.dispatch(action)，比如组件内部，Ajax 回调函数里面等等。
+
+（2）Action 会触发给 Store 指定的 rootreducer
+rootreducer会返回一个完整的状态树，state状态树上的各个值都可以由对应的reducer来更新。
+
+（3）store会保存状态树
+更新完state后，新的 State 会替代旧的 State。然后可以添加监听函数<code>store.subscribe(listener)</code>在回调函数里面可以通过<code>store.getState()</code>来获取新的state。这样就能更新整个UI。只要调用<code>dispath</code>，state就会根据<code>reducer</code>对应更新，进而触发监听函数<code>subscribe</code>，然后触发回调函数渲染UI。
+    */
+    </script>
+  </body>
+</html>

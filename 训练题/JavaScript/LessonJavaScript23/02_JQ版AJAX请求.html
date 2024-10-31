@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_JQ版AJAX请求</title>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	</head>
+	<body>
+		<input type="text" id="i1" placeholder="用户名">
+		<input type="text" id="i2" placeholder="密码">
+		<button id="btn1">ajax_get请求</button>
+		<button id="btn2">ajax_post请求</button>
+		<button id="btn3">ajax_jsonp请求</button>
+		<img id="img1">
+		<script type="text/javascript">
+			/* 
+				jq的ajax请求, 是对原生ajax的封装, 语法上更简洁统一
+				$.ajax({
+					type:请求的类型: get/post,
+					url:请求地址,
+					async:是否异步,
+					data:需要传递的数据, 格式为对象,
+					dataType:预期的服务器的响应类型,
+					success: 成功的回调函数,
+					error: 失败的回调函数,
+					contentType:传递的数据的格式,
+					jsonp:传递的回调函数的键值对的key,
+					jsonpCallback:传递的回调函数的键值对的value
+				});
+			 */
+			btn1.onclick = function() {
+				$.ajax({
+					type: "get",
+					// url:"http://10.10.11.224:6789/netGet123",
+					// url:"http://10.10.11.224:6789/netGet",
+					url: "http://10.10.11.224:6789/netGet456",
+					async: true,
+					// data:{username:i1.value, password:i2.value},
+					success: function(data) {
+						console.log(data);
+						// console.log(JSON.parse(data));
+					},
+					error: function(err) {
+						console.log(err);
+					},
+					dataType: "json"
+				});
+			}
+			btn2.onclick = function() {
+				$.ajax({
+					type: "post",
+					url:"http://10.10.11.224:6789/netPost",
+					// url: "https://elm.cangdu.org/v1/captchas",
+					async: true,
+					// data: {
+					// 	username: i1.value,
+					// 	password: i2.value
+					// },
+					success: function(data) {
+						console.log(data);
+						img1.src = data.code;
+					},
+					// 该字段的默认值就是application/x-www-form-urlencoded
+					contentType: "application/x-www-form-urlencoded"
+				});
+			}
+			
+			btn3.onclick = function() {
+				$.ajax({
+					type:"get",
+					url:"http://10.10.11.224:6789/ajaxJSONP",
+					async:true,
+					data:{username:i1.value, password:i2.value},
+					//如果想要发起jsonp请求, 必须填写dataType字段, 值必须是jsonp
+					dataType:"jsonp",
+					// jsonp:"cb",
+					// jsonp字段也可以省略, 如果省略, 默认值为callback
+					// jsonpCallback:"abc"
+					
+					// jsonpCallback字段可以不写, 如果不写, 可以通过success字段代替
+					success:function(data){
+						console.log(data);
+					}
+				})
+			}
+			
+			// function abc(data){
+			// 	console.log(data);
+			// }
+		</script>
+	</body>
+</html>

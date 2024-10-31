@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_轮播图</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.box {
+				width: 300px;
+				height: 450px;
+				border: 5px solid gold;
+				margin: 100px auto 0;
+				position: relative;
+				overflow: hidden;
+			}
+			.contentBox {
+				width: 2100px;
+				height: 450px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			.contentBox>img {
+				width: 300px;
+				height: 450px;
+				float: left;
+			}
+			.leftBtn, .rightBtn {
+				width: 50px;
+				height: 80px;
+				font-size: 50px;
+				color: white;
+				font-weight: bold;
+				position: absolute;
+				text-align: center;
+				line-height: 80px;
+				top: 50%;
+				margin-top: -40px;
+			}
+			.leftBtn {
+				left: 0px;
+			}
+			.rightBtn {
+				right: 0;
+			}
+			ul {
+				width: 40%;
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 20px;
+				margin: 0 auto;
+				list-style: none;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			ul li {
+				width: 10px;
+				height: 10px;
+				background-color: lightblue;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="contentBox">
+				<img src="img/1.png" alt="">
+				<img src="img/2.jpeg" alt="">
+				<img src="img/3.jpeg" alt="">
+				<img src="img/4.png" alt="">
+				<img src="img/5.jpeg" alt="">
+				<img src="img/6.png" alt="">
+				<img src="img/1.png" alt="">
+			</div>
+			<!-- 左右按钮 -->
+			<div class="leftBtn"> < </div>
+			<div class="rightBtn"> > </div>
+			<!-- 分页器 -->
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			/* 
+				js动画: js没有提供好的原生动画, 本质上我们需要自己实现, 实现的原理, 通过计时器(setInterval)模拟出某个样式值的变化过程
+				js动画与css动画的比较
+				1. css动画为系统提供的, js是我们自定义的
+				2. css动画的写法固定, 而js比较灵活
+				3. css动画我们一般特指css3的过渡动画和关键帧动画, 其兼容性在低版本浏览器上有问题, js动画没有兼容问题
+				4. js动画因为实现基础为计时器, 而计时器当线程阻塞时, 可能会出现丢帧的问题.
+			 */
+			// var contentDiv = document.querySelector(".contentBox");
+			// var contentLeft = 0;
+			// setInterval(function(){
+			// 	contentLeft-=5;
+			// 	contentDiv.style.left = contentLeft + "px";
+			// 	if(contentLeft <= -1800) {
+			// 		contentLeft = 0;
+			// 	}
+			// }, 20);
+			
+			/* 
+				1. 绑定左右按钮的点击事件, 并处理点击逻辑
+				2. 自动播放, 鼠标移入轮播图区域, 停止轮播, 移出, 继续开始轮播
+			 */
+			var index = 0;
+			
+			var leftBtnDiv = document.querySelector(".leftBtn");
+			var rightBtnDiv = document.querySelector(".rightBtn");
+			var contentDiv = document.querySelector(".contentBox");
+			
+			leftBtnDiv.onclick = leftClick;
+			rightBtnDiv.onclick = rightClick;
+			 
+			// 左边按钮的点击事件函数
+			function leftClick(){
+				if(index == 0) {
+					index = 6;
+				}
+				// 声明一个变量记录每次contentBox的偏移量
+				var x = 0;
+				var leftTimer = setInterval(function(){
+					x += 5;
+					contentDiv.style.left = contentDiv.offsetLeft + x + "px";
+					// 当一张图换完时, 需要清除计时器
+					if(x == 300){
+						clearInterval(leftTimer);
+						index--;
+					}
+				}, 20);
+			}
+			// 右边按钮的点击事件函数
+			function rightClick(){
+				// 每次点击将点击事件置空, 防止二次点击
+				this.onclick = null;
+				/* 有没有到达最后一张, 如果到了要瞬间将contentBox拉回到left为0的位置 */
+				if(index == 6) {
+					index = 0;
+				}
+				// 声明一个变量记录每次contentBox的偏移量
+				var x = 0;
+				var rightTimer = setInterval(function(){
+					x += 5;
+					contentDiv.style.left = contentDiv.offsetLeft - x + "px";
+					// 当一张图换完时, 需要清除计时器
+					if(x == 300){
+						clearInterval(rightTimer);
+						index++;
+						// 换图完毕, 再加上点击事件
+						rightBtnDiv.onclick = rightClick;
+					}
+				}, 20);
+			}
+			 
+			// 自动播放
+			// 监听屏幕的刷新状态, 并在下一次屏幕刷新时触发回调函数
+			var flag = 0;
+			var isAuto = true;
+			function autoPlay(){
+				flag++;
+				if(flag == 200) {
+					if(isAuto){
+						rightClick();
+					}
+					flag = 0;
+				}
+				requestAnimationFrame(autoPlay);
+			}
+			autoPlay();
+			
+			
+			/*
+				鼠标移入和移出效果
+				1. 鼠标移入, 停止自动轮播
+				2. 鼠标移出, 开启自动轮播
+			*/
+		   var boxDiv = document.querySelector(".box");
+		   // 鼠标移入事件
+		   boxDiv.onmouseenter = function(){
+			   isAuto = false;
+		   };
+		   // 鼠标移出事件
+		   boxDiv.onmouseleave = function(){
+			   isAuto = true;
+		   };
+		</script>
+	</body>
+</html>

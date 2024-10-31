@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04_自定义滚动条</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#box {
+				width: 400px;
+				height: 600px;
+				margin: 50px auto 0;
+				position: relative;
+				background-color: lightcyan;
+				overflow: hidden;
+			}
+			#content {
+				width: 383px;
+				font-size: 40px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			#lineArea {
+				width: 17px;
+				height: 600px;
+				position: absolute;
+				right: 0;
+				top: 0;
+				background-color: lightgrey;
+			}
+			#line {
+				width: 17px;
+				background-color: gray;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<!-- 内容区域 -->
+			<div id="content">
+				在中国共产党建党百年之际，为讲好中国共产党故事，帮助非洲青年认识真实、立体、全面的现代中国，增进中非青年相互了解与友谊，中国人民对外友好协会于10月13日至17日举办“我眼中的中国共同富裕之路——中非青年嘉兴行”活动，组织来自中国和非洲10国的青年领袖代表以及中外媒体记者走进中国革命红船起航地嘉兴，见证中国数字化发展赋能乡村振兴和基层治理的具体实践，探寻中国共产党以人民为中心的共同富裕之路，展望新时代中非合作的光明前景。林怡副会长率团全程参加活动。嘉兴是“红船精神”的诞生地，也是浙江省乃至中国数字经济和互联网+高地。参访期间，中非青年通过“我在浙江感悟红船精神”“我在浙江学习数字治理”“我在浙江考察数字产业”“我在浙江体验数字生活”等专题活动，围绕数字经济主题参访红色嘉兴、探寻中国共同富裕之路。在中国共产党建党百年之际，为讲好中国共产党故事，帮助非洲青年认识真实、立体、全面的现代中国，增进中非青年相互了解与友谊，中国人民对外友好协会于10月13日至17日举办“我眼中的中国共同富裕之路——中非青年嘉兴行”活动，组织来自中国和非洲10国的青年领袖代表以及中外媒体记者走进中国革命红船起航地嘉兴，见证中国数字化发展赋能乡村振兴和基层治理的具体实践，探寻中国共产党以人民为中心的共同富裕之路，展望新时代中非合作的光明前景。林怡副会长率团全程参加活动。嘉兴是“红船精神”的诞生地，也是浙江省乃至中国数字经济和互联网+高地。参访期间，中非青年通过“我在浙江感悟红船精神”“我在浙江学习数字治理”“我在浙江考察数字产业”“我在浙江体验数字生活”等专题活动，围绕数字经济主题参访红色嘉兴、探寻中国共同富裕之路。
+			</div>
+			<!-- 滚动条区域 -->
+			<div id="lineArea">
+				<div id="line"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			// 动态计算滚动条的高度
+			line.style.height = box.offsetHeight / content.offsetHeight * lineArea.offsetHeight + "px";
+			box.onmousewheel = function(e){
+				var even = e || event;
+				if(even.wheelDelta > 0) {
+					// 滚轮向上, 滚动条向上, 内容向下
+					content.style.top = content.offsetTop + 30 + "px";
+					// 判断临界值
+					if(content.offsetTop >= 0) {
+						content.style.top = "0px";
+					}
+				}else {
+					// 滚轮向下, 滚动条向下, 内容向上
+					content.style.top = content.offsetTop - 30 + "px";
+					// 判断临界值
+					if(content.offsetTop <= box.offsetHeight - content.offsetHeight) {
+						content.style.top = box.offsetHeight - content.offsetHeight + "px";
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

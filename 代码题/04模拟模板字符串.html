@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let str = "{{name}}名字，{{age}}年龄,{{obj.name}},{{obj.age}}";
+      let data = {
+        name: "zs",
+        age: 15,
+        obj: {
+          name: "nei",
+          age: 778,
+        },
+      };
+      let reg = /\{\{(.*?)\}\}/g;
+      str = str.replace(reg, function (g1, g2) {
+        let value = data;
+        let arr = g2.split(".");
+        arr.map((val) => {
+          value = value[val];
+        });
+        return value;
+      });
+      console.log(str);
+    </script>
+  </body>
+</html>

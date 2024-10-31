@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    ul li {
+      list-style-type: none;
+    }
+    .box {
+      width: 343px;
+      height: 480px;
+      margin: 100px auto 0;
+      background: url("img/bg.jpg") no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+    .bars {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+    .bars {
+      position: relative;
+      width: 100%;
+    }
+    .bar {
+      width: 62px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 343px;
+    }
+    .upperbar {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: url(img/up_pipe.png) no-repeat center bottom,
+        url(img/up_mod.png);
+    }
+    .lowbar {
+      width: 100%;
+      position: absolute;
+      bottom: 55px;
+      left: 0;
+      background: url(img/down_pipe.png) no-repeat center top,
+        url(img/down_mod.png);
+    }
+  </style>
+  <body>
+    <div class="box">
+      <ul class="bars">
+        <li class="bar">
+          <div class="upperbar"></div>
+          <div class="lowbar"></div>
+        </li>
+        <li class="bar">
+          <div class="upperbar"></div>
+          <div class="lowbar"></div>
+        </li>
+      </ul>
+    </div>
+    <script>
+      // 开始的时候 柱1 在墙外 350px
+      // 柱子1 移动到left<=0的时候柱子2 出现
+      // 柱子1 消失的时候 随即生成一个上下柱子的高度 将left重置为350px
+      // 使用transition 和transform 来作 使用requestFrame监听柱子的当前位置
+      const barStack = Array.from(document.querySelectorAll(".bar"));
+      let curBar = barStack.shift();
+      const preCompleteStack = [];
+      const box = document.querySelector(".box");
+      /**
+       * 监听柱子的移动
+       */
+      function watcher() {
+        for (let i = 0; i < preCompleteStack.length; i++) {
+          const bar = preCompleteStack[i];
+          if (checkCompleted(bar)) {
+            bar.style.transform = "translate(0,0)";
+            bar.style.transition = "none";
+            barStack.push(bar);
+            preCompleteStack.shift();
+          }
+        }
+        const offsetX = barOffsetX(curBar);
+        if (offsetX < 0) {
+          preCompleteStack.push(curBar);
+          curBar = barStack.shift();
+        }
+        //检测是否开始移动柱子
+        if (offsetX >= 343) {
+          starRun(curBar, 405, 15);
+        }
+        requestAnimationFrame(watcher);
+      }
+      function generateRandomHeight() {
+        const randomHeight = Math.floor(160 + (230 - 160) * Math.random());
+        return [randomHeight, 300 + (350 - 300) * Math.random() - randomHeight];
+      }
+      /**
+       * 让柱子开始移动
+       * @ params bar 当前的柱子
+       * @ distance 移动距离
+       * @ time 移动时间
+       *
+       */
+      function starRun(cur, distance, time) {
+        const [upper, lower] = generateRandomHeight();
+        cur.querySelector(".upperbar").style.height = upper + "px";
+        cur.querySelector(".lowbar").style.height = lower + "px";
+        cur.style.left = "343px";
+        cur.style.transform = `translate(-${distance}px,0)`;
+        cur.style.transition = `all 10s linear(0 0%, 1 100%) 0s`;
+      }
+
+      function barOffsetX(curBar) {
+        return (
+          curBar &&
+          curBar.getBoundingClientRect().x - box.getBoundingClientRect().x
+        );
+      }
+      /**
+       * 检测柱子是否移动完成
+       * params bar 当前柱子
+       * return boolean 是否已经脱离视口
+       *
+       */
+      function checkCompleted(bar) {
+        return barOffsetX(bar) <= -62;
+      }
+
+      watcher();
+    </script>
+  </body>
+</html>

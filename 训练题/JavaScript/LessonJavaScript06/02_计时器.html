@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_计时器</title>
+	</head>
+	<body>
+		<div class="box">
+			<img src="img/1.jpg" alt="">
+		</div>
+		<button>上一张</button>
+		<button>下一张</button>
+		<button>开始</button>
+		<button>暂停</button>
+		<script type="text/javascript">
+			var btns = document.querySelectorAll("button");
+			var img1 = document.querySelector(".box img");
+			// 给每个按钮绑定点击事件
+			
+			// 声明一个变量记录当前是第几张图片
+			var index = 1;
+			// 上一张
+			btns[0].onclick = function(){
+				if(index == 1){
+					index = 8;
+				}else {
+					index--;
+				}
+				img1.src = "img/" + index + ".jpg";
+			};
+			// 下一张
+			btns[1].onclick = nextImg;
+			function nextImg(){
+				if(index == 8){
+					index = 1;
+				}else {
+					index++;
+				}
+				img1.src = "img/" + index + ".jpg";
+			};
+			
+			
+			// var isUse = true;
+			var num = 0;
+			// 开始
+			btns[2].onclick = function(){
+				// setInterval(function(){
+				// 	if(index == 8){
+				// 		index = 1;
+				// 	}else {
+				// 		index++;
+				// 	}
+				// 	img1.src = "img/" + index + ".jpg";
+				// }, 1000);
+				// if(isUse) {
+				// 	setInterval(nextImg, 1000);
+				// 	isUse = !isUse;
+				// }
+				clearInterval(num);
+				num = setInterval(nextImg, 1000);
+				console.log(num);
+			}
+			// 暂停
+			btns[3].onclick = function(){
+				clearInterval(num);
+			}
+			
+			/* 
+				计时器: 每间隔一段时间 自动执行某部分代码
+				语法: setInterval(函数体, 时间间隔(毫秒));
+				返回值: 创建的计时器的序号
+			 */
+			/* 
+				同步和异步
+				单线程和多线程
+				JS是一门单线程的编程语言, 绝大部分的代码都是由主线程执行的, 所以, 在绝大部分情况下, 下一行代码必须等待上一行代码执行完毕之后才能执行.
+				但是计时器是在系统里又开辟了一个子线程, 子线程的执行与主线程互不影响. setInterval执行几遍, 系统里就会存在几个子线程, 也就会同时存在若干个计时器.
+				
+			 */
+			// console.log(1111);
+			// setInterval(function(){
+			// 	console.log("hello, world!!!");
+			// }, 1000);
+			// for(var i = 0; i < 10000000; i++){
+			// 	console.log("hello, world!!!");
+			// }
+			// console.log(2222);
+			
+			
+			/* 
+				清除计时器  clearInterval(要清楚的计时器的序号);
+			 */
+			
+		</script>
+	</body>
+</html>

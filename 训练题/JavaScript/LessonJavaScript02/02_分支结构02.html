@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_分支结构02</title>
+	</head>
+	<body>
+		<fieldset>
+			<legend><h2>练习1</h2></legend>
+			<input type="number" id="num1">
+			<button onclick="department()">查询</button>
+		</fieldset>
+		<fieldset>
+			<legend><h2>练习2</h2></legend>
+			<input type="number" id="month">
+			<button onclick="dayOfMonth()">查询</button>
+		</fieldset>
+		<script type="text/javascript">
+			/* 
+				switch...case语句
+				语法:
+					switch(值){
+						case 值1: {
+							代码块1...
+							break;
+						}
+						case 值2: {
+							代码块2...
+							break;
+						}
+						...
+						default: {
+							默认代码块...
+							break;
+						}
+					}
+				执行原理: 将switch小括号里的值与其内容的case语句后的值做匹配, 匹配上谁, 就执行对应大括号里的代码, 如果一个case语句都匹配不上, 就执行最后default大括号里的代码.
+				
+				break关键字的作用: 终止case语句的执行, 结束switch...case语句; 但是如果case语句里没有break, 系统在走完当前的case语句之后, 会继续执行下一个case语句, 直到遇到break再结束执行.
+			 */
+			/* 
+				练习1: 输入号码, 匹配部门
+					号码1: 行政部
+					号码2: 市场部
+					号码3: 研发部
+					号码4: 财务部
+					号码5: 总经理办公室
+					其他号码: 无此部门
+			 */
+			function department() {
+				var numV = num1.value;
+				switch (numV){
+					case "1":{
+						alert("行政部");
+						// break;
+					}
+					case "2":{
+						alert("市场部");
+						break;
+					}
+					case "3":{
+						alert("研发部");
+						break;
+					}
+					case "4":{
+						alert("财务部");
+						break;
+					}
+					case "5":{
+						alert("总经理办公室");
+						break;
+					}
+					default:{
+						alert("无此部门");
+						break;
+					}
+				}
+			}
+			
+			/* 
+				练习2: 输入月份, 输出对应天数, 默认2月 29天
+			 */
+			function dayOfMonth() {
+				var m = month.value - 0;
+				switch (m){
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:{
+						alert(31);
+						break;
+					}
+					case 8:{
+						break;
+					}
+					case 9:{
+						break;
+					}
+					case 10:{
+						break;
+					}
+					case 11:{
+						break;
+					}
+					case 12:{
+						break;
+					}
+					default:{
+						break;
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

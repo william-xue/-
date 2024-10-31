@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <div id="box"></div>
+        <div id="box1"></div>
+        <button id="btn1">1</button>
+        <button id="btn2">2</button>
+        <script src="../js/Reactive.js"></script>
+        <script>
+          /**
+           */
+          let data = {
+            a: 1,
+            b: 2,
+          };
+          let reactive = new Reactive();
+          function computed(getter) {
+            let cache_value;
+            let cache;
+            let res;
+            let effectFn = reactive.effect(getter, {
+              lazy: true,
+              scheduler(fn) {
+                cache = false;
+                reactive.trigger(res, "value");
+              },
+            });
+            res = {
+              get value() {
+                if (!cache) {
+                  cache_value = effectFn();
+                  cache = true;
+                  reactive.track(res, "value");
+                }
+                return cache_value;
+              },
+            };
+            return res;
+          }
+          let obj = reactive.proxy(data);
+          let num = computed(() => {
+            console.log("计算");
+            console.log(obj.a, obj.b);
+            return obj.a + obj.b;
+          });
+          // reactive.effect(() => {
+          //   console.log(num.value);
+          // });
+          console.log(num.value);
+
+          obj.a++;
+          console.log(num.value);
+        </script>
+      </body>
+    </html>
+  </body>
+</html>

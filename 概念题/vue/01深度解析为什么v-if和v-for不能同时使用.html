@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // v-if和v-for不能同时的原因: v-for的执行优先比v-if要高
+      // 在v-for下面使用v-if会导致每次都要使用v-if来判断会很消耗性能
+      // 在v-if不依赖v-for的前提下，我们可以将v-if写在v-for的外层，这样就可以让v-if判断优先
+      // 当v-if的判断条件依赖于v-for的某个值时(item,index)，我们则可以使用计算属性的方式 现将值进行一次过滤
+      /**
+    *  <div  v-for="(item) in ListArr" :key="item" ></div>
+     * computed:{
+        1. 在computed里先做好判断，这里过滤的成本远比v-if的成本低
+        ListArr(){
+            return this.list.filter((_,index) => index === 1)
+        }
+      }
+     * 
+    */
+    </script>
+  </body>
+</html>

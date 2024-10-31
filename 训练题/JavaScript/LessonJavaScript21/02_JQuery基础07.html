@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_JQuery基础07</title>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			/* 
+				文档加载事件
+				1. load事件: JS的原生事件, 该事件会在绑定的对象完全加载完毕之后触发
+				2. ready事件: JQ的事件, 该事件会在页面的DOM结构加载完毕只有触发
+				
+				页面的响应的基本顺序:
+				1. 域名解析
+				2. 加载html文件
+				3. 加载css和js
+				4. 加载图片等其他信息
+				
+				面试题: 当在浏览器的地址栏写入网址并敲了回车之后发生了什么, 过程描述的越详细越好.
+				
+				load事件与ready的区别:
+				load事件会等到页面里的所有资源加载完毕之后触发; ready事件只会等到页面的DOM结构加载完毕之后就会触发
+					
+			 */
+			// window.onload = function(){
+			// 	console.log("文档加载完毕!");
+			// 	console.log(document.getElementById("div1"));
+			// }
+			// $(document).ready(function(){
+			// 	console.log("文档加载完毕!");
+			// 	console.log(document.getElementById("div1"));
+			// });
+			
+			// ready的简写形式
+			// $(function(){
+			// 	console.log("文档加载完毕!");
+			// 	console.log(document.getElementById("div1"));
+			// });
+		</script>
+	</head>
+	<body>
+		<!-- 
+			正常情况下, 标签的执行顺序是从上到下的, 所以我们在写script标签时, 建议写到body里面的最下面, 目的是为了让我的写的所有的html标签先加载,  当标签加载完毕之后, 再执行script里的代码, 如果代码里操作当前页面里标签的代码, 就能正常执行.
+			但是, script标签的位置其实是可以任意的, 但是是由前提的
+			1. 如果该script标签引入的是一个第三方的js文件, 那么该标签位置可以随意, 但是我们建议写到head里
+			2. 如果script标签是我们自己书写js的标签
+				2.1 如果我们不需要书写获取html标签的代码, 该script标签也可以随便放置, 建议还是放到head里
+				2.2 如果我们需要书写html标签的代码, 那么建议写到body里面的最下面, 如果我还想要随便放置位置, 请给window绑定一个onload事件, 保证文档加载完毕之后再执行我们的JS.
+			
+		 -->
+		<div id="div1"></div>
+	</body>
+</html>

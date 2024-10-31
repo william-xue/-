@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_作业</title>
+		<style type="text/css">
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border: 2px solid;
+				background-color: white;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- <img src="img/1.gif" onclick="changeLight()"> -->
+		<!-- <hr> -->
+		<div>
+			<div>
+				<div>
+					<div>
+						<div>
+							<div>
+								<div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button onclick="outIn()">从外往里</button>
+		<button onclick="inOut()">从里往外</button>
+		<script type="text/javascript">
+			// 1.gif == false  2.gif == true 
+			// var isLight = false;
+			var a = 0;
+			function changeLight() {
+				var imgEle = document.querySelector("img");
+				// console.log(imgEle.src);
+				// if(imgEle.src == "http://127.0.0.1:8848/JavaScript/LessonJavaScript05/img/1.gif"){
+				// 	imgEle.src = "img/2.gif";
+				// }else {
+				// 	imgEle.src = "img/1.gif";
+				// }
+				// if(!isLight){
+				// 	imgEle.src = "img/2.gif";
+				// }else {
+				// 	imgEle.src = "img/1.gif";
+				// }
+				// imgEle.src = (isLight=!isLight) ? "img/2.gif" : "img/1.gif";
+				// isLight = !isLight;
+				if(++a % 2){
+					imgEle.src = "img/2.gif";
+				}else {
+					imgEle.src = "img/1.gif";
+				}
+			}
+			
+			
+			var divs = document.querySelectorAll("div");
+			for(var i = 0; i < divs.length; i++) {
+				divs[i].style.width = "70%";
+				divs[i].style.height = "70%";
+			}
+			// 从外往里
+			function outIn() {
+				/* 
+					div1产生新的随机色, 所有的颜色向内传递, 相邻的div在赋值的时候是从里往外赋值  div7=div6, div6=div5...
+				 */
+				// divs[6].style.backgroundColor = divs[5].style.backgroundColor;
+				// divs[5].style.backgroundColor = divs[4].style.backgroundColor;
+				// divs[4].style.backgroundColor = divs[3].style.backgroundColor;
+				// divs[3].style.backgroundColor = divs[2].style.backgroundColor;
+				
+				// divs[2].style.backgroundColor = divs[1].style.backgroundColor;
+				// divs[1].style.backgroundColor = divs[0].style.backgroundColor;
+				for(var i = divs.length-1; i > 0; i--) {
+					divs[i].style.backgroundColor = divs[i-1].style.backgroundColor;
+				}
+				
+				var r = Math.floor(Math.random()*256);
+				var g = Math.floor(Math.random()*256);
+				var b = Math.floor(Math.random()*256);
+				divs[0].style.backgroundColor = "rgb("+r+","+g+","+b+")";
+			}
+			
+			
+			// 从里往外
+			function inOut() {
+				/* 
+					div7产生新的随机色, 所有颜色向外传递, 相邻的div在赋值的时候是从外往里赋值  div2=div1, div3=div2...
+				 */
+				// divs[0].style.backgroundColor = divs[1].style.backgroundColor;
+				// divs[1].style.backgroundColor = divs[2].style.backgroundColor;
+				// divs[2].style.backgroundColor = divs[3].style.backgroundColor;
+				// divs[3].style.backgroundColor = divs[4].style.backgroundColor;
+				
+				// divs[4].style.backgroundColor = divs[5].style.backgroundColor;
+				// divs[5].style.backgroundColor = divs[6].style.backgroundColor;
+				for(var i = 0; i < divs.length-1; i++) {
+					divs[i].style.backgroundColor = divs[i+1].style.backgroundColor;
+				}
+				var r = Math.floor(Math.random()*256);
+				var g = Math.floor(Math.random()*256);
+				var b = Math.floor(Math.random()*256);
+				divs[divs.length-1].style.backgroundColor = "rgb("+r+","+g+","+b+")";
+			}
+		</script>
+	</body>
+</html>

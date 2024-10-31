@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <!-- 无论link在上面还是下面都会阻塞domloaded执行 hi在上面会直接渲染hi不会等link加载完css -->
+    <!-- 无论link在上面还是下面都会阻塞domloaded执行 hi在下面会等待css加载完成才渲染 -->
+  </head>
+  <style>
+    h1 {
+      color: red !important;
+    }
+  </style>
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        alert("DOMContentLoaded");
+      });
+    </script>
+    <link
+      href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css"
+      rel="stylesheet"
+    />
+    <h1>Hi</h1>
+  </body>
+</html>

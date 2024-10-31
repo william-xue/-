@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>b</h1>
+    <script>
+      window.onload = function () {
+        window.addEventListener("message", function (e) {
+          // 监听 message 事件
+          console.log(e.origin);
+          console.log(e.data);
+        });
+      };
+    </script>
+  </body>
+</html>

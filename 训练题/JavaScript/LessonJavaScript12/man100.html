@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#game {
+				width: 400px;
+				height: 450px;
+				border: 5px solid gold;
+				margin: 10px auto;
+				position: relative;
+			}
+			#score {
+				height: 50px;
+				line-height: 50px;
+				font-size: 25px;
+				text-align: center;
+			}
+			#show {
+				height: 400px;
+				position: relative;
+			}
+			ul {
+				list-style: none;
+				height: 20px;
+				position: absolute;
+				bottom: 0;
+			}
+			li {
+				width: 18px;
+				height: 18px;
+				background-color: gainsboro;
+				border: 1px solid black;
+				float: left;
+				transition: all 0.5s;
+			}
+			#menu {
+				width: 400px;
+				height: 450px;
+				background-color: rgba(0, 0, 0, 1);
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			#start {
+				font-size: 20px;
+				text-shadow: 0 0 8px yellow;
+				text-align: center;
+				line-height: 450px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="game">
+			<p id="score">层数:0</p>
+			<div id="show">
+			</div>
+			<div id="menu">
+				<p id="start">开始游戏</p>
+			</div>
+		</div>
+		<script type="text/javascript">
+			/* 
+				1. 开始游戏菜单
+				2. 开始游戏按钮
+				3. 大盒子
+				4. 得分
+			 */
+			var startBtn = document.querySelector("#start");
+			var startMenu = document.querySelector("#menu");
+			var showBox = document.querySelector("#show");
+			var scoreEle = document.querySelector("#score");
+			var gameBox = document.querySelector("#game");
+			startBtn.onclick = function(e){
+				e.stopPropagation();
+				startMenu.style.display = "none";
+				// 创建行
+				createRow();
+			}
+			// 记录个数
+			var num = 10;
+			// 记录行数
+			var row = 0;
+			// ul左右移动的计时器
+			var moveTimer = 0;
+			// ul的偏移量
+			var x = 0;
+			// ul的运动速度
+			var speed = 500;
+			// 记录ul的运动方向  true -> false <-
+			var direction = true;
+			function createRow() {
+				// 创建ul
+				var ulEle = document.createElement("ul");
+				ulEle.style.bottom = 20 * row + "px";
+				// 确定ul的偏移量
+				ulEle.style.left = x + "px";
+				showBox.appendChild(ulEle);
+				
+				// 创建li
+				for (var i = 0; i < num; i++) {
+					var liEle = document.createElement("li");
+					ulEle.appendChild(liEle);
+				}
+				
+				// 移动ul
+				moveTimer = setInterval(function(){
+					if(direction) {
+						x+=20;
+						if(x >= gameBox.clientWidth - ulEle.offsetWidth){
+							direction = false;
+						}
+					}else {
+						x-=20;
+						if(x <= 0){
+							direction = true;
+						}
+					}
+					ulEle.style.left = x + "px";
+				}, speed);
+			}
+			
+			// 通过一个布尔值 延缓用户的点击时间
+			var clickFlag = true;
+			// 游戏区域添加点击事件
+			gameBox.onclick = function (){
+				if(clickFlag) {
+					clickFlag = false;
+					setTimeout(function(){
+						clickFlag = true;
+					}, 600);
+				}else {
+					return;
+				}
+				/*
+					1. 加一层
+					2. 速度变快
+					3. 点击清除本次移动的ul计时器
+					4. 计算超出的部分, 掉落
+					5. 重新创建新的一行
+				*/
+			   row++;
+			   scoreEle.innerHTML = `层数:${row}`;
+			   speed *= 0.8;
+			   clearInterval(moveTimer);
+			   
+			   // 计算超出的部分
+			   var nowUl = showBox.lastElementChild;
+			   var prevUl = nowUl.previousElementSibling;
+			   
+			   // 计算超出的数量
+			   var removeNum = 0;
+			   if(prevUl){
+				   removeNum = (nowUl.offsetLeft - prevUl.offsetLeft) / 20;
+			   }
+			   
+				// 修改数量
+				num -= Math.abs(removeNum);
+				if(num <= 0) {
+					// 游戏结束
+					alert("游戏结束!");
+					return;
+				}
+				
+				// 判断哪些li需要落下
+				if(removeNum > 0) {
+					// 右侧超出
+					for(var i = 0; i < removeNum; i++) {
+						var removeLi = nowUl.children[nowUl.children.length - 1 - i];
+						removeLi.style.transform = "translateY(100px) rotateZ(360deg)";
+						removeLi.style.opacity = "0";
+					}
+					setTimeout(function(){
+						for(var i = 0; i < removeNum; i++) {
+							nowUl.removeChild(nowUl.lastElementChild);
+						}
+						createRow();
+						
+					}, 500);
+				}else {
+					// 左侧超出
+					for (var i = 0; i < Math.abs(removeNum); i++) {
+						var removeLi = nowUl.children[i];
+						removeLi.style.transform = "translateY(100px) rotateZ(360deg)";
+						removeLi.style.opacity = "0";
+					}
+					setTimeout(function(){
+						for (var i = 0; i < Math.abs(removeNum); i++) {
+							nowUl.removeChild(nowUl.firstElementChild);
+						}
+						// 每删一个元素, 后一个元素会忘前走, 所以我们需要修改ul的left值
+						x = nowUl.offsetLeft + Math.abs(removeNum) * 20;
+						nowUl.style.left = x + "px";
+						createRow();
+					}, 500);
+				}
+			}
+		</script>
+	</body>
+</html>

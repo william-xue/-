@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 争第一 如过两个ajax同时改变一个变量 那么第一次返回的有优先改变变量的权利
+      // let a;
+      // function foo(res) {
+      //   if (!a) {
+      //     a = res;
+      //   }
+      //   console.log(a);
+      // }
+      // function bar(res) {
+      //   if (!a) {
+      //     a = res;
+      //   }
+      //   console.log(a);
+      // }
+      // setTimeout(() => {
+      //   bar("bar");
+      // }, Math.floor(Math.random() * 1000));
+      // setTimeout(() => {
+      //   foo("foo");
+      // }, Math.floor(Math.random() * 1000));
+
+      // 协作 两个不确定时间返回的ajax交替执行 谁先返回谁入栈 入栈后开启的定时器 如果另一个ajax也返回了数据那么他们两个就会交替执行
+
+      let bar = new Array(10000).fill(0).map((index, val) => "bar" + val);
+      let foo = new Array(10000).fill(0).map((index, val) => "foo" + val);
+      let res = [];
+      function response(data) {
+        let chunk = data.splice(0, 1000);
+        res = res.concat(chunk.map((val) => val + "chunk"));
+        console.log(res);
+
+        if (data.length > 0) {
+          setTimeout(() => {
+            response(data);
+          }, 0);
+        }
+      }
+      setTimeout(() => {
+        response(bar);
+      }, 0);
+      setTimeout(() => {
+        response(foo);
+      }, 0);
+    </script>
+  </body>
+</html>

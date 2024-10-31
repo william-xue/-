@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 每个语句都有一个结果值 可以使用eval 或者es7中的do来获取语句的结果值 do暂时无法使用
+      let a = eval(`if (true) {
+          b = 4 + 32;
+          c = 6 + 24;
+        }`);
+      console.log(a); // 30 返回的是最后一条语句的结果
+    </script>
+  </body>
+</html>

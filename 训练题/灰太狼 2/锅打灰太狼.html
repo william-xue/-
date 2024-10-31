@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>锅打灰太狼</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .box {
+        width: 320px;
+        height: 480px;
+        margin: 50px auto 0;
+        background: url(img/game_bg.jpg) no-repeat;
+        position: relative;
+      }
+
+      .score {
+        font-size: 20px;
+        color: white;
+        position: absolute;
+        left: 64px;
+        top: 10px;
+      }
+
+      .progress {
+        height: 16px;
+        position: absolute;
+        left: 64px;
+        top: 66px;
+      }
+
+      .startMenu,
+      .endMenu {
+        width: 60%;
+        height: 40%;
+        position: absolute;
+        color: red;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        font-size: 35px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .endMenu {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="score">0</div>
+      <img src="img/progress.png" class="progress" />
+      <div class="startMenu">
+        <p>开始游戏</p>
+        <p>游戏说明</p>
+      </div>
+      <div class="endMenu">
+        <p>游戏结束</p>
+      </div>
+    </div>
+    <script type="text/javascript">
+      let box = document.querySelector(".box");
+      let startMenu = document.querySelector(".startMenu");
+      let endMenu = document.querySelector(".endMenu");
+      let start = document.querySelector(".startMenu>p:nth-child(1)");
+      let end = document.querySelector(".endMenu>p:nth-child(1)");
+      let progress = document.querySelector(".progress");
+      let gameTimer = null;
+      let isClick = false;
+      let isEnd = false;
+      let wolf;
+      var locationArr = [
+        [110, 137],
+        [30, 182],
+        [30, 245],
+        [195, 166],
+        [114, 216],
+        [210, 236],
+        [41, 318],
+        [130, 298],
+        [219, 319],
+      ];
+      function startGame() {
+        startMenu.style.display = "none";
+        countDown();
+        createWolf();
+      }
+      function endGame() {
+        endMenu.style.display = "block";
+      }
+      function reloadPage() {
+        window.location.reload();
+      }
+      function createRandomNum(x, y) {
+        return Math.floor(Math.random() * (y - x + 1)) + x;
+      }
+      function hitWolf(e, name) {
+        if (isClick) {
+          let hitIndex = 6;
+          let hitTimer = setInterval(function () {
+            wolf.src = "img/" + name + hitIndex + ".png";
+            hitIndex++;
+            if (hitIndex == 10) {
+              clearInterval(hitTimer);
+              box.removeChild(wolf);
+              isClick = false;
+              if (!isEnd) {
+                gameTimer = setTimeout(() => {
+                  createWolf();
+                }, 1000);
+              }
+            }
+          }, 100);
+        }
+      }
+      function createWolf() {
+        wolf = document.createElement("img");
+        let random = createRandomNum(0, locationArr.length - 1);
+        wolf.style.position = "absolute";
+        wolf.style.left = locationArr[random][0] + "px";
+        wolf.style.top = locationArr[random][1] + "px";
+        wolf.style.width = "80px";
+        wolf.className = "wolf";
+        box.appendChild(wolf);
+        let wolfStatus = 0;
+        let wolfFlag = true;
+        name = Math.random() > 0.8 ? "x" : "h";
+        wolf.onclick = function (e) {
+          if (isClick) return;
+          isClick = true;
+          hitWolf.call(this, e, name);
+        };
+        let dynamicWolfTimer = setInterval(() => {
+          if (!isClick) {
+            if (wolfFlag) {
+              wolfStatus++;
+              if (wolfStatus === 5) {
+                wolfFlag = false;
+              }
+            } else {
+              wolfStatus--;
+              if (wolfStatus === 0) {
+                clearInterval(dynamicWolfTimer);
+                box.removeChild(wolf);
+                if (!isEnd) {
+                  gameTimer = setTimeout(() => {
+                    createWolf();
+                  }, 1000);
+                }
+              }
+            }
+            wolf.src = `./img/${name}${wolfStatus}.png`;
+          } else {
+            clearInterval(dynamicWolfTimer);
+          }
+        }, 100);
+      }
+      function countDown() {
+        let progressWidth = progress.clientWidth;
+        let timer = setInterval(() => {
+          progressWidth -= 2;
+          progress.style.width = progressWidth + "px";
+          if (progressWidth <= 0) {
+            isEnd = true;
+            clearInterval(timer);
+            clearTimeout(gameTimer);
+            endGame();
+          }
+        }, 100);
+      }
+      end.onclick = reloadPage;
+      start.onclick = startGame;
+    </script>
+  </body>
+</html>

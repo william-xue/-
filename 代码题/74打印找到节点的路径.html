@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        {
+          id: "1",
+          children: [
+            {
+              id: "12",
+              children: [{ id: "121" }, { id: "122" }],
+            },
+            {
+              id: "11",
+              children: [{ id: "111" }, { id: "112" }],
+            },
+          ],
+        },
+      ];
+      function fn(arr, target) {
+        let path = [];
+        arr.map((val) => {
+          if (val.id === target) {
+            path.push(val.id);
+          } else if (val.children && val.children.length > 0) {
+            let result = fn(val.children, target);
+            if (result.length > 0) {
+              path.push(val.id, ...result);
+            }
+          }
+        });
+        return path;
+      }
+      console.log(fn(arr, "112"));
+    </script>
+  </body>
+</html>

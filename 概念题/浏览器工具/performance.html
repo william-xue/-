@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+     * 浏览器调优，performance选项卡
+     * 1 先点击录制，将卡顿的时刻录制进来 
+     * 2 时间线下第一行如果有红色说明有性能问题（渲染不达标 这一帧16.6ms渲染不完就会出现延迟） 
+     * 3 下面多行黄/绿/紫标识cpu被占用标识，下面选项卡中可以看到总览信息分别介绍黄绿紫分别执行时间及说明
+     * 4 将上面时间线缩短，观察frames就可以看到每一帧的时间
+     * 5 frames中绿色代表的是正常渲染的帧 黄色代表部分渲染
+     * 6 看下方选项卡中的main就是主线程执行的任务
+     * 7 下面一块一块的就是当前执行的任务栈
+     * 8 查看任务细节代码可以选中任务栈中的其中一个，然后选中最下方
+     * 小知识，如果直接读dom元素的几何信息会让浏览器产生回流，优化的方式是读style中的css的几何信息
+
+    */
+  </script>
+</body>
+</html>

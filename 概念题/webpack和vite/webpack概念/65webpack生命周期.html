@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+     *1  首先加载webpack.config.js文件生成options
+      2  根据options引入对应模块 然后初始化webpack (new webpack)
+      3  执行run进行编译 编译阶段把代码和模块生成 构建compilation对象 就是后续生成ast的方法以及最后用来生成js的template
+      4  找到入口文件 通过工厂方法创建模块 绑定到compilation 调用loader处理源文件 使用arcon生成ast 遍历ast 进行build
+      5  调用seal对每个module和chunk进行整理 生成源码合并拆分
+      6  通过插件来处理源码 
+      7  通过emitAssets将最终的js输出 
+    */
+      localStorage.setItem("aaa", "dsadsa");
+    </script>
+  </body>
+</html>

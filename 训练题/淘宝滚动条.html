@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      width: 200px;
+      height: 100px;
+      border: 1px solid red;
+      margin: 200px auto;
+      position: relative;
+      overflow: hidden;
+      position: relative;
+    }
+    .container {
+      width: 400px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: all 0.3s;
+      display: flex;
+      flex-wrap: wrap;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+    .sub {
+      height: 50%;
+      width: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+    .sub img {
+      width: 38%;
+      height: 70%;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+      cursor: pointer;
+    }
+    .progress {
+      width: 40px;
+      height: 5px;
+      border-radius: 4px;
+      background-color: #ccc;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+      top: 305px;
+    }
+    .p-sub {
+      width: 20px;
+      height: 97%;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+      background-color: orange;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <div class="container">
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav3.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav3.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav3.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav3.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav2.webp" alt="" />
+        </div>
+        <div class="sub">
+          <img src="./small_img/nav1.webp" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="progress">
+      <div class="p-sub"></div>
+    </div>
+  </body>
+  <script>
+    // 当做这种类型的滑块跟随鼠标移动并限制在一个区域内的需求的时候  当滑块到达区域边界的时候一定要把滑块的位置定死在区域边界的坐标 不然快速滑动的时候肯定会越界
+    let container = document.querySelector(".container");
+    let pSub = document.querySelector(".p-sub");
+    let flag = false;
+    function debounce(callback) {
+      var timer = null;
+      return function (e) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          callback && callback.call(this, e);
+        }, 0);
+      };
+    }
+    container.onmousedown = function (e) {
+      let start = e.pageX;
+      let startPosotion = container.offsetLeft;
+      document.onmousemove = debounce(function (e) {
+        let end = e.pageX;
+        let distance = end - start;
+        let currentPosition = container.offsetLeft;
+        if (distance > 0) {
+          // 向右
+          if (startPosotion + distance >= 0) {
+            // 定死在边界  否则会越界
+            container.style.left = 0 + "px";
+            pSub.style.left = 0 + "px";
+            if (currentPosition >= 0) {
+              start = end;
+              startPosotion = currentPosition;
+            }
+            return;
+          }
+        } else if (distance < 0) {
+          // 向左
+          if (startPosotion + distance <= -200) {
+            // 定死在边界  否则会越界
+            container.style.left = -200 + "px";
+            pSub.style.left = 20 + "px";
+            if (currentPosition <= -200) {
+              start = end;
+              startPosotion = currentPosition;
+            }
+            return;
+          }
+        }
+        container.style.left = startPosotion + distance + "px";
+        pSub.style.left = -(startPosotion + distance) / 10 + "px";
+      });
+    };
+    container.ontransitionend = function (e) {
+      flag = true;
+    };
+    document.onmouseup = function () {
+      console.log("tanqi");
+      document.onmousemove = null;
+    };
+    container.onmouseup = function () {
+      console.log("tanqi");
+      document.onmousemove = null;
+    };
+  </script>
+</html>

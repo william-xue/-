@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>JS第3天作业</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 第一题:   求1 x 2 x 3 x 4 x ... x 19 x 20的结果?  */
+			// var res = 1;
+			// for(var i = 1; i < 21; i++) {
+			// 	res *= i;
+			// }
+			// console.log("乘积是:"+res);
+			
+			/* 
+				第二题:   打印1-100的数，奇数之和，偶数之和。
+			 */
+			// var oddSum = 0;
+			// var evenSum = 0;
+			// for(var i = 1; i < 101; i++){
+			// 	if(i % 2 == 0) {
+			// 		evenSum += i;
+			// 	}else {
+			// 		oddSum += i;
+			// 	}
+			// }
+			// console.log("偶数的和是:" + evenSum);
+			// console.log("奇数的和是:" + oddSum);
+			
+			/* 
+				第三题:   打印九九乘法表
+			 */
+			// for(var i = 1; i < 10; i++) {
+			// 	for (var j = 1; j < i + 1; j++) {
+			// 		document.write(j + "*" + i + "=" + i * j + " ");
+			// 	}
+			// 	document.write("<br/>");
+			// }
+			
+			
+			/* 
+				第四题:   编程将所有“水仙花数”打印出来，并打印其总个数。 “水仙花数”是一个各个位立方之和等于该整数的三位数(个位数立方 + 十位数立方 + 百位数立方 = 这个整数)。
+			 */
+			// for(var i = 100; i < 1000; i++){
+			// 	// 分别取出三位数的百位, 十位, 个位
+			// 	var bai = Math.floor(i / 100);
+			// 	var shi = Math.floor(i % 100 / 10);
+			// 	var ge = Math.floor(i % 10);
+			// 	if(bai*bai*bai+shi*shi*shi+ge*ge*ge == i) {
+			// 		console.log(i);
+			// 	}
+			// }
+			
+			// for(var i = 1; i < 10; i++){
+			// 	for(var j = 0; j < 10; j++){
+			// 		for(var k = 0; k < 10; k++){
+			// 			// console.log(i, j, k);
+			// 			if(i*i*i+j*j*j+k*k*k == 100*i+10*j+k){
+			// 				console.log(100*i+10*j+k);
+			// 			}
+			// 		}
+			// 	}
+			// }
+			
+			/* 
+				第五题:    已知abc+cba = 1333，其中a、b、c均为一位数，编程求出满足条件的a、b、c所有组合。
+			 */
+			// for(var a = 100; a < 1000; a++){
+			// 	// 分别取出三位数的百位, 十位, 个位
+			// 	var i = Math.floor(a / 100);
+			// 	var j = Math.floor(a % 100 / 10);
+			// 	var k = Math.floor(a % 10);
+			// 	if(i*100+j*10+k+k*100+j*10+i == 1333) {
+			// 		console.log(a);
+			// 	}
+			// }
+			
+			/* 
+				第六题:    找出1-99之间是7的倍数或者个位数字是7或者十位数字是7的数字，并输出这些数字，统计有多少个? 
+			 */
+			
+			// var count = 0;
+			// for(var i = 1; i < 100; i++) {
+			// 	if(i % 7 == 0 || i % 10 == 7 || Math.floor(i / 10) == 7) {
+			// 		console.log(i);
+			// 		count++;
+			// 	}
+			// }
+			// console.log(count);
+		</script>
+	</body>
+</html>

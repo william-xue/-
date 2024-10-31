@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_cookie</title>
+	</head>
+	<body>
+		<input type="text" placeholder="请输入key" id="k">
+		<input type="text" placeholder="请输入value" id="v">
+		<button id="btn1">添加cookie</button>
+		<button id="btn2">获取cookie</button>
+		<button id="btn3">修改cookie</button>
+		<button id="btn4">设置cookie的生命周期</button>
+		<button id="btn5">删除cookie</button>
+		<script src="js/handleCookie.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			/* 
+				数据持久化
+				1. cookie
+				2. localStorage
+				3. sessionStorage (自我学习)
+				
+				面试题: cookie, localStorage, sessionStorage三者的区别
+			 */
+			
+			/* 
+				cookie介绍
+				有时候我们也会用其复数形式cookies, 这是服务器保存在客户端的数据片段, 以键值对的形式(key=value)保存, 简单来说, cookie就是服务端留给计算机用户浏览器端的小文件(文本)
+				一旦客户端存储了该cookie, 将来再次访问服务器的时候, 会自动携带该cookie, 发送给服务端, 服务端就可以知晓用户的信息, 定制化做操作
+				cookie的特点:
+				1. cookie本质上是一段文本
+				2. 格式以键值对形式存在(key=value)
+				3. cookie在服务端创建, 保存在客户端
+				4. 一旦cookie保存, 以后的请求都会自动携带cookie
+				
+				cookie的缺点:
+				1. 存储大小只有4kb
+				2. 默认的生命周期一般无法满足要求, 需要设置
+				3. 可以手动清除
+				4. 前端没有自带的cookie操作函数, 需要自己封装
+			 */
+			// console.log(document.cookie);
+			// 添加cookie
+			btn1.onclick = function(){
+				var kV = k.value;
+				var vV = v.value;
+				// document.cookie = kV + "=" + vV;
+				// addCookie(kV, vV);
+				// addCookie(kV, vV, 100);
+				var now = new Date();
+				now.setHours(now.getHours()+1);
+				addCookie(kV, vV, now);
+				k.value = "";
+				v.value = "";
+			};
+			btn2.onclick = function(){
+				console.log(document.cookie);
+			};
+			/* 
+				默认情况下cookie的生命周期为 浏览器打开期间, 在此期间, 刷新浏览器, cookie依旧存在, 但是浏览器关闭, cookie被销毁
+			 */
+			btn3.onclick = function(){
+				// 如果想要修改cookie, 本质上是替换, cookie如果key相同, 会覆盖掉之前写的
+				var kV = k.value;
+				var vV = v.value;
+				document.cookie = kV + "=" + vV;
+				k.value = "";
+				v.value = "";
+			};
+			btn4.onclick = function(){
+				/* 
+					设置cookie的生命周期有两种办法:
+					1. 给本条cookie设置一个失效时刻
+						语法: key=value;expires=时刻字符串
+					2. 给本条cookie设置一个存活时间
+						语法: key=value;max-age=秒数
+				 */
+				var kV = k.value;
+				var vV = v.value;
+				// 设置一个未来时刻
+				// var now = new Date();
+				// now.setDate(now.getDate()+1);
+				// document.cookie = `${kV}=${vV};expires=${now.toString()}`;		
+				
+				document.cookie = `${kV}=${vV};max-age=10`;
+			};
+			btn5.onclick = function(){
+				/* 
+					删除cookie的本质是先覆盖再让新设置立刻失效
+				 */
+				document.cookie = "school=;max-age=-1";
+			};
+			
+			
+			var arr1 = [1,"abc", false];
+			console.log(arr1.join("="));
+		</script>
+	</body>
+</html>

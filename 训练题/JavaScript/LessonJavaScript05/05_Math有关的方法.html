@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>05_Math有关的方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 随机数
+			console.log(Math.random());
+			// 向下取整
+			console.log(Math.floor(5.9999));
+			// 向上取整
+			console.log(Math.ceil(1.0001));
+			// 四舍五入
+			console.log(Math.round(5.3), Math.round(5.5));
+			// 绝对值
+			console.log(Math.abs(-5), Math.abs(5));
+			// 次方 参数1是底数, 参数2是次幂数
+			console.log(Math.pow(81, 1/2));
+			// 开方
+			console.log(Math.sqrt(81));
+			// 求最大值
+			console.log(Math.max(3, 10, 7, 20, 19));
+			// 求最小值
+			console.log(Math.min(3, 10, 7, 20, 19));
+			
+			
+			
+			function fn1() {
+				/* 
+					JS为每个函数都内置了一个arguments数组, 该数组里永远存储函数调用时传入的所有实参.
+				 */
+				// console.log(a, b, c);
+				console.log(arguments);
+			}
+			fn1(10, 20, 30);
+			fn1(100);
+			fn1("a", "b", "c", "d");
+		</script>
+	</body>
+</html>

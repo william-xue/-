@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>01_字符串操作函数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				字符串操作函数, 只能由字符串去调用
+			 */
+			/* 
+				1. 获取一个字符串的子字符串
+				substr(start, length)
+				start: 截取的起始位置, 从0开始, 可以给负值, 位置从后往前数
+				length: 截取的长度, 可以不写, 默认截取到最后
+				返回值: 截取到的子串
+			 */
+			// var str1 = "abcdefg";
+			// var subStr1 = str1.substr(-5);
+			// console.log(subStr1);
+			
+			
+			/* 
+				2. 字符串分割
+				split(string, count);
+				string:分隔符, 充当分隔符的符号, 不会出现在结果字符串里, 如果想要将字符串的每个符号都分割出来, 分隔符用空字符串""
+				count:规定得到的子串个数
+				返回值: 子串数组
+			 */
+			// var cityNames = "北京-上海-广州-深圳-郑州-长沙";
+			// var cityArr = cityNames.split("");
+			// console.log(cityArr);
+			
+			/* 
+				3. 字符串拼接
+				concat() 将两个或者多个字符串组合起来
+				返回值: 组合过后的新字符串
+			 */
+			// var a = "hhh";
+			// var newStr = "abc".concat("deg", a, "zzz");
+			// console.log(newStr);
+			
+			/* 
+				4. 提取字符串的一部分
+				slice(begin, end)
+				begin: 截取的起始位置下标, 从0开始
+				end: 截取的结束位置的下标, 但是该位置并不会被截取到
+			 */
+			// var str3 = "abcdefg";
+			// var newStr = str3.slice(2, 5);
+			// console.log(newStr);
+			
+			
+			/* 
+				5. 查找对应的子字符串
+				indexOf(目标子串)
+				返回值: 如果能找到, 返回匹配到的第一个字符的下标, 如果找不到, 返回-1
+				注意: 该方法匹配的是整个子串, 而不是某个字符
+			 */
+			// var str5 = "abcdefgdefzzz";
+			// var index = str5.indexOf("def");
+			// console.log(index);
+			
+			/* 
+				6. 查找对应的字符串
+				lastIndexOf(目标子串)
+				 返回值: 如果能找到, 返回匹配到的最后一个子串的第一个字符的下标, 找不到,返回-1
+			 */
+			// var str6 = "abcdefgdefzzz";
+			// var index = str6.lastIndexOf("def");
+			// console.log(index);
+			
+			/* 
+				7. 大小写转化
+				toLowerCase() 整个字符串转成小写字母
+				toUpperCase() 整个字符串转成大写字母
+			 */
+			var s1 = "hello, world!";
+			var s2 = "HI, JAVASCRIPT";
+			
+			var upperS1 = s1.toUpperCase();
+			var lowerS2 = s2.toLowerCase();
+			
+			console.log(upperS1);
+			console.log(lowerS2);
+			
+		</script>
+	</body>
+</html>

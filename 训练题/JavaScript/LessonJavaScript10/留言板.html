@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>留言板</title>
+		<style type="text/css">
+			.box {
+				width: 800px;
+				background-color: lightblue;
+				margin: 50px auto 0;
+				padding: 10px 20px;
+			}
+			.box>div {
+				font-size: 30px;
+			}
+			.box>div>input {
+				width: 80%;
+				height: 40px;
+			}
+			.box>div>textarea {
+				width: 80%;
+				height: 200px;
+			}
+			.msgLi {
+				width: 100%;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div>
+				QQ: <input type="text" id="title">
+			</div>
+			<br>
+			<div>
+				留言: <textarea id="content"></textarea>
+			</div>
+			<br>
+			<button id="btn1">发表留言</button>
+			<ul id="message">
+				
+			</ul>
+		</div>
+		<script type="text/javascript">
+			
+			btn1.onclick = function(){
+				var titleV = title.value;
+				var contentV = content.value;
+				
+				title.value = "";
+				content.value = "";
+				
+				if(titleV.trim() == "" || contentV.trim() == ""){
+					return;
+				}
+				
+				// 创建留言
+				var msgWrapper = document.createElement("li");
+				msgWrapper.className = "msgLi";
+				message.appendChild(msgWrapper);
+				
+				//创建序号, title, content, 删除按钮
+				var num = document.createElement("h2");
+				msgWrapper.appendChild(num);
+				reorderNum();
+				
+				var titleEle = document.createElement("h3");
+				titleEle.innerHTML = titleV;
+				msgWrapper.appendChild(titleEle);
+				
+				var hrEle = document.createElement("hr");
+				msgWrapper.appendChild(hrEle);
+				
+				var contentEle = document.createElement("p");
+				contentEle.innerHTML = contentV;
+				msgWrapper.appendChild(contentEle);
+				
+				var deleteBtn = document.createElement("button");
+				deleteBtn.innerHTML = "删除";
+				deleteBtn.onclick =  function(){
+					// var deleteMsg = this.parentNode;
+					var liH = 200;
+					var timer2 = setInterval(function(){
+						liH -= 10;
+						// deleteMsg.style.height = liH + "px";
+						msgWrapper.style.height = liH + "px";
+						if(liH <= 0) {
+							clearInterval(timer2);
+							// message.removeChild(deleteMsg);
+							message.removeChild(msgWrapper);
+							reorderNum()
+						}
+					}, 20);	
+				};
+				msgWrapper.appendChild(deleteBtn);
+				
+				// 动态获取的留言高度
+				var fH = msgWrapper.offsetHeight;
+				msgWrapper.style.height = "0px";
+				/* 留言添加动画 */
+				var liH = 0;
+				var timer1 = setInterval(function(){
+					liH+=10;
+					msgWrapper.style.height = liH + "px";
+					if(liH >= fH) {
+						clearInterval(timer1);
+					}
+				}, 20);
+			}
+			
+			/* 序号重排的函数 */
+			function reorderNum() {
+				var allH2 = document.querySelectorAll("h2");
+				for(var i = 0; i < allH2.length; i++) {
+					allH2[i].innerHTML = "第" + (i+1) + "条留言";
+				}
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

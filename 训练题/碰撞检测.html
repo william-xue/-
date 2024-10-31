@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      width: 800px;
+      height: 500px;
+      border: 1px solid red;
+      position: relative;
+      margin: 100px auto;
+    }
+    .box > div {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: red;
+      border-radius: 50%;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <div></div>
+    </div>
+    <script>
+      let boxDiv = document.querySelector(".box>div");
+      let leftV = 0;
+      let topV = 0;
+      let flagL = true;
+      let flagT = true;
+      function move() {
+        if (flagL) {
+          leftV += 5;
+        } else {
+          leftV -= 5;
+        }
+        if (flagT) {
+          topV += 5;
+        } else {
+          topV -= 5;
+        }
+        if (leftV >= 760) {
+          flagL = false;
+        }
+        if (leftV <= 0) {
+          flagL = true;
+        }
+        if (topV >= 460) {
+          flagT = false;
+        }
+        if (topV <= 0) {
+          flagT = true;
+        }
+        boxDiv.style.left = leftV + "px";
+        boxDiv.style.top = topV + "px";
+
+        requestAnimationFrame(move);
+      }
+
+      move();
+    </script>
+  </body>
+</html>

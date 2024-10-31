@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .box {
+        height: 50px;
+        width: 50px;
+        background-color: red;
+      }
+      .from {
+        transform: translateX(300px);
+      }
+      .active {
+        transition: all 3s ease-in-out;
+      }
+      .leave {
+        transform: translateX(0);
+      }
+    </style>
+    <div id="parent"></div>
+    <script>
+      let div = document.createElement("div");
+      div.classList.add("from");
+      div.classList.add("box");
+      let parent = document.getElementById("parent");
+      parent.appendChild(div);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          div.classList.remove("from");
+          div.classList.add("active");
+          div.classList.add("leave");
+          div.addEventListener("transitionend", () => {
+            let parent = div.parentElement || div.parentNode;
+            div.classList.remove("active");
+            div.classList.remove("leave");
+            parent.removeChild(div);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

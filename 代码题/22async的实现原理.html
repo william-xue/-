@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function run(num) {
+        console.log("run");
+        return new Promise(function (reasolve, reject) {
+          setTimeout(() => {
+            reasolve(num);
+          }, 5000);
+        });
+      }
+      function asyncFn(generate) {
+        let runGenerate = generate();
+        function resolve(value1) {
+          let { value, done } = runGenerate.next(value1);
+          if (done) {
+            return value;
+          }
+          Promise.resolve(value).then((res) => {
+            resolve(res);
+          });
+        }
+        resolve();
+      }
+      let res = asyncFn(function* generate() {
+        let res = yield run(1);
+        console.log("run1", res);
+        let res2 = yield run(2);
+        console.log("run2", res2);
+        let res3 = yield run(3);
+        console.log("run3", res3);
+      });
+    </script>
+  </body>
+</html>

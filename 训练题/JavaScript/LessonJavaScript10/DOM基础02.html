@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DOM基础02</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			.box {
+				width: 500px;
+				height: 500px;
+				border: 5px solid red;
+				margin: 50px;
+				background-color: lightcyan;
+				position: relative;
+			}
+
+			.div1 {
+				width: 300px;
+				height: 400px;
+				background-color: yellow;
+				padding: 20px;
+				margin: 30px;
+				border: 0px solid black;
+				border-width: 1px 2px 3px 4px;
+				overflow: scroll;
+			}
+
+			.div2 {
+				width: 500px;
+				height: 600px;
+				background-color: red;
+			}
+
+			#d1 {
+				background-color: lightcoral;
+				font-size: 50px;
+			}
+
+			#s1 {
+				font-size: 20px;
+				background-color: lightseagreen;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="div1">
+				<div class="div2"></div>
+			</div>
+		</div>
+
+		<!-- <div id="d1">
+			DOM获取元素的尺寸和位置DOM获取元素的尺寸和位置
+		</div>
+		<span id="s1" style="display: inline-block;">
+			内尺寸外尺寸内尺寸外尺寸内尺寸外尺寸内尺寸外尺寸
+		</span> -->
+		<script type="text/javascript">
+			/* 
+				DOM获取元素的尺寸和位置
+				尺寸:
+					1. 内尺寸: clientWidth/clientHeight: 
+						由元素content大小 + 元素padding大小
+					
+					2. 外尺寸: offsetWidth/offsetHeight: 
+						由元素content大小 + 元素padding大小 + 元素border大小
+				注意点:
+					1. 行元素的内尺寸获取不到
+				
+				位置:
+					1. 内位置: clientLeft/clientTop
+						实际上就是border-left-width和border-top-width, 如果元素没有设置边框, 内位置为0
+					
+					2. 外位置: offsetLeft/offsetTop
+						offsetLeft: 当前元素的左边框的外边缘距离 离它最近的, 设置了非static定位的祖先元素的左边框的内边缘
+						offsetTop: 当前元素的上边框的外边缘距离 离它最近的, 设置了非static定位的祖先元素的上边框的内边缘
+			 */
+			// console.log(d1.offsetWidth, d1.offsetHeight);
+			// console.log(s1.offsetWidth, s1.offsetHeight);
+
+			// console.log(d1.clientWidth, d1.clientHeight);
+			// console.log(s1.clientWidth, s1.clientHeight);
+
+			var div1Ele = document.querySelector(".div1");
+			// console.log(div1Ele.clientWidth, div1Ele.clientHeight);
+			// console.log(div1Ele.offsetWidth, div1Ele.offsetHeight);
+
+			// console.log(div1Ele.clientLeft, div1Ele.clientTop);
+			// console.log(div1Ele.offsetLeft, div1Ele.offsetTop);
+
+			/* 
+				滚动尺寸: scrollWidth/scrollHeight
+					scrollWidth: 滚动元素的内容的宽度 + 滚动元素的左右padding
+					scrollHeight: 滚动元素的内容的高度 + 滚动元素的上下padding
+				注意: 如果水平方向内容溢出, 可滚动元素的右padding失效
+				
+				滚动位置: scrollLeft/scrollTop
+			 */
+
+			console.log(div1Ele.scrollWidth, div1Ele.scrollHeight);
+			// setInterval(function(){
+			// 	console.log(div1Ele.scrollLeft, div1Ele.scrollTop);
+			// 	if(div1Ele.scrollTop > 150) {
+			// 		document.body.style.backgroundColor = "lightblue";
+			// 	}else {
+			// 		document.body.style.backgroundColor = "transparent";
+			// 	}
+			// }, 100);
+			// onscroll事件, 滚动条滚动事件
+			
+			div1Ele.onscroll = function() {
+				if (this.scrollTop > 150) {
+					document.body.style.backgroundColor = "lightblue";
+				} else {
+					document.body.style.backgroundColor = "transparent";
+				}
+			}
+		</script>
+	</body>
+</html>

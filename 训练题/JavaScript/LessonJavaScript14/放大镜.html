@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>放大镜</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#box1 {
+				width: 400px;
+				height: 400px;
+				border: 5px solid red;
+				float: left;
+				position: relative;
+			}
+			#box2 {
+				width: 400px;
+				height: 400px;
+				border: 5px solid blue;
+				float: left;
+				overflow: hidden;
+				margin-left:50px;
+				display: none;
+				position: relative;
+			}
+			#zoom {
+				background-color: rgba(255,255,0,0.5);
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: none;
+			}
+			#bigImg {
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box1">
+			<img src="img/min.jpg">
+			<div id="zoom"></div>
+		</div>
+		<div id="box2">
+			<img src="img/max.jpg" id="bigImg">
+		</div>
+		<script type="text/javascript">
+			
+		
+			box1.onmouseenter = function(){
+				zoom.style.display = "block";
+				box2.style.display = "block";
+				/* 动态计算放大镜的大小 */
+				zoom.style.width = box2.clientWidth / bigImg.clientWidth * box1.clientWidth + "px";
+				zoom.style.height = box2.clientHeight / bigImg.clientHeight * box1.clientHeight + "px";
+			};
+			box1.onmouseleave = function(){
+				zoom.style.display = "none";
+				box2.style.display = "none";
+			};
+			
+			box1.onmousemove = function(e){
+				var even = e || event;
+				
+				zoom.style.left = even.clientX - this.offsetLeft - this.clientLeft - zoom.offsetWidth / 2 + "px";
+				zoom.style.top = even.clientY - this.offsetTop - this.clientTop - zoom.offsetHeight / 2 + "px";
+				
+				// 水平方向临界值
+				if(zoom.offsetLeft <= 0){
+					zoom.style.left = "0px";
+				}
+				if(zoom.offsetLeft >= box1.clientWidth - zoom.offsetWidth) {
+					zoom.style.left = box1.clientWidth - zoom.offsetWidth + "px";
+				}
+				if(zoom.offsetTop <= 0) {
+					zoom.style.top = "0px";
+				}
+				if(zoom.offsetTop >= box1.clientHeight - zoom.offsetHeight) {
+					zoom.style.top = box1.clientHeight - zoom.offsetHeight + "px";
+				}
+				
+				bigImg.style.left = -zoom.offsetLeft/(box1.clientWidth-zoom.clientWidth) * (bigImg.clientWidth-box2.clientWidth) + "px";
+				bigImg.style.top = -zoom.offsetTop/(box1.clientHeight-zoom.clientHeight) * (bigImg.clientHeight-box2.clientHeight) + "px";
+			}
+		</script>
+	</body>
+</html>

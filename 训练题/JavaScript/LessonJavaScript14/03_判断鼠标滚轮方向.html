@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_判断鼠标滚轮方向</title>
+		<style type="text/css">
+			#div1 {
+				width: 200px;
+				height: 200px;
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script type="text/javascript">
+		
+			div1.onmousewheel = function(e){
+				var even = e || event;
+				console.log(123213213);
+				if(even.wheelDelta > 0) {
+					console.log("上");
+				}else {
+					console.log("下");
+				}
+			}
+			
+			/* 
+				火狐浏览器里不支持onmousewheel事件, 火狐如果想要监听鼠标滚轮事件, 需要通过addEventListener的方式进行事件绑定, 事件名叫:
+				DOMMouseScroll
+			 */
+			div1.addEventListener("DOMMouseScroll", function(e){
+				var even = e || event;
+				// console.log(event);
+				if(even.detail < 0) {
+					console.log("上");
+				}else {
+					console.log("下");
+				}
+			});
+			
+			
+			/* 
+				非火狐浏览器 监听滚轮事件 事件名 onmousewheel
+				火狐浏览器 监听滚轮事件 事件名 DOMMouseScroll
+			 
+				非火狐浏览器 绑定滚轮事件, 普通绑定方式即可
+				火狐浏览器 绑定滚轮事件, 需要通过addEventListener
+				
+				非火狐浏览器 监听滚轮事件方向, 通过wheelDelta属性, 值大于0, 向上, 小于0, 向下.
+				火狐浏览器 监听滚轮事件方向, 通过detail属性, 值小于0, 向上, 大于0, 向下
+			 */
+		</script>
+	</body>
+</html>

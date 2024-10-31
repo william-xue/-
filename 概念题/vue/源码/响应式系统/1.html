@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let obj = {
+        a: 5,
+        b: {
+          c: 3,
+          d: {
+            f: 6,
+          },
+        },
+        age: 15,
+      };
+      function travserse(source, set = new Set()) {
+        if (typeof source !== "object" || set.has(source) || source === null) {
+          return source;
+        }
+        set.add(source);
+        for (const key in source) {
+          source[key] = travserse(source[key], set);
+        }
+        return { ...source };
+      }
+      let newObj = travserse(obj);
+      obj.b.c = 8;
+      console.log(obj, newObj);
+    </script>
+  </body>
+</html>

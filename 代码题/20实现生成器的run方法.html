@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function request(timeout, value) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            resolve("返回结果" + value);
+          }, timeout);
+        });
+      }
+      function* foo() {
+        try {
+          var p1 = request(2000, "r1");
+          var p2 = request(3000, "r2");
+          var r2 = yield p2;
+          var r1 = yield p1;
+          console.log(r1, r2);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      function run(gen, ...args) {
+        let it;
+        it = gen.apply(this, args);
+        function deepRun(next) {
+          if (next.done) return next.value;
+          Promise.resolve(next.value).then(
+            (val) => {
+              console.log(val);
+              deepRun(it.next(val));
+            },
+            (err) => {
+              return Promise.resolve(it.throw(err)).then((val) => {
+                deepRun(val);
+              });
+            }
+          );
+        }
+        let res = deepRun(it.next());
+      }
+      run(foo, 12, 43);
+    </script>
+  </body>
+</html>

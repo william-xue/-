@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 单例模式
+      var Singleton = function (name) {
+        this.name = name;
+        this.instance = null;
+      };
+      Singleton.prototype.getName = function () {
+        return this.name;
+      };
+      // 获取实例对象
+      Singleton.getInstance = function (name) {
+        console.log(this.instance);
+        if (!this.instance) {
+          this.instance = new Singleton(name);
+        }
+        return this.instance;
+      };
+      // 测试单例模式的实例
+      var a = Singleton.getInstance("aa");
+      var b = Singleton.getInstance("bb");
+
+      console.log(a === b); // true
+    </script>
+  </body>
+</html>

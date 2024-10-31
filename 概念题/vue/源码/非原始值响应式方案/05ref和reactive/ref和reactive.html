@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./Reactive.js"></script>
+    <script>
+      /**
+       * ref和reactive
+       * ref的目的是为了解决简单数据类型的代理
+       * 如 let str ='123'
+       * proxy是无法直接代理str的所以需要一个ref函数
+       *
+       */
+      let num = 1;
+      let data = ref(num);
+      effect(() => {
+        console.log(data.value);
+      });
+      data.value = 2;
+      console.log(data.__ref_wrapper);
+    </script>
+  </body>
+</html>

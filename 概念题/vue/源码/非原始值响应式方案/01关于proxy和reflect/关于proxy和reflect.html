@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./js/Reactive.js"></script>
+    <script>
+      /**
+       * 1 Reflect反射 在track的时候能够拿到正确的属性绑定到对应的effect函数
+       * data={
+       *  foo:'1'
+       *  bar:(){
+       *    return this.foo  // 这里当我们用proxy代理data成为obj后 访问obj.bar的时候里面的this还是data 这时候就需要用到Reflect反射把里面的this反射为obj
+       *  }
+       * }
+       *
+       * 2 proxy 代理 in方法访问的(has) for in(ownKeys) delete(deleteProperty)
+       */
+      let data = {
+        foo: 1,
+        a: "22",
+      };
+      let reactive = new Reactive();
+      let obj = reactive.proxy(data);
+      reactive.effect(() => {
+        console.log(obj.a);
+      });
+      obj.a = "22";
+    </script>
+  </body>
+</html>

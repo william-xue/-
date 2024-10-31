@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <b>www</b>
+    <strong>www</strong>
+    <script>
+      // 在try catch中如果在try中发生错误会直接走到catch 如果在函数中有return 会返回一个值 但是finally会运行不会收到阻碍
+      // try catch finally执行的顺序 先走try -> catch (如果try和catch中有return并且有finally的话先不return) -> finally(如果finally中有return 执行finally的return不会执行try和catch的return 如果没有就会执行try或者catch的return)
+      function a() {
+        try {
+          let a = 5;
+          throw "try error";
+          return "try return";
+        } catch (error) {
+          console.log(error);
+          return "catch return";
+        } finally {
+          console.log("finally");
+          return "finally return";
+        }
+        console.log("zhixingma");
+      }
+      let b = a();
+      console.log(b);
+    </script>
+  </body>
+</html>

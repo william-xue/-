@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_阻止默认事件的执行</title>
+		<style type="text/css">
+			#div1 {
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				margin-top: 2000px;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="http://www.baidu.com" id="a1">点击跳转到百度</a>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			/* 
+				阻止默认事件的执行:
+				事件对象.preventDefault();
+			 */
+			a1.onclick = function(e){
+				var even = e || event;
+				even.preventDefault();
+			}
+			div1.onmousewheel = function(e){
+				var even = e || event;
+				even.preventDefault();
+				console.log("滚轮事件触发了!");
+			}
+		</script>
+	</body>
+</html>

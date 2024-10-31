@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      overflow: hidden;
+    }
+    .box {
+      width: 200px;
+      height: 140px;
+      margin: 500px auto;
+      overflow: hidden;
+      position: relative;
+    }
+    .item {
+      height: 40px;
+      width: 100%;
+      position: absolute;
+      transition: all 0.5s;
+    }
+  </style>
+
+  <body>
+    <div class="box">
+      <div class="item" data-index="0">1</div>
+      <div class="item" data-index="1">2</div>
+      <div class="item" data-index="2">3</div>
+      <div class="item" data-index="3">4</div>
+      <div class="item" data-index="4">5</div>
+      <div class="item" data-index="5">6</div>
+      <div class="item" data-index="6">7</div>
+    </div>
+    <script>
+      /**
+       * 1 有自动滚动效果
+       * 2 滑轮滚动效果
+       * 3 鼠标拖动滚动效果
+       * 4 点击任意元素 进行高亮显示 如果点击第一个 最后一个补上来
+       * 无缝轮播
+       *
+       */
+      const data = [1, 2, 3, 4, 5, 6];
+      let index = 1;
+      function createElement(tag) {
+        return document.createElement(tag);
+      }
+      let items = document.querySelectorAll(".item");
+      const box = document.querySelector(".box");
+      box.appendChild(items[0].cloneNode(true));
+      box.appendChild(items[1].cloneNode(true));
+      box.insertBefore(items[items.length - 1].cloneNode(true), box.children[0]);
+      box.insertBefore(items[items.length - 2].cloneNode(true), box.children[0]);
+      items = document.querySelectorAll(".item");
+      for (let i = 0; i < items.length; i++) {
+        const element = items[i];
+        element.style.backgroundColor = `rgb(${Math.random() * 255},${
+          Math.random() * 255
+        },${Math.random() * 255})`;
+      }
+      // 当前高亮的元素
+      function run(direction = 0) {
+        console.log(direction);
+        for (let i = 0; i < items.length; i++) {
+          const element = items[i];
+          element.style.transform = `translateY(${
+            (i - index + 1) * 50
+          }px) scale(${index === i ? 1 : 0.95})`;
+
+          element.style.opacity = `${index === i ? 1 : 0.2}`;
+        }
+      }
+      run();
+      box.onclick = function (e) {
+        const curIndex = Number(e.target.dataset.index);
+        if (isNaN(curIndex) || curIndex === index) return;
+        const direction = Math.sign(curIndex - index);
+        index = curIndex;
+        run(direction);
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>history01</title>
+	</head>
+	<body>
+		<h2>history01页面</h2>
+		<a href="history02.html">点击跳转到history02页面</a>
+		<button id="forwordBtn">前进</button>
+		<button id="go01">点击去history03页面</button>
+		<script type="text/javascript">
+			forwordBtn.onclick = function(){
+				history.forward();
+			}
+			go01.onclick = function(){
+				history.go(2);
+			}
+		</script>
+	</body>
+</html>

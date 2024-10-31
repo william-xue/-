@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .container {
+        width: 400px;
+        height: 500px;
+        margin: 100px auto 0;
+        border: 2px solid red;
+        padding: 10px;
+      }
+      .time {
+        float: left;
+      }
+      .score {
+        float: right;
+      }
+      .time,
+      .score {
+        font-size: 25px;
+      }
+      header::after {
+        content: ""; /*设置内容为空*/
+        height: 0; /*高度为0*/
+        line-height: 0; /*行高为0*/
+        display: block; /*将文本转为块级元素*/
+        visibility: hidden; /*将元素隐藏*/
+        clear: both; /*清除浮动*/
+      }
+      .big-font {
+        font-size: 300px;
+        text-align: center;
+      }
+      ul li {
+        list-style-type: none;
+      }
+      ul {
+        display: flex;
+        justify-content: space-around;
+        font-size: 40px;
+        list-style: none;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <div class="container">
+      <header>
+        <div class="time">
+          <span>时间:</span>
+          <span class="second">0</span>
+        </div>
+        <div class="score">
+          <span>得分:</span>
+          <span class="score-num">0</span>
+        </div>
+      </header>
+      <main>
+        <div class="big-font">红</div>
+      </main>
+      <ul class="font-list"></ul>
+    </div>
+    <script>
+      let fontList = document.querySelector(".font-list");
+      let colorArr = ["red", "yellow", "blue", "green", "purple"];
+      let fontArr = ["黄", "蓝", "绿", "紫", "红"];
+      let bigFont = document.querySelector(".big-font");
+      let score = document.querySelector(".score-num");
+      let second = document.querySelector(".second");
+      let fontDomArr = [];
+      let is = 0;
+      let i = 0;
+      for (let i = 0; i < 5; i++) {
+        let li = document.createElement("li");
+        fontDomArr.push(li);
+      }
+      function randomFontList() {
+        randomArr(colorArr);
+        randomArr(fontArr);
+        for (let i = 0; i < 5; i++) {
+          let color = colorArr[i];
+          switch (color) {
+            case "red":
+              fontDomArr[i].innerHTML = "红";
+              break;
+            case "yellow":
+              fontDomArr[i].innerHTML = "黄";
+              break;
+            case "blue":
+              fontDomArr[i].innerHTML = "蓝";
+              break;
+            case "green":
+              fontDomArr[i].innerHTML = "绿";
+              break;
+            case "purple":
+              fontDomArr[i].innerHTML = "紫";
+              break;
+          }
+          fontDomArr[i].style.color = color;
+          fontList.appendChild(fontDomArr[i]);
+        }
+      }
+      function randomArr(arr) {
+        for (let i = arr.length; i > 0; i--) {
+          let rand = Math.floor(Math.random() * i);
+          let temp = arr[rand];
+          temp = arr[i - 1];
+          arr[i - 1] = arr[rand];
+          arr[rand] = temp;
+        }
+      }
+      function randomBigFont() {
+        let n1 = Math.floor(Math.random() * 5);
+        let n2 = Math.floor(Math.random() * 5);
+        bigFont.style.color = colorArr[n1];
+        bigFont.innerHTML = fontArr[n2];
+      }
+      randomFontList();
+      randomBigFont();
+      score.innerHTML = i;
+      fontList.onclick = function (e) {
+        let dom = e.target;
+        let text = dom.innerHTML;
+        let color = dom.style.color;
+        if (bigFont.style.color === color) {
+          i++;
+          score.innerHTML = i;
+        }
+        randomBigFont();
+        randomFontList();
+      };
+      setInterval(() => {
+        is++;
+        second.innerHTML = is;
+      }, 1000);
+    </script>
+  </body>
+</html>

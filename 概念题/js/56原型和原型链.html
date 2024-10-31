@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 每个类都有一个显示的prototype
+       * 每个类的实例有一个隐士的[[protorype]]
+       * 类的prototype和其实例的[[protorype]]指向的是一个地方{constructor:'xxx',[[prototype]]:'xxx'}
+       * {constructor:'xxx',[[prototype]]:'xxx'} [[prototype]]这个地方其实也是上一级类的实例 所以上一级类的实例指向的是上一级类的prototype
+       */
+      function Test() {}
+      Test.prototype.call = function () {
+        console.log(1);
+      };
+      let proto = Object.create(Test.prototype);
+      function A() {}
+      A.prototype = proto;
+      A.prototype.constructor = A;
+      A.prototype.speak = function () {};
+      let a = new A();
+      console.log(a);
+      console.log([]);
+      console.dir(A);
+      console.log({});
+    </script>
+  </body>
+</html>

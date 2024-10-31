@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_循环结构02</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				while循环
+				语法:
+				1;
+				while(2){
+					4;
+					3;
+				}
+			 */
+			// var i = 0;
+			// while (i < 5){
+			// 	console.log("hello, world!");
+			// 	i++;
+			// }
+			
+			/* 
+				循环输出[30-70]的随机数, 直到随机出50, 停止输出
+			 */
+			// for(;true;){
+			// 	var ranNum = Math.floor(Math.random()*41+30);
+			// 	console.log(ranNum);
+			// 	if(ranNum == 50) {
+			// 		break;
+			// 	}
+			// }
+			
+			// while (true){
+			// 	var ranNum = Math.floor(Math.random()*41+30);
+			// 	console.log(ranNum);
+			// 	if(ranNum == 50) {
+			// 		break;
+			// 	}
+			// }
+			
+			/* 
+				当明确的知道循环次数时, 建议使用for循环;
+				不知道循环次数,或者需要写死循环时, 建议使用while循环
+			 */
+			// while (true){
+			// 	alert("下载我!");
+			// }
+			
+			/* 
+				do...while循环
+				语法:
+				1;
+				do{
+					4;
+					3;
+				}while(2)
+			 */
+			// var i = 0;
+			do{
+				console.log("hello, world!");
+				// i++;
+			}while(false)
+			
+			
+			// while (false){
+			// 	console.log("hello");
+			// }
+			/* 
+				do...while循环与其他循环的区别:
+				其他的循环如果循环条件一开始都不成立, 循环体一次都不会执行;
+				do...while因为语法上是先执行循环体, 再进行条件判断, 所以如果循环条件一开始不成立, do...while循环也会执行一遍循环体.
+			 
+			 */
+		</script>
+	</body>
+</html>

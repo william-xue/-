@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>01_循环结构</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				循环结构: 重复执行某段代码
+				1. for循环
+				2. while循环
+				3. do...while循环
+			 */
+			// console.log("hello, world!");
+			// console.log("hello, world!");
+			// console.log("hello, world!");
+			// console.log("hello, world!");
+			// console.log("hello, world!");
+
+			/* 
+				1. for循环
+				语法:
+				for(1;2;3){
+					4;
+				}
+				1: 循环变量初始值
+				2: 循环条件
+				3: 循环增量
+				4: 循环体
+				
+				执行顺序:
+				第一次1243
+				以后243
+				直到循环条件为假, 循环执行结束
+			 */
+			// for(var a = 0; a < 5; a++) {
+			// 	console.log("hello, world!");
+			// }
+
+			// 练习1: 控制台依次输出1-5
+			// for(var a = 1; a < 6; a++) {
+			// 	console.log(a);
+			// }
+
+			// 练习2: 控制台依次输出5-1
+			// for(var a = 5; a > 0; a--) {
+			// 	console.log(a);
+			// }
+
+			// 练习3: 遍历1-100以内的所有数, 输出其中所有的偶数
+			// for(var a = 1; a < 101; a++){
+			// 	if(!(a % 2)) {
+			// 		console.log(a);
+			// 	}
+			// }
+
+			// 练习4: 输出1-100以内个位为7的数
+			// for(var i = 1; i < 101; i++) {
+			// 	if(i % 10 == 7) {
+			// 		console.log(i);
+			// 	}
+			// }
+			// 练习5: 输出1-100以内十位为7的数
+			// for(var i = 1; i < 101; i++) {
+			// 	if(Math.floor(i / 10) == 7){
+			// 		console.log(i);
+			// 	}
+			// }
+			// 练习6: 输出1-100以内不含有7的数(个位为7, 十位为7, 7的倍数)
+			// for(var i = 1; i < 101; i++) {
+			// 	// if(!(i % 7 == 0 || i % 10 == 7 || Math.floor(i / 10) == 7)) {
+			// 	// 	console.log(i);	
+			// 	// }
+			// 	if(i % 7 != 0 && i % 10 != 7 && Math.floor(i / 10) != 7) {
+			// 		console.log(i);	
+			// 	}
+			// }
+
+			// 练习7: 输出10个随机数, 随机数范围[30-70]
+			// for (var i = 0; i < 10; i++) {
+			// 	var randomNum = Math.floor(Math.random() * (70 - 30 + 1) + 30);
+			// 	console.log(randomNum);
+			// }
+
+			// 练习8: 输出10个随机数, 随机数范围[30-70], 最后输出这十个数里的最大值
+			// 思路: 声明一个值, 存储每次比较的结果, 初始值要小于等于随机范围里的最小值
+			// var max = 0;
+			// var min = 100;
+			// for (var i = 0; i < 10; i++) {
+			// 	var ranNum = Math.floor(Math.random()*41+30);
+			// 	console.log(ranNum);
+			// 	// 每得到一个随机数, 将其与max比较, max永远存储两者之间的较大值
+			// 	max = max > ranNum ? max : ranNum;
+			// 	min = min < ranNum ? min : ranNum;
+			// }
+			// console.log("最大值是:" + max);
+			// console.log("最小值是:" + min);
+
+			/* 
+				练习9: 循环输出[30-70]的随机数, 直到随机出50, 停止输出
+				分析: 我们有时候在进行代码的循环时, 是没有办法确定循环次数的, 此时, 不要故意将循环次数设置的特别大, 而要将循环写成无限循环(死循环), 通过break关键字停止循环的执行
+				break在循环中的作用, 终止循环的执行
+			 */
+			// for(var i = 0; i >= 0; i++){
+			// 	var ranNum = Math.floor(Math.random()*41+30);
+			// 	console.log(ranNum);
+			// 	if(ranNum == 50) {
+			// 		break;
+			// 	}
+			// }
+
+			/* 
+				break: 循环中的作用是终止循环
+				continue: 循环中的作用是跳过本次循环, 继续后面的循环 
+			 */
+			// for(var i = 0; i < 10; i++){
+			// 	if(i == 5) {
+			// 		// break;
+			// 		continue;
+			// 	}
+			// 	console.log(i);
+			// }
+
+
+			/* 
+				循环嵌套
+			 */
+			// for (var i = 0; i < 10; i++) {
+			// 	for (var j = 0; j < 10; j++) {
+			// 		console.log("i的值是:" + i + ", j的值是" + j);
+			// 	}
+			// }
+			
+			/* 
+				练习10. 在页面上显示如下效果
+				1 2 3 4 5
+				1 2 3 4 5
+				1 2 3 4 5
+				1 2 3 4 5
+				1 2 3 4 5
+			 */
+			for(var i = 0; i < 5; i++) {
+				for(var j = 1; j < 6; j++){
+					document.write(j + " ");
+				}
+				document.write("<br/>");
+			}
+			
+			/*
+				练习11. 在页面上显示如下效果
+				1 
+				1 2 
+				1 2 3 
+				1 2 3 4
+				1 2 3 4 5
+			 */
+			// for(var i = 0; i < 5; i++) {
+			// 	for(var j = 1; j < i + 2; j++){
+			// 		document.write(j + " ");
+			// 	}
+			// 	document.write("<br/>");
+			// }
+			
+			/*
+				练习12. 在页面上显示如下效果
+				1 2 3 4 5
+				1 2 3 4
+				1 2 3 
+				1 2 
+				1
+			 */
+			// for(var i = 0; i < 5; i++) {
+			// 	for(var j = 1; j < 6 - i; j++){
+			// 		document.write(j + " ");
+			// 	}
+			// 	document.write("<br/>");
+			// }
+		</script>
+	</body>
+</html>

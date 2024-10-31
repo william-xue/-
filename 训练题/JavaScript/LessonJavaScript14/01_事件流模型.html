@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>01_事件流模型</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#div1 {
+				width: 500px;
+				height: 500px;
+				background-color: red;
+			}
+			#div2 {
+				width: 400px;
+				height: 400px;
+				background-color: yellow;
+			}
+			#div3 {
+				width: 300px;
+				height: 300px;
+				background-color: blue;
+			}
+			#div4 {
+				width: 200px;
+				height: 200px;
+				background-color: green;
+			}
+			#div5 {
+				width: 100px;
+				height: 100px;
+				background-color: purple;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<div id="div2">
+				<div id="div3">
+					<div id="div4">
+						<div id="div5"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<ul>
+			<li><button>按钮1</button></li>
+			<li><button>按钮2</button></li>
+			<li><button>按钮3</button></li>
+			<li><button>按钮4</button></li>
+			<li><button>按钮5</button></li>
+		</ul>
+		<script type="text/javascript">
+			/* 
+				事件流模型: 描述的是JS里一个事件触发之后的完整步骤, 该步骤一共分为三步:
+				1. 事件捕获: 事件流模型的第一阶段, 当某个节点上的事件被触发时, 系统会从根节点开始, 一直向下寻找, 直到找到真正触发了该事件的节点, 沿途在其直系继承树上的所有节点如果绑定了相同的事件, 这些事件依次触发.
+				2. 事件触发: 事件流模型的第二阶段, 绑定的事件被触发.
+				3. 事件冒泡: 事件流模型的第三阶段, 绑定的事件被触发之后, 会沿着直系继承树一直向上传递, 一直再传递回到根节点, 沿途绑定了相同事件的节点会依次触发.
+			 */
+			div1.onclick = function(){alert("div1")};
+			div2.onclick = function(){alert("div2")};
+			div3.onclick = function(){alert("div3")};
+			div4.onclick = function(){alert("div4")};
+			div5.onclick = function(e){
+				/* 
+					阻止事件冒泡: 意思是阻止事件的传播, 但是不影响本身事件的执行
+					事件对象.stopPropagation()
+				 */
+				// var even = e || event;
+				// even.stopPropagation();
+				alert("div5")
+			};
+			
+			// 事件代理: 利用事件冒泡的特点, 将原本应该绑定给某个元素的事件绑定给了其某个直系祖先元素. 但是这样无法通过this知道真正触发了该事件的元素是谁. 我们需要通过"事件源"对象来获取真正触发了该事件的元素
+			document.querySelector("ul").onclick = function(e){
+				// 获取事件源对象  event.target
+				var even = e || event;
+				console.log(even.target);
+				// alert("触发!");
+			}
+			/* 
+				事件捕获: 默认JS是不响应该阶段的, 如果想要响应该阶段, 需要通过addEventListener的方式给元素绑定事件, 而不能再通过之前的语法绑定事件
+				addEventListener("事件名", 回调函数, 是否把事件的传播方式设置成捕获);
+				
+				面试题: 普通绑定事件的方式与addEventListener绑定事件的区别是什么?
+			 */
+			var flag = true;
+			div1.addEventListener("click", function(){alert("div1")}, flag);
+			div2.addEventListener("click", function(){alert("div2")}, flag);
+			div3.addEventListener("click", function(){alert("div3")}, flag);
+			div4.addEventListener("click", function(){alert("div4")}, flag);
+			div5.addEventListener("click", function(){alert("div5")}, flag);
+		</script>
+	</body>
+</html>

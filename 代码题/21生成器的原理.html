@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function request() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("结果");
+          }, 1000);
+        });
+      }
+      function* fn() {
+        let temp = request();
+        console.log(temp);
+        let res = yield temp;
+        console.log(res);
+      }
+      let it = fn();
+      it.next().value;
+      function diedai() {
+        let state;
+        let val;
+        function process(v) {
+          switch (state) {
+            case 1:
+              let val = request();
+              console.log(val);
+              return val;
+            case 2:
+              console.log(v);
+              return undefined;
+            case 3:
+              break;
+          }
+        }
+        return {
+          next: function (v) {
+            if (!state) {
+              state = 1;
+              return {
+                value: process(),
+                done: false,
+              };
+            } else if (state === 1) {
+              state = 2;
+              return {
+                value: process(v),
+                done: false,
+              };
+            } else if (state === 2) {
+              return {
+                value: undefined,
+                done: true,
+              };
+            }
+          },
+        };
+      }
+      let gen = diedai();
+      gen.next().value.then((res) => {
+        console.log(gen.next(res).value);
+      });
+    </script>
+  </body>
+</html>

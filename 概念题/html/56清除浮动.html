@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .fahter {
+        width: 400px;
+        border: 1px solid deeppink;
+      }
+      .big {
+        width: 200px;
+        height: 200px;
+        background: darkorange;
+        float: left;
+      }
+      .small {
+        width: 120px;
+        height: 120px;
+        background: darkmagenta;
+        float: left;
+      }
+      .footer {
+        width: 900px;
+        height: 100px;
+        background: darkslateblue;
+      }
+      .clear {
+        clear: both;
+      }
+      .over {
+        overflow: hidden;
+      }
+      .weiyuansu::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fahter">
+      <!-- 伪元素法 缺点就是无法兼容id6 7  -->
+      <!-- <div class="fahter weiyuansu"> -->
+      <!-- overflow：hidden法 缺点是后续如果添加元素会全部被阶段无法看到 -->
+      <!-- <div class="fahter over"> -->
+      <div class="big">big</div>
+      <div class="small">small</div>
+      <!-- 额外添加标签在父元素中清除 缺点是语义化不好 -->
+      <!-- <div class="clear">额外标签法</div> -->
+    </div>
+    <div class="footer"></div>
+  </body>
+</html>

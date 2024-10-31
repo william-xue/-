@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="parent">
+      <div id="p1"></div>
+      <div id="p2"></div>
+    </div>
+    <script>
+      const p = document.createElement("p");
+      const parent = document.getElementById("parent");
+      const p1 = document.getElementById("p1");
+      const p2 = document.getElementById("p2");
+      console.log(parent);
+      parent.insertBefore(p, null);
+    </script>
+  </body>
+</html>

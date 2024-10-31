@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Array.prototype.myMap = function (fn) {
+        let arr = this.reduce(function (pre, cur, index, arr) {
+          let res;
+          try {
+            res = fn(cur, index, arr);
+          } catch (e) {
+            console.log(e);
+            res = undefined;
+          } finally {
+            pre.push(res);
+            return pre;
+          }
+        }, []);
+        return arr;
+      };
+      let arr = [1, 2, 3];
+
+      arr = arr.myMap(function (val, index, arr) {
+        if (index == 2) {
+          throw new Error("error");
+        }
+        return {
+          name: "zsd",
+          age: val * 2,
+        };
+      });
+
+      console.log(arr);
+    </script>
+  </body>
+</html>

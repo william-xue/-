@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var a = "2";
+      var obj = {
+        a: "3",
+        simple() {
+          let showA = () => {
+            console.log(this.a); //3
+          };
+          showA();
+        },
+        arrowFn: () => {
+          console.log(this.a); //
+        },
+        simple2() {
+          let showA = () => {
+            console.log(this.a);
+          };
+          return showA;
+        },
+        simple3() {
+          let showA = function () {
+            console.log(this.a);
+          };
+          return showA;
+        },
+      };
+      obj.simple(); //3
+      obj.arrowFn(); // 2
+
+      obj.simple2()(); // 3
+      obj.simple3()(); // 2
+    </script>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BOM基础</title>
+	</head>
+	<body>
+		<!-- <button id="btn1">点击1</button>
+		<button id="btn2" onclick="btn2Click()">点击2</button> -->
+		<button id="btn1">新建window</button>
+		<a href="http://www.mi.com" target="w1">跳转到小米</a>
+
+		<hr>
+		<button id="cBtn">创建</button>
+		<button id="dBtn">删除</button>
+		<hr>
+		<button id="createW">新建窗口</button>
+		<button id="mT">moveTo窗口</button>
+		<button id="bT">moveBy窗口</button>
+		<hr>
+		<button id="rT">resizeTo窗口</button>
+		<button id="rB">resizeBy窗口</button>
+		<textarea placeholder="输入内容"></textarea>
+		<script type="text/javascript">
+			/* 
+				BOM: Broswer Object Model 浏览器对象模型
+				作用: 用来处理浏览器有关的操作
+				
+				BOM是由一系列对象组成的, 每个对象都负责与浏览器有关的一类功能
+				window对象 是BOM里的核心对象, 也是顶层对象, 其余的所有对象都是从window里延伸出来的, 它们都是window的子对象
+				
+				window的子对象
+				1. document
+				2. history
+				3. location
+				4. navigator
+				5. screen
+			 */
+
+			/* 
+				window对象 代指运行当前文档的 浏览器窗口 
+				JS里, 所有的全局变量和全局函数都是window的属性
+			 */
+			// var a = 10;
+			// console.log(window.a, a);
+			// function fn1(){
+			// 	console.log("fn1函数被触发了!", this);
+			// }
+			// fn1();
+			// window.fn1();
+
+			/* 
+				this的代指情况:
+				1. this在行间绑定的元素事件的函数内, 代指的是window, 如果想让this代指的依然是对应的标签, 需要在行间调用函数的时候, 传入this, 则函数的形参接收到的就是对应的标签
+				2. this在JS绑定的元素事件的函数内, 代指的是触发了该事件的元素
+				3. this在全局函数内, 代指的是window
+				4. 直接在script标签里写this, 代指的是window
+				5. 系统自带的函数传入的回调函数里的this, 代指的是window
+			 */
+
+			// btn1.onclick = function(){
+			// 	console.log(this);
+			// }
+
+			// function btn2Click() {
+			// 	console.log(this);
+			// }
+
+			// console.log(this);
+
+			// setInterval(function(){
+			// 	console.log(this);
+			// }, 1000);
+
+			/* 
+				window里与操作浏览器窗口有关的方法
+			 */
+			/* 
+				1. open(url, name, features)  新建一个浏览器窗口
+				url: 打开的新窗口的地址
+				name: 打开的窗口的名字
+				features: 打开的窗口的特性: 如大小,位置等
+				返回值: 新打开的窗口的window对象
+				
+				注意: open方法只要调用一次, 就会新创建一个窗口. 但是如果窗口的name值相同, 相同name值的窗口只能有一个.
+			 */
+			btn1.onclick = function() {
+				var newW = window.open("http://www.baidu.com", "", "width=200,height=200,left=300,top=200");
+				// newW.console.log("hello~~");
+				// var newDiv = document.createElement("div");
+				// newDiv.style.width = "200px";
+				// newDiv.style.height = "200px";
+				// newDiv.style.background = "red";
+				// newW.document.body.appendChild(newDiv);
+			}
+
+			/* 
+				2. close() 关闭窗口
+			 */
+			// window.close();
+
+			/*
+			 练习1： 两个按钮， 分别是： 创建和关闭
+			 点击创建按钮， 一次创建5个窗口
+			 点击关闭按钮， 关闭所有新建的窗口
+			*/
+			var winArr = [];
+
+			cBtn.onclick = function() {
+				for (var i = 0; i < 5; i++) {
+					var win = window.open("", "", "width=200, height=200");
+					winArr.push(win);
+				}
+			};
+			dBtn.onclick = function() {
+				for (var i = 0; i < winArr.length; i++) {
+					winArr[i].close();
+					winArr.shift();
+					i--;
+				}
+				// for (var i = winArr.length-1; i >= 0; i--) {
+				// 	winArr[i].close();
+				// 	winArr.pop();
+				// }
+				console.log(winArr);
+			};
+			
+			/* 
+				3.1 moveTo(x, y) 将窗口移动到x，y的位置
+				3.2 moveBy(x, y) 将窗口在当前的位置基础上加上x，y之后的新位置， x，y也可以为负值
+			 */
+			var gWin = null;
+			createW.onclick = function(){
+				// gWin = window.open("http://www.baidu.com", "", "width=200, height=200");
+				
+				gWin = window.open("../LessonJavaScript11/锅打灰太狼.html", "", "width=200, height=200");
+			}
+			mT.onclick = function(){
+				gWin.moveTo(500, 300);
+			}
+			bT.onclick = function(){
+				gWin.moveBy(5, 5);
+			}
+			
+			/* 
+				4.1 resizeTo(w, h) 将窗口的尺寸重置成w和h
+				4.2 resizeBy(w, h) 将窗口的尺寸在原有尺寸的基础上增加w和h的增量, w, h可以为负值
+			 */
+			rT.onclick = function(){
+				gWin.resizeTo(500, 500);
+			}
+			rB.onclick = function(){
+				gWin.resizeBy(2, 2);
+			}
+			
+			/* 
+				跨域问题: JS不允许跨域访问, JS只允许前端与访问的服务端在"同源"下(在一个地方), 如果操作者与被操作者不同源, JS会拒绝本次操作, 抛出错误, "跨域"(corss-origin)错误
+			 */
+			
+			/*
+				2. history 
+				该对象用来存储用户的历史记录(表示页面的访问顺序, 仅存储最近访问的 有限条目的url信息)
+				H5之前, history对象是禁止访问的
+			 */
+			// console.log(history);
+			/* 
+				history对象的常用方法
+				1. back() 在历史记录中后退, 等效于, 点击了浏览器工具栏里的"后退"按钮
+				2. forward() 在历史记录中前进, 等效于, 点击了浏览器工具栏里的"前进"按钮
+				3. go() 在历史记录中根据传入的索引值加载页面(0表示当前页, 上一页是-1, 下一页是1, 依次类推)
+				
+				注意: 通过history的方法进行的页面切换, 切换的页面是读取的缓存, 并不是重新加载的!!!
+			 */
+			
+			/* 
+				3. location对象
+					存储的是当前文档的位置有关的信息
+					
+				location常用的属性和方法
+				1. protocol 协议名
+				2. host ip+端口号
+				3. hostname ip
+				4. port 端口号
+				5. pathname 资源的具体路径
+				6. search 参数列表 以?开头, 数据以键值对的形式拼接, 多个键值对中间用&相连
+				7. hash #开头, 这个值不会影响服务器的判断
+				8. href 完整的url地址
+				
+				9. reload() 重新加载页面
+				10. replace() 会替换掉当前网址, 但是不会产生历史记录
+			 */
+			// var url = "http://127.0.0.1:8848/JavaScript/LessonJavaScript12/01_BOM%E5%9F%BA%E7%A1%80.html";
+			// console.log(location);
+			
+			
+			/* 
+				navigator对象
+				该对象存储与浏览器有关的信息, 如版本, 内核, 系统
+				
+				navigator对象的常用属性
+				1. appName 应用的名字
+				2. appVersion 应用的版本
+				3. cookieEnabled 是否开启cookie
+				4. userAgent 浏览器的所有基础信息
+			 */
+			console.log(navigator.userAgent);
+			/* 
+				判断用户使用哪个浏览器打开的网页???
+				谷歌(chrom, safari)
+				火狐(firefox)
+				苹果(safari)
+				ie(trident)
+			 */
+			var info = navigator.userAgent.toLowerCase();
+			if(info.indexOf("firefox") != -1){
+				alert("火狐浏览器")
+			}else if(info.indexOf("edg") != -1){
+				alert("edg浏览器")
+			}else if(info.indexOf("safari") != -1){
+				alert("苹果浏览器");
+			}else if(info.indexOf("trident") != -1){
+				alert("ie浏览器");
+			}else if(info.indexOf("chrome") != -1){
+				alert("谷歌浏览器");
+			}else {
+				alert("其他浏览器");
+			}
+			
+			/* 
+				screen对象
+				存储了客户端的屏幕信息
+				1. width, height
+				2. availWidth, availHeight
+				
+			 */
+			console.log(screen.width, screen.height);
+			console.log(screen.availWidth, screen.availHeight);
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">ok</button>
+    <button id="btn2">test</button>
+    <script>
+      let data = {
+        test: "test",
+        ok: true,
+      };
+      let temp1;
+      let temp2;
+      let i = 0;
+      let activeEffect = null;
+      let bucket = new WeakMap();
+      // 为了解决嵌套effect调用顺序有误
+      let effectStack = [];
+      function track(target, key) {
+        if (!activeEffect) return target[key];
+
+        let depsMap = bucket.get(target);
+        if (!depsMap) {
+          bucket.set(target, (depsMap = new Map()));
+        }
+        let deps = depsMap.get(key);
+        if (!deps) {
+          depsMap.set(key, (deps = new Set()));
+        }
+        deps.add(activeEffect);
+        activeEffect.deps.push(deps);
+      }
+      function trigger(target, key) {
+        let depsMap = bucket.get(target);
+        if (!depsMap) return true;
+        let effects = depsMap.get(key);
+        if (!effects) return true;
+        const efectsToRun = new Set(effects);
+        efectsToRun.forEach((effect) => {
+          effect && effect();
+        });
+      }
+      function effect(fn) {
+        const effectFn = () => {
+          cleanup(effectFn);
+          activeEffect = effectFn;
+          // 执行的时候先进行入栈
+          effectStack.push(activeEffect);
+          fn();
+          // 执行完后出栈 栈底就是上一个
+          effectStack.pop();
+          activeEffect = effectStack[effectStack.length - 1];
+        };
+        effectFn.deps = [];
+        effectFn();
+      }
+      function cleanup(effectFn) {
+        console.log(effectFn.deps, "cleanup3");
+        for (let i = 0; i < effectFn.deps.length; i++) {
+          const deps = effectFn.deps[i];
+          deps.delete(effectFn);
+        }
+        effectFn.deps.length = 0;
+      }
+      let handle = {
+        get(target, key) {
+          console.log("get5");
+          track(target, key);
+          return target[key];
+        },
+        set(target, key, newValue) {
+          console.log("set");
+          target[key] = newValue;
+          trigger(target, key);
+          return true;
+        },
+      };
+      let obj = new Proxy(data, handle);
+      effect(() => {
+        // 嵌套的effect
+        console.log("effect1");
+        effect(() => {
+          console.log("effect2");
+          temp2 = obj.ok;
+        });
+        temp1 = obj.test;
+      });
+
+      btn.onclick = function () {
+        obj.ok = false;
+      };
+      btn2.onclick = function () {
+        obj.test = "xxx";
+      };
+    </script>
+  </body>
+</html>

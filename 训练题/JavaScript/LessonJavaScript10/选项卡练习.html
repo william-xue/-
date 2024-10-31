@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>选项卡练习</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			ul {
+				width: 1000px;
+				height: 50px;
+				margin: 150px auto 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+			}
+			
+			li {
+				width: 200px;
+				height: 100%;
+				border: 1px solid;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 30px;
+			}
+			.line {
+				width: 200px;
+				height: 5px;
+				background-color: red;
+				position: absolute;
+				left: 0;
+				bottom: -5px;
+				transition: all .5s;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>热点</li>
+			<li>娱乐</li>
+			<li>体育</li>
+			<li>时尚</li>
+			<li>军事</li>
+			<div class="line"></div>
+		</ul>
+		<script type="text/javascript">
+			var allLis = document.querySelectorAll("li");
+			var line = document.querySelector(".line");
+			for (var i = 0; i < allLis.length; i++) {
+				allLis[i].onclick = function(){
+					line.style.left = this.offsetLeft + "px";
+				}
+			}
+		</script>
+	</body>
+</html>

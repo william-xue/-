@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04_ES6数组常用方法</title>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<ul></ul>
+		<script type="text/javascript">
+			/* 
+				1. foreach()
+				2. map()
+				3. filter()
+				4. reduce()
+				5. some()
+				以上的所有方法均对数组进行的遍历操作
+			 */
+			//1. foreach() 该方法仅仅对数组做遍历, 没有返回值, 也不会修改原数组
+			// var arr1 = [100, 200, 300, 400, 500];
+			// arr1.forEach(function(item, index){
+			// 	// 参数1: 遍历出的数组里的每个值
+			// 	// 参数2: 遍历出的数组里的每个值的下标
+			// 	console.log(item, index);
+			// });
+			// console.log(arr1);
+			
+			//2. map() 对数组做遍历, 遍历的同时可以对数组里的值做修改, 返回值是修改过后的新数组, 但是依然不改变原数组
+			// var arr2 = [100, 200, 300, 400, 500];
+			// var newArr2 = arr2.map(function(item, index){
+			// 	// 参数1: 遍历出的数组里的每个值
+			// 	// 参数2: 遍历出的数组里的每个值的下标
+			// 	// console.log(item, index);
+			// 	// 修改的值需要被return出来, 才会被存进新的数组里
+			// 	if(index % 2) {
+			// 		return item + "aaa";
+			// 	}else {
+			// 		return item + "bbb";
+			// 	}
+			// });
+			// console.log(newArr2);
+			// console.log(arr2);
+			
+			/* 
+				3. filter() 对数组进行过滤  返回值是过滤后的新数组, 不改变原数组 
+			 */
+			// var arr3 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+			// var filterArr = arr3.filter(function(item, index){
+			// 	// 参数1: 遍历出的数组里的每个值
+			// 	// 参数2: 遍历出的数组里的每个值的下标
+			// 	console.log(item, index);
+			// 	// 制定过滤规则, 规则需要写到return后面
+			// 	// return item > 5;
+			// 	return item % 2 == 0;
+			// });
+			// console.log(filterArr);
+			// console.log(arr3);
+			
+			// var proArr = [
+			// 	{id:"001", pName:"羽绒服", pPrice:666, type:"服饰"},
+			// 	{id:"002", pName:"苹果", pPrice:2, type:"水果"},
+			// 	{id:"003", pName:"牛肉", pPrice:30, type:"肉类"},
+			// 	{id:"004", pName:"橘子", pPrice:5, type:"水果"},
+			// 	{id:"005", pName:"拖鞋", pPrice:7, type:"服饰"},
+			// ];
+			// var filterProArr = proArr.filter(function(pro, index){
+			// 	return pro.type == "水果";
+			// });
+			// console.log(filterProArr);
+			
+			/* 
+				4. reduce() 数组聚合, 作用: 将数组里的值聚合成一个值
+				该方法接收两个参数
+				参数1: 回调函数
+				参数2: 聚合值的初始值
+				
+				第一个回调函数里也接收两个参数
+				参数1: 每次遍历后聚合成的值
+				参数2: 每次遍历的数组里的值
+				
+				返回值: 最终聚合成的值
+			 */
+			// 1. 数组求和
+			// var numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+			
+			// var sum = 0;
+			// numArr.forEach(function(v){
+			// 	sum += v;
+			// })
+			// console.log(sum);
+			
+			// var res = numArr.reduce(function(a, b){
+			// 	return a + b;
+			// }, 0);
+			// console.log(res);
+			
+			var proArr = [
+				{id:"001", pName:"羽绒服", pPrice:666, type:"服饰"},
+				{id:"002", pName:"苹果", pPrice:2, type:"水果"},
+				{id:"003", pName:"牛肉", pPrice:30, type:"肉类"},
+				{id:"004", pName:"橘子", pPrice:5, type:"水果"},
+				{id:"005", pName:"拖鞋", pPrice:7, type:"服饰"},
+			];
+			// 想把所有type值是水果的商品的名字单独存放到一个数组里
+			// var pNameArr = proArr.reduce(function(a, b){
+			// 	if(b.type == "水果") {
+			// 		a.push(b.pName);
+			// 	}
+			// 	return a;
+			// }, []);
+			// console.log(pNameArr);
+			// pNameArr.forEach(function(item){
+			// 	$("<li/>").html(item).appendTo("ul");
+			// })
+			
+			// var pNameStr = proArr.reduce(function(a, b){
+			// 	if(b.type == "水果"){
+			// 		a += `<li>${b.pName}</li>`
+			// 	}
+			// 	return a;
+			// }, "");
+			// $("ul").append(pNameStr);
+			
+			
+			/* 
+				5. some() 用来判断符合规则的一个值是否存在数组里, 如果符合规则, 返回值是true, 否则返回false
+				注意: 如果符合规则, 就停止遍历
+			 */
+			var arr = [1, 2, 3, 4, 5];
+			var res = arr.some(function(item, index){
+				console.log(item, index);
+				return item > 4;
+			});
+			// console.log(res);
+			
+		</script>
+	</body>
+</html>

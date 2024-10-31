@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="box">点击</button>
+    <script>
+      let obj1 = {};
+      obj = {
+        [obj1]: "21",
+      };
+      console.log(obj);
+      // map 和set功能以及好处
+      // 1 set是无序不重复的数据结构  可以用来数组去重里面可以存放各种不同的数据类型
+      // 2 map是字典 打破之前object对象只能用字符串来作为对象的键的限制  可以使用各种数据类型来作为对象的键
+      const map = new Map();
+      const k1 = ["a"];
+      const k2 = ["a"];
+      map.set(k1, 111).set(k2, 222);
+      map.get(k1); // 111
+      map.get(k2); // 222
+      //  weakMap和weakSet是只能用对象的弱引用来保存值 弱引用指的是用引用作为键不计入垃圾回收 当对象本身删除weakMap里面对应的值也会被删除
+      var ws = new WeakSet();
+      var a = { foo: "bar" };
+      ws.add(a);
+      console.log(ws);
+      /* 应输出：
+    WeakSet {{…}}
+      __proto__: WeakSet
+      [[Entries]]: Array(1)
+        0: value: {foo: "bar"}
+        length: 1
+    */
+      delete a; // 此时的delete是断开引用 浏览器并没有进行垃圾回收 断开引用后 引用为0 浏览器下次垃圾回收执行后才会输出为0
+      console.log(ws);
+      /* 应输出：
+    WeakSet {}
+      __proto__: WeakSet
+      [[Entries]]: Array(0)
+        length: 0
+    */
+      //  weakSet用处不多 多的是weakMap 主要用dom来进行绑定与其关联的值防止内存泄露
+      let dom = document.getElementById("box");
+      let weakMap = new WeakMap();
+      weakMap.set(dom, { timerClick: 0 });
+      //  这样进行绑定 timerClick和dom节点就关联的起来 当dom被删除的时候timerClick这个对象也会被随之删除
+      dom.onclick = function () {
+        let tick = weakMap.get(dom);
+        tick.timerClick++;
+      };
+    </script>
+  </body>
+</html>

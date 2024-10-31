@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03_碰撞检测</title>
+		<style type="text/css">
+			.box {
+				width: 1000px;
+				height: 500px;
+				border: 2px solid red;
+				margin: 50px auto 0;
+				position: relative;
+			}
+			.box>div {
+				width: 20px;
+				height: 20px;
+				background-color: red;
+				position: absolute;
+				left: 0;
+				top:0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div></div>
+		</div>
+		<script type="text/javascript">
+			var div1 = document.querySelector(".box>div");
+			var leftV = 0;
+			// flagX为true: -->   flagX为false: <--
+			var flagX = true;
+			var topV = 0;
+			// flagY为true: 下   flagY为false: 上
+			var flagY = true;
+			setInterval(function(){
+				if(flagX){
+					leftV++;
+					if(leftV >= 980) {
+						flagX = false;
+					}
+				}else {
+					leftV--;
+					if(leftV <= 0) {
+						flagX = true;
+					}
+				}
+				div1.style.left = leftV + "px";
+				
+				
+				if(flagY){
+					topV++;
+					if(topV >= 480) {
+						flagY = false;
+					}
+				}else {
+					topV--;
+					if(topV <= 0){
+						flagY = true;
+					}
+				}
+				div1.style.top = topV + "px";
+			}, 20);
+		</script>
+	</body>
+</html>

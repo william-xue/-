@@ -1,0 +1,16 @@
++<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Http/1.0每次请求都需要建立新的TCP连接，连接不能复用。Http/1.1新的请求可以在上次建立的tcp连接之上发送，连接可以复用。
+      // 1 在发送http的请求头中设置Connection: keep-alive
+      // 2当前的url与上一次下载的url之间进行对比，如果host相同的话，则用上一次的socket_id。否则关闭上一次的socket，重新连接服务器，获取新的socket。所以，url的文件，需要进行排序，将同一个站点的url放在一起即可。
+    </script>
+  </body>
+</html>

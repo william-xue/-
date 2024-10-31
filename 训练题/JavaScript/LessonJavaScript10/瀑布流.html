@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>瀑布流</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.box {
+				width: 1200px;
+				border: 5px solid red;
+				margin: 50px auto 0;
+				overflow: hidden;
+			}
+			.box ul {
+				width: 200px;
+				float: left;
+				list-style: none;
+			}
+			.box ul li {
+				width: 100%;
+				text-align: center;
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul></ul>
+			<ul></ul>
+			<ul></ul>
+			<ul></ul>
+			<ul></ul>
+			<ul></ul>
+		</div>
+		<script type="text/javascript">
+			/* 
+				瀑布流原理: 多列布局, 每列等宽, 高度有差距
+				每次动态创建一个内容元素, 并将其放进最低的列里
+			 */
+			var uls = document.querySelectorAll("ul");
+			
+			function randomNumber(x, y) {
+				return Math.floor(Math.random()*(y-x+1)+x);
+			}
+			
+			function randomColor() {
+				var r = randomNumber(0, 255);
+				var g = randomNumber(0, 255);
+				var b = randomNumber(0, 255);
+				return `rgb(${r}, ${g}, ${b})`;
+			}
+			
+			// 动态创建li
+			for (var i = 0; i < 1000; i++) {
+				var liEle = document.createElement("li");
+				
+				// 背景色, 高度, 行高, 序号
+				liEle.style.height = randomNumber(100, 400) + "px";
+				liEle.style.backgroundColor = randomColor();
+				liEle.innerHTML = i + 1;
+				liEle.style.lineHeight = liEle.style.height;
+				
+				shortUl().appendChild(liEle);
+			}
+			
+			// 获取高度最低的ul的函数
+			function shortUl() {
+				var min = uls[0];
+				for (var i = 0; i < uls.length; i++) {
+					min = min.offsetHeight < uls[i].offsetHeight ? min : uls[i];
+				}
+				return min;
+			}
+		</script>
+	</body>
+</html>

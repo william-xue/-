@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // object.defineproperty 当变成get和set的时候 访问时候就会触发get  修改的时候就会触发set 会影响原对象
+      let obj = {
+        name: "zs",
+        age: 14,
+      };
+      for (const key in obj) {
+        let value = obj[key];
+        Object.defineProperty(obj, key, {
+          get() {
+            console.log("get");
+            return value;
+          },
+          set(newValue) {
+            console.log("set");
+            value = newValue;
+          },
+        });
+      }
+      // proxy是返回一个新的对象 不会影响原对象 无论访问对象还是改变对象都会触发get方法 当改变深层对象时候就可以通过在访问get方法的时候直接再对没有代理过得对象当前做代理让它有set 当修改好了之后就会触发set
+      let obj2 = {
+        name: "ls",
+        age: 22,
+        other: {
+          name: "asd",
+          age: 888,
+        },
+        array: [0, 1, 2, 3, 4],
+      };
+      let handle = {
+        get(obj, key) {
+          console.log(obj,key,'get');
+          if (obj[key] instanceof Object) {
+            return new Proxy(obj[key], handle);
+          }
+          if (Array.isArray(obj[key])) {
+            return true;
+          }
+          return obj[key];
+        },
+        set(obj, key) {
+          console.log(obj,key,'set');
+          let newValue = Reflect.set(...arguments);
+          return newValue;
+        },
+      };
+      let props = new Proxy(obj2, handle);
+      let c = props.other.name;
+      // console.log(c);
+      props.other.name = {
+        name: 888,
+        age: 888,
+      };
+      // console.log(props);
+      // props.other.name.name = 555;
+      // props.array.push(898);
+    </script>
+  </body>
+</html>

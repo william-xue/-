@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // parseInt转化原理
+      // 现将值转化为字符串 会默认调用自带的tostring()方法进行转化
+      let a = new String("42a");
+      a.toString = function () {
+        console.log("parsint");
+        return a;
+      };
+      console.log(parseInt(a));
+
+      // 如果是对象 也会默认调用对象中的toString方法
+      let obj = {
+        num: 42,
+        toString: function () {
+          console.log("objparseint");
+          return "55";
+        },
+      };
+      console.log(parseInt(obj));
+
+      console.log(parseInt(1 / 0, 19)); //转换18 原因是1/0是Infinity 而I在19进制中是18，基数是19 默认转化为10进制 就变成18*19的0次方为18
+      console.log(parseInt(0.000008)); //0 来自于("0.000008")
+      console.log(parseInt(0.0000008)); //8 来自于("8e-7") 先转化成8e-7字符串 然后取出第一个8
+      console.log(parseInt(false, 16)); //250 来自于("false")fa 在16进制中表示250
+      console.log(parseInt(parseInt, 16)); // 来自于 parseInt是个函数 转化为'function' 取第一个字母f 十六进制就是15
+      console.log(parseInt("103", 2)); // 2 因为基数是二进制103中3不是二进制所以只保留10 转为十进制就是2
+    </script>
+  </body>
+</html>

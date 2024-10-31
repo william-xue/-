@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <script>
+      /**
+       *  渲染器就是将对象形式的ast 转换成实际的dom
+       *  每个自定义的组件其实就是一个ast对象
+       *
+       */
+      function alert() {
+        console.log("alert");
+      }
+      let dom = {
+        tag: "div",
+        props: {
+          onClick: alert,
+          id: "test",
+        },
+        children: "click me",
+      };
+      let dom2 = {
+        tag: {
+          render: () => {
+            return dom;
+          },
+        },
+      };
+      function mountElement(dom, container) {
+        let el = document.createElement(dom.tag);
+        for (const key in dom.props) {
+          if (/^on/.test(key)) {
+            el.addEventListener(
+              key.substr(2).toLocaleLowerCase(),
+              dom.props[key]
+            );
+          } else {
+            el.setAttribute(key, dom.props[key]);
+          }
+        }
+        if (typeof dom.children === "string") {
+          el.appendChild(document.createTextNode(dom.children));
+        } else if (Array.isArray(dom.children)) {
+          dom.children.forEach((dom) => {
+            renderer(dom, el);
+          });
+        }
+        container.appendChild(el);
+      }
+      function mountComponent(tag, container) {
+        let render = tag.render();
+        console.log(render);
+        mountElement(render, container);
+      }
+      function renderer(vNode, container) {
+        if (typeof vNode.tag === "string") {
+          mountElement(dom, container);
+        } else if (typeof vNode.tag === "object") {
+          mountComponent(vNode.tag, container);
+        }
+      }
+      renderer(dom2, container);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 当使用Vue.use的时候会调用install方法 可以再方法中拿到全局的Vue 然后可以调用Vue.component方法把组件注册到全局
+      Alert.install = function (Vue) {
+        console.log(Alert.name);
+        Vue.component(Alert.name, Alert);
+      };
+    </script>
+  </body>
+</html>

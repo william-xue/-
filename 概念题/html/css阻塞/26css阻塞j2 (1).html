@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <!-- hi如果在上面link加载完才会执行domloaded -->
+  <!-- hi如果在下面link加载完才会执行domloaded -->
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        alert("DOMContentLoaded");
+      });
+    </script>
+    <link
+      href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css"
+      rel="stylesheet"
+    />
+    Hi
+  </body>
+</html>

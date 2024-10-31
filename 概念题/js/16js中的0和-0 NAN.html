@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // -0 问题 保留0的负符号主要是在动画中用来判断方向
+      console.log(0 / -3); // -0 Number类型
+      console.log(0 / -3 + ""); // 0 string类型
+      // 通用判断是否为NAN和-0的方法可以使用object.is方法来判断
+      let a = 0 / -3;
+      let b = 1 / "sw";
+
+      console.log(Object.is(a, -0));
+      console.log(Object.is(b, NaN));
+    </script>
+  </body>
+</html>

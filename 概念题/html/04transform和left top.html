@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+    动画修改一个元素的 left 和 top会改变它的形状，而且可能引起页面上其它元素的移动和形状改变，这个过程称为布局。基于 CSS 的动画和原生支持的 Web 动画通常在称为合成器线程的线程上处理，transforms 和 opacity 都可以在合成器线程中处理；它与浏览器的主线程不同，在该主线程中执行样式，布局，绘制和 JavaScript。这意味着如果浏览器在主线程上运行一些耗时的任务，这些动画可以继续运行而不会中断；如果任何动画出发了绘制，布局，或者两者，那么主线程会来完成该工作。这个对基于 CSS 还是 JavaScript 实现的动画都一样，布局或者绘制的开销巨大，让与之关联的 CSS 或 JavaScript 执行工作、渲染都变得毫无意义；避免使用触发布局或绘制的属性动画。对于大多数现代浏览器，这意味着将动画（修改的属性）限制为 opacity 和 transform；
+    1 首先transfrom移动属于视觉上的移动实际的位置并没有发生变化 所以不会造成浏览器的重新布局
+    2 top和left属于改变元素的实际位置 可能会触发浏览器的重新布局
+    3 因为一会个造成浏览器重新布局一个不会也就是说left和top是主线程驱动 而transform是合成器线程驱动所以transfrom的性能要比left和top好 做的动画会更加流畅
+    */
+    </script>
+  </body>
+</html>

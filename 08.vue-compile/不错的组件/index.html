@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+  <li>
+    <a href="javascript:;" onclick="skipView('iosSelect')">仿ios选择</a>
+  </li>
+  <li>
+    <a href="javascript:;" onclick="skipView('toast')">Toast 弹出提示</a>
+  </li>
+  <li>
+    <a href="javascript:;" onclick="skipView('loadData')">滑动加载</a>
+  </li>
+  <li>
+    <a href="javascript:;" onclick="skipView('datePicker')">日历</a>
+  </li>
+  <li>
+    <a href="javascript:;" onclick="skipView('editView')">文本编辑器</a>
+  </li>
+  <li>
+    <a href="javascript:;" onclick="skipView('btnRipple')">波纹按钮</a>
+  </li>
+  <li>
+    <a href="javascript:;" onclick="skipView('jitter')">元素抖动</a>
+  </li>
+</ul>
+
+<script>
+  function skipView(path, params) {
+    let packageParams = '';
+    if (params) {
+      Object.keys(params).forEach(function (key, i) {
+        if (i === 0) {
+          packageParams += '?';
+        } else {
+          packageParams += '&';
+        }
+        packageParams += key + '=' + params[key];
+      });
+    }
+    let url = '/';
+    if (location.href.indexOf('zhangkunusergit') >= 0) {
+      url = '/vue-component/dist/';
+    }
+    location.href = url + path + '.html' + packageParams;
+  }
+
+</script>
+</body>
+</html>

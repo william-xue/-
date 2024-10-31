@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // react的fiber主要是可以让diff算法暂停 开始的一个作用
+      // react15的时候 虚拟dom是一个单向的二叉树结构 所以diff算法的时候就不能被暂停 这样就会产生一个问题 当虚拟dom很大的时候diff算法就会很耗时 占用主线程阻碍页面的重绘重排，导致页面卡顿等问题，
+      // react16的时候加入fiber fiber是一个双向链表 使每个dom节点都变成fiber节点 生成fiber树 fier数的结构是{result:'父节点'，child:"子节点"，sibing:"兄弟节点"} fiber的使用可以让浏览器的渲染和diff算法的更新进行交替使用 因为浏览器渲染视图是一帧帧的进行渲染 每一帧渲染需要16ms 当用不满16ms的时候留下的时间就会进行diff算法(这里主要用的就是requestcallback函数)
+    </script>
+  </body>
+</html>

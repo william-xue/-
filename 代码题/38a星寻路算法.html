@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Array2D(w, h, num) {
+      var data = [];
+      var default_num = num || 0;
+      for (var x = 0; x < w; x++) {
+        var temp = [];
+        for (var y = 0; y < h; y++) {
+          temp.push(default_num);
+        }
+        data.push(temp);
+      }
+      return {
+        w: w,
+        h: h,
+        data: data,
+        showArray2D: function () {
+          var s = "";
+          for (var y = 0; y < this.h; y++) {
+            for (var x = 0; x < this.w; x++) {
+              s += this.data[x][y] + " ";
+            }
+            s += "\n";
+          }
+          console.log(s);
+        }
+      }
+    }
+    let mapData = Array2D(1920, 1080, 0)
+    mapData.showArray2D()
+
+    function Point(x, y) {
+      return {
+        x,
+        y,
+        eq: function (other) {
+          return other.x === x && other.y === y
+        }
+      }
+    }
+
+    function AStart(mapData, startPoiot, endPoint, passTag) {
+      let openList = []
+      let closeList = []
+      let currentNode = null
+      let minF = null
+      let Node = function generateNode(point) {
+        return {
+          point,
+          parent: null,
+          g: 0,
+          h: (Math.abs(endPoint.x - point.x) + Math.abs(endPoint.y - point.y)) * 10
+        }
+      }
+      let pointInCloseList = function (point) {
+        console.log(point);
+        for (let i = 0; i < closeList.length; i++) {
+          const node = closeList[i];
+          if (node.point.eq(point)) {
+            return node
+          }
+        }
+        return null
+      }
+      let pointInOpenList = function (point) {
+        for (let i = 0; i < openList.length; i++) {
+          const node = openList[i];
+          if (node.point.eq(point)) {
+            return node
+          }
+        }
+        return null
+      }
+      let endPointInCloseList = function () {
+        for (let i = 0; i < closeList.length; i++) {
+          const node = closeList[i];
+          if (node.point.eq(endPoint)) {
+            return node
+          }
+        }
+        return null
+      }
+      let findFMinPoint = function () {
+        let node = openList[0]
+        for (let i = 1; i < openList.length; i++) {
+          const point = openList[i];
+          if (point.h + point.g < node.h + node.g) {
+            node = point
+          }
+        }
+        return node
+
+      }
+      let search = function (minNode, offsetX, offsetY) {
+        let x = minNode.point.x + offsetX
+        let y = minNode.point.y + offsetY
+        if (x < 0 || y < 0 || x > mapData.w - 1 || y > mapData.h - 1) {
+          return null
+        }
+        // 判断是否能通过
+        console.log(x,y);
+        if (mapData.data[x][y] !== passTag) {
+          return null
+        }
+        // 判断是否走过 
+        let currentPoint = Point(x, y);
+        if (pointInCloseList(currentPoint)) {
+          return null
+        }
+        // 判断是否在openlist
+        currentNode = pointInOpenList(currentPoint)
+        if (currentNode === null) {
+          currentNode = Node(currentPoint)
+          currentNode.g = minF.g + 10;
+          currentNode.parent = minNode
+          openList.push(currentNode)
+          return null
+        }
+        if (minF.g + 10 < currentNode.g) {
+          currentNode.g = minF.g + 10
+          currentNode.father = minF
+        }
+      }
+      let start = function () {
+        currentNode = Node(startPoiot);
+        openList.push(currentNode);
+        let res = []
+        while (true) {
+          // 从openlist中找到g+h最小的点
+          minF = findFMinPoint()
+          // 把当前节点从openlist中删除 加入到closelist中
+          let index = openList.indexOf(minF)
+          openList.splice(index, 1)
+          closeList.push(minF)
+          // 然后把当前最小点上下左右的点都加入到openlist中
+          search(minF, 0, 1)
+          search(minF, 1, 0)
+          search(minF, 0, -1)
+          search(minF, -1, 0)
+          // 判断openlist中是否有结束点 如果有说明找到了遍历结束回溯获取全部路径
+          let point = endPointInCloseList()
+          if (point) {
+            let cpoint = point
+            while (true) {
+              if (cpoint.parent) {
+                res.push(cpoint)
+                cpoint = cpoint.parent
+              } else {
+                return res.reverse()
+              }
+            }
+          }
+          // 如果openlist中的长度为0说明无法到达
+          if (openList.length === 0) {
+            return null
+          }
+        }
+      }
+      return start()
+    }
+    mapData.data[2][0] = 1
+    mapData.data[2][1] = 1
+    mapData.data[2][2] = 1
+    mapData.showArray2D();
+    let res = AStart(mapData, Point(1, 1), Point(3, 2), 0)
+    console.log(res);
+  </script>
+</body>
+
+</html>

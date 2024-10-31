@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 原理上来说 想要promise遍历顺序的执行异步 原则就是把他们处理成链式调用 每次调用返回下一次的promise
+      let chain = Promise.resolve("参数");
+      chain = chain.then(() => this.run1());
+      chain = chain.then(() => this.run2());
+      chain = chain.then(() => this.run3());
+      function run1() {
+        console.log("run1");
+      }
+      function run2() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log("settime");
+            resolve();
+          }, 1000);
+        });
+      }
+      function run3() {
+        console.log("run3");
+      }
+      // let p1 = function (val) {
+      //   console.log(val);
+      // };
+      // let p2 = function (val) {
+      //   return new Promise(function (resolve, reject) {
+      //     setTimeout(() => {
+      //       console.log("ajax请求返回" + val);
+      //       resolve("ajax请求返回" + val);
+      //     }, 2000);
+      //   });
+      // };
+      // let p3 = function (val) {
+      //   return new Promise(function (resolve, reject) {
+      //     console.log("response" + val);
+      //     resolve("response" + val);
+      //   });
+      // };
+
+      // let arr = [p1, p2, p3];
+
+      // while (arr.length > 0) {
+      //   let fn = arr.shift();
+      //   p = p.then(fn);
+      // }
+
+      //  等同于
+
+      // p.then(function (val) {
+      //   return new Promise(function (resolve, reject) {
+      //     resolve(val + "请求前处理");
+      //   });
+      // })
+      //   .then(function (val) {
+      //     return new Promise(function (resolve, reject) {
+      //       setTimeout(() => {
+      //         resolve("ajax请求返回" + val);
+      //       }, 2000);
+      //     });
+      //   })
+      //   .then(function (val) {
+      //     return new Promise(function (resolve, reject) {
+      //       resolve("response" + val);
+      //     });
+      //   })
+      //   .then((val) => {
+      //     console.log(val);
+      //   });
+    </script>
+  </body>
+</html>

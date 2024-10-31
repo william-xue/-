@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 当n为100的时候就会执行很慢 出现爆栈问题
+      function f(n) {
+        if (n === 0 || n === 1) {
+          return n;
+        } else return f(n - 1) + f(n - 2);
+      }
+      // 1可以使用尾调用优化来进行解决  尾调用优化就是外层函数返回一个内层函数的方式 oter的返回值就是inner的返回值 所以只让inner入栈并拿出它的返回值即可不需要反复多次入栈出栈这就是尾调用优化
+      // function oter() {
+      //   return inner();
+      // }
+      function fn(n, ac = 0, acc = 1) {
+        if (n === 0) {
+          return ac;
+        } else return fn(n - 1, acc, acc + ac);
+      }
+      // 改用循环的写法就不会出现栈溢出问题 因为循环是不用把函数入栈的
+      function fLoop(n, ac1 = 0, ac2 = 1) {
+        while (n--) {
+          [ac1, ac2] = [ac2, ac1 + ac2];
+          console.log(n, ac1, ac2);
+        }
+        return ac1;
+      }
+      console.log(fLoop(8));
+    </script>
+  </body>
+</html>

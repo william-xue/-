@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04_Date日期时间对象</title>
+	</head>
+	<body>
+		<button>开启祥铭的生命后期</button>
+		<script type="text/javascript">
+			/* 
+				JS里, Date用来创建日期和事件对象, 该对象负责处理与日期和时间有关的操作
+			 Date是一个函数, 其作用用来创建一个对象, 该对象存储的是一个日期时间的"时刻"信息
+			 语法:
+			 var 日期时间对象 = new Date();
+			 */
+			var dateObj = new Date();
+			// console.log(dateObj, typeof dateObj);
+			/* 日期时间对象的操作 */
+			
+			// 获取年份
+			var year = dateObj.getFullYear();
+			// console.log(year);
+			
+			// 获取月份 month的取值范围0-11
+			var month = dateObj.getMonth();
+			// console.log(month);
+			
+			// 获取星期几 day的取值范围0-6 0表示周日
+			var day = dateObj.getDay();
+			// console.log(day);
+			
+			// 获取几号
+			var date = dateObj.getDate();
+			// console.log(date);
+			
+			// 获取小时
+			var hour = dateObj.getHours();
+			// console.log(hour);
+			
+			// 获取分钟
+			var min = dateObj.getMinutes();
+			// console.log(min);
+			
+			// 获取秒
+			var sec = dateObj.getSeconds();
+			// console.log(sec);
+			
+			// 获取时区
+			var timeOffet = dateObj.getTimezoneOffset();
+			// console.log(timeOffet);
+			
+			// 电子表
+			// setInterval(function(){
+			// 	var dateObj = new Date();
+			// 	var timeStr = "当前的时间是:" + dateObj.getFullYear() + "年" + (dateObj.getMonth()+1) + "月" + dateObj.getDate() + "号 " + dateObj.getHours() + "点" + dateObj.getMinutes() + "分" + dateObj.getSeconds() + "秒";
+			// 	 // document.write() 是向body标签里面写内容, 而且内容的拼接的, 如果我们想向其他标签里写内容, 而且还想让内容进行覆盖, 请使用innerHTML, 语法: html标签.innerHTML= "内容";
+			// 	 document.body.innerHTML = timeStr;
+			// }, 1000);
+			
+			/* 
+				时间戳: 任意一个时刻距离1970年1月1日0时刻 所经历的毫秒数
+				日期时间对象.getTime();
+				
+				时间戳的作用: 
+					1. 正时
+					2. 计算区间时间
+			 */
+			// var nowObj = new Date();
+			// var timeStamp = nowObj.getTime();
+			// console.log(timeStamp/1000/60/60/24/365);
+			
+			/* 
+				倒计时功能分析:
+				1. 需要获取两个时间点: 未来的某个固定时刻, 当前的时刻
+				2. 再分别获取各自的时间戳
+				3. 未来的时间戳 减去 当前的时间戳 (当前的时间戳是不断变化的, 不断变大)
+				4. 将差值 再转化为 天, 小时, 分钟, 秒
+			 */
+			/*
+			  如何自定义时刻???
+			  1. 自己填写时刻信息自定义时刻
+			  2. 在当前时刻的基础上自定义时刻
+			*/
+		    // 自己填写时刻信息自定义时刻, 在new Date()的时候, 给Date函数传入实参即可
+			// 定义双11的时刻
+			// var tmallDate = new Date(2021,10,11,0,0,0);
+			// setInterval(function(){
+			// 	var nowDate = new Date();
+			// 	// 分别获取两个时刻的时间戳
+			// 	var tTime = tmallDate.getTime();
+			// 	var nTime = nowDate.getTime();
+				
+			// 	var resTime = (tTime - nTime)/1000;
+				
+			// 	var m = Math.floor(resTime / (60*60*24*31));
+				
+			// 	var d = Math.floor(resTime % (60*60*24*31) / (24*60*60));
+			// 	var h = Math.floor(resTime % (60*60*24) / (60*60));
+			// 	var min = Math.floor(resTime % (60*60) / 60);
+			// 	var s = Math.floor(resTime % 60);
+				
+			// 	document.body.innerHTML = "距离双十一还有:" + m + "月" + d + "天" + h + "小时" + min + "分钟" + s + "秒";
+			// }, 1000);
+			
+			
+			//在当前时刻的基础上自定义时刻
+			var btn = document.querySelector("button");
+			btn.onclick = function(){
+				// 先获取点击按钮的时刻
+				var nowDate = new Date();
+				console.log(nowDate);
+				
+				// 获取从当前往后延长一个月之后的时刻
+				var m = nowDate.getMonth() + 1;
+				var fDate = new Date();
+				fDate.setMonth(m);
+				console.log(fDate);
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let queue = new Set();
+      let i = 0;
+      let isflushing = false;
+      let p = Promise.resolve();
+      function jobRun() {
+        if (isflushing) return;
+        isflushing = true;
+        p.then(() => {
+          queue.forEach((fn) => {
+            fn();
+          });
+        }).finally(() => {
+          isflushing = true;
+        });
+      }
+      function changeValue() {
+        i++;
+        queue.add(printValue);
+        jobRun();
+      }
+      function printValue() {
+        console.log(i);
+      }
+      changeValue();
+      changeValue();
+      changeValue();
+      changeValue();
+    </script>
+  </body>
+</html>

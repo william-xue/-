@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04_大图滚动</title>
+		<style type="text/css">
+			.box {
+				width: 300px;
+				height: 450px;
+				margin: 50px auto 0;
+				border: 10px solid gold;
+				position: relative;
+				overflow: hidden;
+			}
+			.contentBox {
+				width: 1800px;
+				height: 450px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				transition: all 1s;
+			}
+			.contentBox>img {
+				width: 300px;
+				height: 450px;
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<button>第1张</button>
+		<button>第2张</button>
+		<button>第3张</button>
+		<button>第4张</button>
+		<button>第5张</button>
+		<button>第6张</button>
+		<div class="box">
+			<div class="contentBox">
+				<img src="img/1.png" alt="">
+				<img src="img/2.jpeg" alt="">
+				<img src="img/3.jpeg" alt="">
+				<img src="img/4.png" alt="">
+				<img src="img/5.jpeg" alt="">
+				<img src="img/6.png" alt="">
+			</div>
+		</div>
+		<script type="text/javascript">
+			var btns = document.querySelectorAll("button");
+			var contentBox = document.querySelector(".contentBox");
+			// for (var i = 0; i < btns.length; i++) {
+			// 	btns[i].onclick = function(){
+			// 		for(var j = 0; j < btns.length; j++){
+			// 			// 通过遍历找到对应的按钮, 获取按钮的下标
+			// 			if(btns[j] == this) {
+			// 				console.log(j);
+			// 				contentBox.style.left = j * -300 + "px";
+			// 				break;
+			// 			}
+			// 		}
+			// 	}
+			// }
+			
+			// for (var i = 0; i < btns.length; i++) {
+			// 	btns[i].onclick = (function(index){
+			// 		return function(){
+			// 			contentBox.style.left = index * -300 + "px";
+			// 		}
+			// 	})(i)
+			// }
+			
+			
+			// for (let i = 0; i < btns.length; i++) {
+			// 	btns[i].onclick = function(){
+			// 		contentBox.style.left = i * -300 + "px";
+			// 	}
+			// }
+		</script>
+	</body>
+</html>

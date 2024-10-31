@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 函数
+      let fn = Function.prototype;
+      console.log(Object.prototype.toString.call(fn));
+      // 数组
+      let arr = Array.prototype;
+      console.log(Object.prototype.toString.call(arr));
+
+      // 正则
+      let reg = RegExp.prototype;
+      console.log(Object.prototype.toString.call(reg));
+      let reg1 = /112/;
+      console.log(Object.prototype.toString.call(reg1));
+    </script>
+  </body>
+</html>

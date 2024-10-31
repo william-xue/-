@@ -1,0 +1,51 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "579740",
+      "name": "用户-fill",
+      "font_class": "yonghufill",
+      "unicode": "e787",
+      "unicode_decimal": 59271
+    },
+    {
+      "icon_id": "739117",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "3427831",
+      "name": "喜欢",
+      "font_class": "icon-",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "4361001",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e576",
+      "unicode_decimal": 58742
+    },
+    {
+      "icon_id": "5388065",
+      "name": "消息_o",
+      "font_class": "xiaoxi_o",
+      "unicode": "ebc9",
+      "unicode_decimal": 60361
+    },
+    {
+      "icon_id": "16531262",
+      "name": "chat_bubble",
+      "font_class": "chat_bubble",
+      "unicode": "e72e",
+      "unicode_decimal": 59182
+    }
+  ]
+}

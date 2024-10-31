@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=`, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+     * 原理：HTML5的离线存储是基于一个新建的.appcache文件的，通过这个文件上的解析清单离线存储资源，这些资源就会像cookie一样被存储了下来。之后当网络在处于离线状态下时，浏览器会通过被离线存储的数据进行页面展示。
+        方法：
+        1.在index.html里加上<html manifest="test.manifest">
+        2.manifest清单格式如下：
+        CACHE MANIFEST
+        #上面一句必须
+        #v1.0.0
+        #需要缓存的文件
+        CACHE:
+        a.js
+        b.css
+        #不需要缓存的文件
+        NETWORK:
+        *
+        #无法访问页面
+        FALLBACK:
+        404.html
+        3.manifest文件的mime-type必须是 text/cache-manifest类型。
+            * 
+    */
+  </script>
+</body>
+</html>

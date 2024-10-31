@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>01_函数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/* 
+				函数(function)
+				具有特定功能的代码段
+				封装
+				函数的特点:
+				1. 我们将一段特定功能的代码封装到函数里, 方便以后重复使用
+				2. 完整的函数分为两部分: 函数的声明, 函数的调用
+				3. 函数里的代码如果想要执行, 必须要对函数进行调用, 函数不调用, 其内部的代码不会被执行
+			 */
+
+			/* 
+				函数的声明语法:
+				function 函数名(参数1, 参数2, ...){
+					函数体...
+					return 返回值;
+				}
+				
+				函数调用的语法:
+				函数名(值1, 值2, ...);
+			 */
+
+			/* 
+				1. 无参无返的函数  
+			*/
+			// 控制台输出5遍hello, world!
+			function say5Hello() {
+				for (var i = 0; i < 5; i++) {
+					console.log("hello, world!");
+				}
+			}
+			// say5Hello();
+			// say5Hello();
+
+			/* 
+				2. 有参无返
+				参数: 从外界接收需要的数据, 供函数体使用, 参数本质上是一个变量
+		   */
+			// 控制台输出n遍hello, world!
+			function sayNHello(n) {
+				for (var i = 0; i < n; i++) {
+					console.log("hello, world!");
+				}
+			}
+			// sayNHello(10);
+			// sayNHello(8);
+			
+			// 控制台输出n遍任意内容
+			function sayNContent(n, c){
+				for (var i = 0; i < n; i++) {
+					console.log(c);
+				}
+			}
+			sayNContent(7, [1,2,3]);
+			
+			
+			/* 
+				3. 无参有返
+				返回值: 将来我们想要将函数里执行的某些结果搞到外面来, 我们可以使用返回值.
+				注意:
+					1. return后面一次只能返回一个值, 不能写逗号
+					2. 返回的值的类型可以任意
+					3. return出来的值会去到当初调用该函数的地方
+					4. return后面的代码不会执行, return会终止函数的执行.
+			 */
+			// 封装一个函数, 并且要得到[30, 70]的随机数
+			function ran30To70() {
+				var ran = Math.floor(Math.random()*41+30);
+				console.log("函数内部的ran: "+ran);
+				return ran;
+				// console.log(123);
+			}
+			// var ranN = ran30To70();
+			// console.log("函数外部的ranN:" + ranN);
+			
+			
+			/* 
+				4. 有参有返
+			 */
+			// 封装一个产生任意区间的随机整数
+			function randomNumber(m, n) {
+				return Math.floor(Math.random()*(n-m+1)+m);
+			}
+			var r = randomNumber(0, 255);
+			var g = randomNumber(0, 255);
+			var b = randomNumber(0, 255);
+			// console.log(r, g, b);
+			
+			/* 封装一个产生随机颜色值的函数 */
+			function randomColor(){
+				var r = randomNumber(0, 255);
+				var g = randomNumber(0, 255);
+				var b = randomNumber(0, 255);
+				return "rgb(" + r + "," + g + "," + b + ")";
+			}
+			var c = randomColor();
+			console.log(c);
+			
+			/* 封装一个函数， 求两个数的较大值 */
+			function twoMax(a, b){
+				return a > b ? a : b;
+			}
+			console.log(twoMax(10, 20));
+			/* 封装一个函数， 求三个数的较大值 */
+			function threeMax(a, b, c){
+				return twoMax(twoMax(a, b), c);
+			}
+			console.log(threeMax(10, 20, 30));
+			
+			/* 封装一个函数， 求四个数的较大值 */
+			function fourMax(a, b, c, d) {
+				// return twoMax(threeMax(a, b, c), d);
+				return twoMax(twoMax(a, b), twoMax(c, d));
+			}
+			
+			/* 阶乘 , 函数递归*/
+			function JC(n){
+				if(n > 1){
+					return n * JC(n-1);
+				}
+				return 1;
+			}
+			console.log(JC(5));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>a</h1>
+    <button id="btn">点击</button>
+    <script>
+      // 首先需要通过liveserve开启一个本地服务
+      let obj = {
+        name: "zs",
+        age: 14,
+      };
+      btn.onclick = function () {
+        let b = window.open("http://127.0.0.1:8080/b.html");
+        // let receiver = b.contentWindow;
+        setTimeout(() => {
+          b.postMessage(JSON.stringify(obj), "http://127.0.0.1:8080");
+        }, 3000);
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .clearfix::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+
+      /* 第一种方式 */
+      .left {
+        float: left;
+        width: 200px;
+        height: 500px;
+        background-color: lightseagreen;
+      }
+
+      .right {
+        margin-left: 200px;
+        height: 500px;
+        background-color: lightsalmon;
+      }
+
+      /* 
+      第二种方式：利用 flex 布局
+    */
+      /* .wrapper {
+      display: flex;
+    }
+
+    .left {
+      width: 200px;
+      height: 500px;
+      background-color: lightseagreen;
+    }
+
+    .right {
+      flex-grow: 1;
+      height: 500px;
+      background-color: lightgreen;
+    } */
+
+      /* 第三种：利用绝对定位布局的方式，将父级元素设置相对定位。左边元素设置为absolute定位，并且宽度设置为200px。将右边元素的margin-left的值设置为200px。 */
+      /* .wrapper {
+        position: relative;
+      }
+
+      .left {
+        position: absolute;
+        width: 200px;
+        height: 500px;
+        background-color: lightsalmon;
+      }
+
+      .right {
+        margin-left: 200px;
+        height: 500px;
+        background-color: lightseagreen;
+      } */
+
+      /*
+      第四种：利用绝对定位的方式，将父级元素设置为相对定位。左边元素宽度设置为200px，右边元素设置为绝对定位，左边定位为200px，其余方向定位为0
+    */
+      /* .wrapper {
+        position: relative;
+      }
+
+      .left {
+        width: 200px;
+        height: 500px;
+        background-color: lightseagreen;
+      }
+
+      .right {
+        position: absolute;
+        top: 0;
+        left: 200px;
+        right: 0;
+        bottom: 0;
+        background-color: limegreen;
+      } */
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper clearfix">
+      <div class="left"></div>
+      <div class="right">123</div>
+    </div>
+  </body>
+</html>

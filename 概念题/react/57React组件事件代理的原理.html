@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+      1 react中所有的事件统称为自定义合成事件 通过document进行代理分发调用
+      2 所有相同的事件 onclick onchange 无论注册多少次实际只会注册一次并分类整合到事件调度中心 每个事件都有一个唯一表示key
+      3 react事件发生在冒泡阶段 当注册原生的事件的时候先触发原生事件当原生事件冒泡到doucument的时候进行react中的事件分发 到调度中心查找那个事件及其父级被调度触发，进行自定义的冒泡触发直到window停止
+      4 如果中途阻止了冒泡事件 会直接停止
+
+    */
+    </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let b = new Boolean(false);
+      let s = new String("");
+      let n = new Number(0);
+      // b s n 都是true 短路运算直接返回n
+      console.log(b && s && n);
+      // 直接转换为布尔值
+      console.log(Boolean(b && s && n));
+    </script>
+  </body>
+</html>

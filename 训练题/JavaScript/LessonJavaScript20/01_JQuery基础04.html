@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>JQuery基础04</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			div {
+				border: 2px solid red;
+				font-size: 40px;
+				padding: 20px;
+				background-color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			这是div1
+			<div id="div2">这是div2</div>
+			<div id="div3">这是div3</div>
+			<div id="div4">这是div4
+				<div id="div5">这是div5</div>
+				<div id="div6">这是div6
+					<div id="div7">这是div7</div>
+				</div>
+			</div>
+		</div>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			/* 
+				JQ通过节点之间的关系获取节点
+			 */
+			//1. 查找某个节点的父节点  parent("选择器") 填写选择器的话可以对父节点做过滤
+			// $("div").parent("body").css("background", "red");
+			
+			//2.查找某个节点的所有祖先节点  parents("选择器") 填写选择器的话可以对祖先节点做过滤
+			// $("#div7").parents("div").css("background", "blue");
+			//3. 查找某个节点的所有祖先节点直到某个祖先节点停止, 不包含指定的节点  parentsUntil("指定的节点的选择器", "过滤选择器")
+			// $("#div7").parentsUntil("html", "div").css("background", "red");
+			
+			
+			//4. 查找到某个节点的所有子节点 children("选择器") 可以通过填入选择器对找到的子节点做过滤
+			// $("#div1").children("div+div").css("background", "red");
+			//5. 查找到某个节点的所有后代节点  find("选择器") 选择器为*找到所有后代节点, 当然可以改变选择器对后代节点过滤
+			// $("#div1").find("*").css("background", "blue");
+			
+			//6. 查找到某个节点的上一个兄弟节点 prev("选择器") 填写选择器用于对找到的兄弟节点进行过滤
+			// $("#div3").prev().css("background", "red");
+			
+			//7. 查找到某个节点的下一个兄弟节点 next("选择器") 填写选择器用于对找到的兄弟节点进行过滤
+			// $("#div3").next().css("background", "blue");
+			
+			//8. 查找到某个节点的上面所有的兄弟节点 prevAll("选择器") 填写选择器用于对找到的兄弟节点进行过滤
+			// $("#div4").prevAll().css("background", "yellow");
+			
+			//9. 查找到某个节点的下面所有的兄弟节点 nextAll("选择器") 填写选择器用于对找到的兄弟节点进行过滤
+			// $("#div2").nextAll().css("background", "red");
+			
+			//10. 查找到某个节点的所有兄弟节点 siblings("选择器") 填写选择器用于对找到的兄弟节点进行过滤
+			// $("#div3").siblings().css("background", "red");
+		</script>
+	</body>
+</html>

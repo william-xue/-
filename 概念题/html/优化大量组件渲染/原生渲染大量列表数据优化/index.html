@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      li {
+        list-style: none;
+        width: 100px;
+        height: 30px;
+        background-color: red;
+        margin-top: 10px;
+      }
+    </style>
+    <ul id="ul"></ul>
+    <script>
+      /**
+       * 总结  
+       * 其中requestFragement每执行一次就是16ms 就是一帧  
+       * 我们就可以在每一帧渲染一百条数据
+       * 
+      */
+      const ul = document.getElementById("ul");
+      let count = 101;
+      const sub = 100;
+      const num = count / sub;
+      const sliceArr = [];
+      while (count > 0) {
+        if (count < sub) {
+          sliceArr.push(count);
+          break;
+        }
+        count -= sub;
+        sliceArr.push(sub);
+      }
+      let frame = 0;
+      function rederSlice() {
+        for (let i = 0; i < sliceArr[frame]; i++) {
+          document
+            .getElementById("ul")
+            .appendChild(document.createElement("li"));
+        }
+        if (frame >= num) {
+          return;
+        }
+        frame++;
+        requestAnimationFrame(rederSlice);
+      }
+      rederSlice()
+    </script>
+  </body>
+</html>

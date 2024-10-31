@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02_localStorage</title>
+	</head>
+	<body>
+		<button id="btn1">增</button>
+		<button id="btn2">改</button>
+		<button id="btn3">查</button>
+		<button id="btn4">删</button>
+		<script type="text/javascript">
+			/* 
+				localStorage: html5的新增数据持久化方法
+				优势:
+				1. 拓展了cookie的存储空间太小的问题(每条cookie大小为4kb), 而localStorage在一般浏览器上的存储大小为5M
+				2. localStorage存储的数据的默认生命周期就是永久的
+				3. localStorage的存储语法是建立在对象的基础上, JS为其准备了完备的增删改查语法
+				
+				局限:
+				1. 兼容性, 不兼容低版本IE
+				2. localStorage存储的数据不会自动跟随网络请求传递到后台
+				3. localStorage在隐私模式下无法被获取
+				4. localStorage无法被爬虫爬取到
+				5. 如果localStorage存储的数据量过大, 在读取的时候可能会卡顿
+			 */
+			// console.log(localStorage);
+			btn1.onclick = function(){
+				// 写法1
+				/* 注意: 不要直接往localStorage里存数组或者对象 */
+				localStorage.name = "张三";
+				localStorage.age = 20;
+				
+				// 写法2
+				localStorage["school"] = "郑州大学";
+				
+				// 写法3
+				localStorage.setItem("city", "郑州");
+				
+			}
+			btn2.onclick = function(){
+				// 修改本质是覆盖, 写法参考添加, 三种写法均可使用
+				localStorage.name = "李四";
+				localStorage.age = 50;
+				
+			}
+			btn3.onclick = function(){
+				//写法1
+				console.log(localStorage.name);
+				
+				//写法2
+				console.log(localStorage.getItem("school"))
+				
+				//写法3
+				console.log(localStorage["age"]);
+			}
+			btn4.onclick = function(){
+				// 写法1
+				// localStorage.removeItem("age");
+				
+				// 写法2
+				// delete localStorage.name;
+				
+				// 写法3
+				// delete localStorage["school"];
+				
+				//清空localStorage
+				localStorage.clear();
+			}
+			/* 
+				1. 点击按钮. 如果发现多选框被勾选, 实现记住用户名和密码功能, 刷新页面, 输入框里依然填写用户名和密码, 多选框也要保持选中
+				2. 点击按钮, 发现多选框未被勾选, 实现取消记住用户名和密码功能, 刷新页面, 输入框清空, 多选框不选中
+			 */
+		</script>
+	</body>
+</html>
